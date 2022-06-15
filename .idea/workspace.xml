@@ -5,14 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fbf523dc-3aed-4e2d-98dc-9c2c41800ac9" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.test.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/logo.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/setupTests.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/actions/event.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/actions/event.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/reducers/event.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/reducers/event.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/store.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/store.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/types.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/MainPage/MainPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/MainPage/MainPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/type.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/type.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,6 +64,11 @@
     <property name="ts.external.directory.path" value="C:\Users\glebg\Data\Projects\calendar\node_modules\typescript\lib" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\glebg\Data\Projects\calendar\src" />
+    </key>
+  </component>
   <component name="RunManager" selected="npm.npm start">
     <configuration name="Debug Application" type="JavascriptDebugType" uri="http://localhost:3000">
       <method v="2" />
@@ -89,7 +96,8 @@
       <workItem from="1652261289826" duration="925000" />
       <workItem from="1652262796455" duration="4026000" />
       <workItem from="1652290503184" duration="26000" />
-      <workItem from="1655203598342" duration="6574000" />
+      <workItem from="1655203598342" duration="7615000" />
+      <workItem from="1655216283897" duration="10183000" />
     </task>
     <servers />
   </component>

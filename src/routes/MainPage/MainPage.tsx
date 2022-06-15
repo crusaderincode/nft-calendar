@@ -1,8 +1,11 @@
 import React, {useState, useCallback} from 'react';
-import {Button, Container, TextField, Typography} from "@mui/material";
+import {Button, Container, Grid, MenuItem, Paper, TextField, Typography} from "@mui/material";
 import { useSelector, shallowEqual, useDispatch } from "react-redux"
 import {Dispatch} from "@reduxjs/toolkit";
-import {addEvent} from "../../redux/actions/event";
+import {addEvent, deleteEvent} from "../../redux/actions/event";
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import {AdapterDateFns} from "@mui/x-date-pickers/AdapterDateFns";
 
 
 export const MainPage = () => {
@@ -20,21 +23,68 @@ export const MainPage = () => {
     };
 
     const labelField = useFormField("")
+    const imageField = useFormField("")
+    const supplyField = useFormField("")
+    const priceField = useFormField("")
+    const twitterField = useFormField("")
+    const discordField = useFormField("")
+    const websiteField = useFormField("")
+    const descriptionField = useFormField("")
+    const currencyField = useFormField("SOL")
+
+    const [date, setDate] = React.useState<Date | null>();
+
+    const currencies = [
+        {
+            value: 'SOL',
+            label: 'SOL',
+        },
+        {
+            value: 'ETH',
+            label: 'ETH',
+        },
+        {
+            value: 'MATIC',
+            label: 'MATIC',
+        },
+        {
+            value: 'ADA',
+            label: 'ADA',
+        },
+    ];
+
+    const handleDate = (newDate: Date | null) => {
+        setDate(newDate);
+    };
 
 
-    const submitArticle = useCallback(
+    const submitEvent = useCallback(
         (event: Event) => dispatch(addEvent(event)),
         [dispatch]
     )
 
+    const removeEvent = useCallback(
+        (event: Event) => dispatch(deleteEvent(event)),
+        [dispatch]
+    )
 
-    const onButtonClick = () => {
+
+    const onSubmitClick = () => {
         // @ts-ignore
         let event: Event = {
             id: new Date().getTime(),
             title: labelField.value
         }
-        submitArticle(event)
+        submitEvent(event)
+    }
+
+    const onRemoveClick = (id: number, title: string) => {
+        // @ts-ignore
+        let event: Event = {
+            id: id,
+            title: title
+        }
+        removeEvent(event)
     }
 
 
@@ -47,19 +97,134 @@ export const MainPage = () => {
             width: '100vw',
 
         }}>
-            <Container maxWidth="md" style={{
+            <Container maxWidth="sm" style={{
                 display: 'flex',
                 flexDirection: 'column'
             }}>
-                <TextField
-                    style={{
-                        margin: 10
-                    }}
-                    id="outlined-name"
-                    label="Label"
-                    onChange={labelField.onChange}
-                />
-                <Button onClick={onButtonClick} variant="contained" style={{
+                <Grid container spacing={2}>
+                    <Grid item xs={12} sm={6} md={6} lg={6}>
+                        <TextField
+                            style={{
+                                width: '100%'
+                            }}
+                            id="outlined-name"
+                            label="Name"
+                            onChange={labelField.onChange}
+                            required
+                        />
+                    </Grid>
+                    <Grid item xs={12} sm={6} md={6} lg={6}>
+                        <TextField
+                            style={{
+                                width: '100%'
+                            }}
+                            id="outlined-name"
+                            label="Image url"
+                            required
+                            onChange={imageField.onChange}
+                        />
+                    </Grid>
+                    <Grid item xs={12} sm={6} md={6} lg={6}>
+                        <TextField
+                            style={{
+                                width: '100%'
+                            }}
+                            id="outlined-name"
+                            label="Price"
+                            required
+                            onChange={priceField.onChange}
+                        />
+                    </Grid>
+                    <Grid item xs={12} sm={6} md={6} lg={6}>
+                    <TextField
+                        style={{
+                            width: '100%'
+                        }}
+                        id="outlined-select-currency"
+                        select
+                        label="Currency"
+                        value={currencyField.value}
+                        required
+                        onChange={currencyField.onChange}
+                    >
+                        {currencies.map((option) => (
+                            <MenuItem key={option.value} value={option.value}>
+                                {option.label}
+                            </MenuItem>
+                        ))}
+                    </TextField>
+                    </Grid>
+                    <Grid item xs={12} sm={6} md={6} lg={6}>
+                        <TextField
+                            style={{
+                                width: '100%'
+                            }}
+                            id="outlined-name"
+                            label="Supply"
+                            required
+                            onChange={supplyField.onChange}
+                        />
+                    </Grid>
+                    <Grid item xs={12} sm={6} md={6} lg={6}>
+                        <TextField
+                            style={{
+                                width: '100%'
+                            }}
+                            id="outlined-name"
+                            label="Twitter"
+                            required
+                            onChange={twitterField.onChange}
+                        />
+                    </Grid>
+                    <Grid item xs={12} sm={6} md={6} lg={6}>
+                        <TextField
+                            style={{
+                                width: '100%'
+                            }}
+                            id="outlined-name"
+                            label="Discord"
+                            onChange={discordField.onChange}
+                        />
+                    </Grid>
+                    <Grid item xs={12} sm={6} md={6} lg={6}>
+                        <TextField
+                            style={{
+                                width: '100%'
+                            }}
+                            id="outlined-name"
+                            label="Website"
+                            onChange={websiteField.onChange}
+                        />
+                    </Grid>
+
+                    <Grid item xs={12} sm={12} md={12} lg={12} style={{
+                        textAlign: 'center'
+                    }}>
+                        <LocalizationProvider dateAdapter={AdapterDateFns}>
+                        <DateTimePicker
+                            label="Date&Time"
+                            value={date}
+                            onChange={handleDate}
+                            renderInput={(params) => <TextField {...params} />}
+                        />
+                        </LocalizationProvider>
+                    </Grid>
+                    <Grid item xs={12} sm={12} md={12} lg={12}>
+                        <TextField
+                            style={{
+                                width: '100%',
+                            }}
+                            multiline
+                            required
+                            rows={3}
+                            id="outlined-name"
+                            label="Short Description"
+                            onChange={descriptionField.onChange}
+                        />
+                    </Grid>
+                </Grid>
+
+                <Button onClick={onSubmitClick} variant="contained" style={{
                     margin: 10
                 }}>
                     Submit
@@ -67,9 +232,22 @@ export const MainPage = () => {
 
                 {
                    events && events.map((event: Event) => (
-                        <Typography variant="h4" key={event.id}>
-                            {event.title}
-                        </Typography>
+                       <Paper elevation={12} key={event.id} style={{
+                           marginTop: '1rem',
+                           marginBottom: '1rem',
+                           display: 'flex',
+                           justifyContent: 'space-between',
+                           padding: 10
+                       }}>
+                           <Typography variant="h4">
+                               {event.title}
+                           </Typography>
+
+                           <Button variant="contained" color="error" onClick={() => onRemoveClick(event.id, event.title)}>
+                               X
+                           </Button>
+                       </Paper>
+
                     ))
                 }
 
