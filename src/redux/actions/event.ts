@@ -1,17 +1,20 @@
 import {ActionType} from "../types";
-import { collection, addDoc } from "firebase/firestore";
+import { collection, doc, addDoc, deleteDoc, getDocs } from "firebase/firestore";
 import db from "../../firebase"
 import {jsx} from "@emotion/react";
+import {ThunkAction, ThunkActionDispatch} from "redux-thunk";
+import {Action, Dispatch} from "@reduxjs/toolkit";
 
-export const addEvent = (payload: Event): any => {
 
-    return async (dispatch: any) => {
-        console.log('Im here' + JSON.stringify(payload))
+export const addEvent = (payload: IEvent): ThunkAction<void, any, null, Action<IEvent>> => {
+
+    return async (dispatch: Dispatch) => {
+
         try {
-            const docRef = await addDoc(collection(db, "events"), {title: payload.title});
-            console.log("Document written with ID: ", docRef.id);
+            const snapshot = await addDoc(collection(db, "events"), payload);
+            payload.id = snapshot.id
         } catch (e) {
-            console.error("Error adding document: ", e);
+            console.error("Fatal error: ", e);
         }
         dispatch({type: ActionType.ADD, payload})
     }
@@ -19,6 +22,33 @@ export const addEvent = (payload: Event): any => {
 
 
 
-export const deleteEvent = (payload: Event): EventsAction => (
-    { type: ActionType.DEL, payload }
-)
+export const deleteEvent = (payload: IEvent): ThunkAction<void, any, null, Action<IEvent>> => {
+
+return async (dispatch: Dispatch) => {
+    try {
+        await deleteDoc(doc(db, "events", payload.id));
+    } catch (e) {
+        console.error("Fatal error: ", e);
+    }
+    dispatch({ type: ActionType.DEL, payload })
+}
+
+}
+
+export const getEvents = (): ThunkAction<void, any, null, Action<IEvent>> => {
+
+    return async (dispatch: Dispatch) => {
+
+        try {
+            const querySnapshot = await getDocs(collection(db, "events"));
+            querySnapshot.forEach((doc) => {
+                const entity = doc.data()
+                let payload = {id: doc.id, title: entity.title.toString()}
+                dispatch({type: ActionType.ADD, payload})
+            })
+        } catch (e) {
+            console.error("Fatal error: ", e);
+        }
+
+    }
+}

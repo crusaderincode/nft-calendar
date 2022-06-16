@@ -11,3 +11,4 @@ export const store = configureStore({
         event: eventReducer,
     }, composedEnhancer
 })
+

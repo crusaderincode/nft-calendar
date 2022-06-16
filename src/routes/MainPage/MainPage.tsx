@@ -1,8 +1,8 @@
-import React, {useState, useCallback} from 'react';
+import React, {useState, useCallback, useEffect} from 'react';
 import {Button, Container, Grid, MenuItem, Paper, TextField, Typography} from "@mui/material";
 import { useSelector, shallowEqual, useDispatch } from "react-redux"
 import {Dispatch} from "@reduxjs/toolkit";
-import {addEvent, deleteEvent} from "../../redux/actions/event";
+import {addEvent, deleteEvent, getEvents} from "../../redux/actions/event";
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import {AdapterDateFns} from "@mui/x-date-pickers/AdapterDateFns";
@@ -16,7 +16,7 @@ export const MainPage = () => {
         shallowEqual
     )
 
-    const useFormField = (initialValue = "") => {
+    const useFormField = (initialValue: string) => {
         const [value, setValue] = useState(initialValue);
         const onChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => setValue(e.target.value), []);
         return {value, onChange};
@@ -24,15 +24,15 @@ export const MainPage = () => {
 
     const labelField = useFormField("")
     const imageField = useFormField("")
-    const supplyField = useFormField("")
-    const priceField = useFormField("")
+    const supplyField = useFormField("0")
+    const priceField = useFormField("0")
     const twitterField = useFormField("")
     const discordField = useFormField("")
     const websiteField = useFormField("")
     const descriptionField = useFormField("")
     const currencyField = useFormField("SOL")
 
-    const [date, setDate] = React.useState<Date | null>();
+    const [date, setDate] = React.useState<Date>(new Date());
 
     const currencies = [
         {
@@ -54,35 +54,51 @@ export const MainPage = () => {
     ];
 
     const handleDate = (newDate: Date | null) => {
-        setDate(newDate);
+        if (newDate) {
+            setDate(newDate);
+        }
     };
 
 
     const submitEvent = useCallback(
-        (event: Event) => dispatch(addEvent(event)),
+        (event: IEvent) => dispatch(addEvent(event)),
         [dispatch]
     )
 
     const removeEvent = useCallback(
-        (event: Event) => dispatch(deleteEvent(event)),
+        (event: IEvent) => dispatch(deleteEvent(event)),
         [dispatch]
     )
 
+    const fetchEvents = useCallback(
+        () => dispatch(getEvents()),
+        [dispatch]
+    )
+
+    useEffect(() => {
+        fetchEvents()
+    }, [])
 
     const onSubmitClick = () => {
-        // @ts-ignore
-        let event: Event = {
-            id: new Date().getTime(),
-            title: labelField.value
+
+        let event: IEvent = {
+            id: '',
+            name: labelField.value,
+            twitter: twitterField.value,
+            discord: discordField.value,
+            website: twitterField.value,
+            supply: parseInt(supplyField.value),
+            price: parseInt(priceField.value),
+            description: descriptionField.value,
+            date: date,
+            currency: currencyField.value
         }
         submitEvent(event)
     }
 
-    const onRemoveClick = (id: number, title: string) => {
-        // @ts-ignore
-        let event: Event = {
+    const onRemoveClick = (id: string) => {
+        let event: IEvent = {
             id: id,
-            title: title
         }
         removeEvent(event)
     }
@@ -231,7 +247,7 @@ export const MainPage = () => {
                 </Button>
 
                 {
-                   events && events.map((event: Event) => (
+                   events && events.map((event: IEvent) => (
                        <Paper elevation={12} key={event.id} style={{
                            marginTop: '1rem',
                            marginBottom: '1rem',
@@ -240,10 +256,10 @@ export const MainPage = () => {
                            padding: 10
                        }}>
                            <Typography variant="h4">
-                               {event.title}
+                               {event.name}
                            </Typography>
 
-                           <Button variant="contained" color="error" onClick={() => onRemoveClick(event.id, event.title)}>
+                           <Button variant="contained" color="error" onClick={() => onRemoveClick(event.id)}>
                                X
                            </Button>
                        </Paper>

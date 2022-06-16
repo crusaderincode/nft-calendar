@@ -1,4 +1,4 @@
 export enum ActionType {
     ADD = 'ADD',
-    DEL = 'DEL'
+    DEL = 'DEL',
 }

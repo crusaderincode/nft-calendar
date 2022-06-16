@@ -1,25 +1,25 @@
-interface Event {
-    id: number
-    title: string
-    name: string
-    date: string
-    website: string
-    twitter: string
-    discord: string
-    description: string
-    price: number
-    currency: number
+interface IEvent {
+    id: string
+    name?: string
+    date?: Date
+    website?: string
+    twitter?: string
+    discord?: string
+    description?: string
+    price?: number
+    supply?: number
+    currency?: string
 }
 
 type EventsState = {
-    events: Event[]
+    events: IEvent[]
 }
 
 type SelectorState = {
-    event: { events: Event[] }
+    event: { events: IEvent[] }
 }
 
 type EventsAction = {
     type: string
-    payload: Event
+    payload: IEvent
 }

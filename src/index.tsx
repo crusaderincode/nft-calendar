@@ -36,7 +36,6 @@ const Main = withLayout(() => <MainPage />)
 const Add = withLayout(() => <AddPage />)
 
 root.render(
-  <React.StrictMode>
       <Provider store={store}>
       <ThemeProvider theme={theme}>
           <BrowserRouter>
@@ -47,7 +46,6 @@ root.render(
           </BrowserRouter>
       </ThemeProvider>
       </Provider>
-  </React.StrictMode>
 );
 
 
