@@ -1,6 +1,8 @@
 interface IEvent {
     id: string
+    listed?: boolean
     name?: string
+    email?: string
     date?: Date
     website?: string
     twitter?: string

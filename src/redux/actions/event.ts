@@ -43,8 +43,11 @@ export const getEvents = (): ThunkAction<void, any, null, Action<IEvent>> => {
             const querySnapshot = await getDocs(collection(db, "events"));
             querySnapshot.forEach((doc) => {
                 const entity = doc.data()
-                let payload = {id: doc.id, title: entity.title.toString()}
-                dispatch({type: ActionType.ADD, payload})
+                if (entity) {
+                    let payload = {id: doc.id, name: entity.name.toString()}
+                    dispatch({type: ActionType.ADD, payload})
+                }
+
             })
         } catch (e) {
             console.error("Fatal error: ", e);
