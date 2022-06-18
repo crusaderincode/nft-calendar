@@ -23,6 +23,11 @@ const theme = createTheme({
             main: '#1c0d49',
             dark: '#0e062d'
         },
+        secondary: {
+            light: '#fff',
+            main: '#fff',
+            dark: '#fff'
+        }
     },
 });
 
@@ -34,6 +39,9 @@ const withLayout = (Component: any) => (props :any) => (
 
 const Main = withLayout(() => <MainPage />)
 const Add = withLayout(() => <AddPage />)
+
+
+
 
 root.render(
       <Provider store={store}>

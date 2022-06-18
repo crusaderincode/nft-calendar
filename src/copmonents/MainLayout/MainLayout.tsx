@@ -10,6 +10,7 @@ export const MainLayout = ({children}: Children) => {
             display: 'flex',
             justifyContent: 'flex-start',
             alignItems: 'center',
+            backgroundImage: `linear-gradient(to bottom, #1e2634, #1e2634, #151b25, #0f131a, #050b14)`,
         }}>
             {children}
         </div>

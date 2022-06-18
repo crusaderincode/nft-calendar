@@ -13,6 +13,10 @@ export const addEvent = (payload: IEvent): ThunkAction<void, any, null, Action<I
         try {
             const snapshot = await addDoc(collection(db, "events"), payload);
             payload.id = snapshot.id
+            if (payload.date) {
+                payload.date = payload.date.toString()
+            }
+
         } catch (e) {
             console.error("Fatal error: ", e);
         }

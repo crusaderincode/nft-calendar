@@ -3,7 +3,7 @@ interface IEvent {
     listed?: boolean
     name?: string
     email?: string
-    date?: Date
+    date?: Date | string
     website?: string
     twitter?: string
     discord?: string

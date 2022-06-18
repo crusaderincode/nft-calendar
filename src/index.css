@@ -11,3 +11,44 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+@font-face {
+  font-family: "Pixels";
+  src: local("Pixels"),
+  url("fonts/Regular.ttf") format("truetype");
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: "Pixels";
+  src: local("Pixels"),
+  url("fonts/Bold.ttf") format("truetype");
+  font-weight: bold;
+}
+
+
+
+
+
+
+
+.MuiInputBase-formControl {
+  color: #c7c7c7 !important;
+}
+
+.MuiInputLabel-root {
+  color: #c7c7c7 !important;
+}
+
+.MuiOutlinedInput-notchedOutline {
+  color: #c7c7c7 !important;
+  border-color: #c7c7c7 !important;
+}
+
+.MuiFormHelperText-root {
+  color: #7f7f7f !important;
+}
+
+.MuiSvgIcon-root {
+  color: #c7c7c7 !important;
+}

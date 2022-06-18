@@ -31,12 +31,12 @@ const formValidationHandler = ({
             ...error, name: true
         }))}
 
-    if (Number(price) <= 0) {
+    if (Number(price) < 0) {
         setErr((error: object) => ({
             ...error, price: true
         }))}
 
-    if (Number(supply) < 1) {
+    if (Number(supply) < 0) {
         setErr((error: object) => ({
             ...error, supply: true
         }))}
@@ -70,6 +70,10 @@ const formValidationHandler = ({
         setErr((error: object) => ({
             ...error, email: true
         }))}
+
+    setErr((error: object) => ({
+        ...error, checked: true
+    }))
 
         }
 
