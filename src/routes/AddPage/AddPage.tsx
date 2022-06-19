@@ -1,5 +1,5 @@
 import React, {useState, useCallback, useEffect} from 'react';
-import {Button, Container, Grid, MenuItem, Paper, TextField, Typography} from "@mui/material";
+import {Button, Container, Grid, MenuItem, Paper, TextField, Typography, CircularProgress} from "@mui/material";
 import { useSelector, shallowEqual, useDispatch } from "react-redux"
 import {Dispatch} from "@reduxjs/toolkit";
 import {addEvent, deleteEvent, getEvents} from "../../redux/actions/event";
@@ -9,6 +9,7 @@ import {AdapterDateFns} from "@mui/x-date-pickers/AdapterDateFns";
 import formValidationHandler from "../../formValidationHandler";
 import {GoPlus} from "react-icons/go";
 import { useLocation } from 'react-router-dom'
+import SubmitModal from "../../copmonents/SubmitModal";
 
 
 export const AddPage = () => {
@@ -16,6 +17,10 @@ export const AddPage = () => {
     const location = useLocation()
     //@ts-ignore
     const { promo } = location.state
+
+    const [openModal, setOpenModal] = useState(false);
+    const handleOpenModal = () => setOpenModal(true);
+    const handleCloseModal = () => setOpenModal(false);
 
 
     const [submitButtonHover, setSubmitButtonHover] = useState(false)
@@ -112,7 +117,7 @@ export const AddPage = () => {
         [dispatch]
     )
 
-    const submitHandler = () => {
+    const submitHandler = async () => {
         setError((error) => ({
             ...error, checked: false
         }))
@@ -139,16 +144,24 @@ export const AddPage = () => {
                 date: date,
                 currency: currencyField.value
             }
-            submitEvent(event)
+            setLoading(true)
+            try {
+                await submitEvent(event)
+                setLoading(false);
+                setOpenModal(true)
+            } catch (err) {
+                alert('Something went wrong! Please try again.')
+                setLoading(false);
+            }
         }
         else {
             alert('Not all the fields are correct!')
         }
+
     }
 
 
     const onSubmitClick = () => {
-
         formValidationHandler(
             {
                 setErr: setError,
@@ -188,6 +201,7 @@ export const AddPage = () => {
             minHeight: '100vh',
             width: '100vw',
         }}>
+            <SubmitModal handleClose={handleCloseModal} state={openModal} />
             <Container maxWidth="md" style={{
                 display: 'flex',
                 flexDirection: 'column',
@@ -435,11 +449,16 @@ export const AddPage = () => {
                         cursor: 'pointer',
                         marginTop: '0.7rem'
                     }}>
-                    <GoPlus style={{
-                        color: submitButtonHover ? '#c80e72' : '#fff',
-                        fontSize: 25,
-                        paddingLeft: 4
-                    }}/>
+
+                    {
+                        loading ? <CircularProgress /> : <GoPlus style={{
+                            color: submitButtonHover ? '#c80e72' : '#fff',
+                            fontSize: 25,
+                            paddingLeft: 4
+                        }}/>
+                    }
+
+
                     <Typography variant="h5" style={{
                         color: submitButtonHover ? '#c80e72' : '#fff',
                         fontFamily: 'Pixels',
