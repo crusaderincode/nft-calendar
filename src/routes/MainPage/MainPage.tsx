@@ -1,4 +1,4 @@
-import React, { useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Button, Container, Paper, Typography} from "@mui/material";
 import Header from "../../copmonents/Header";
 import UserEventsList from "../../copmonents/UserEventsList";
@@ -9,6 +9,7 @@ export const MainPage = () => {
     const [openModal, setOpenModal] = useState(false);
     const handleOpenModal = () => setOpenModal(true);
     const handleCloseModal = () => setOpenModal(false);
+
 
     return (
         <div style={{

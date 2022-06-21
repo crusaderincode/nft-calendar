@@ -11,6 +11,9 @@ interface FormValidator {
     email: string,
     website: string,
     description: string,
+    twitterMembersCount: string,
+    txSignature: string,
+    promo: number
 }
 
 const formValidationHandler = ({
@@ -23,8 +26,16 @@ const formValidationHandler = ({
                                 discord,
                                 email,
                                 website,
-                                description }: FormValidator): void => {
+                                description,
+                                promo,
+                                txSignature,
+                               twitterMembersCount}: FormValidator): void => {
 
+
+    if (promo > 0 && txSignature.length < 1) {
+        setErr((error: object) => ({
+            ...error, txSignature: true
+        }))}
 
     if (name.length < 1 || name.length > 32) {
         setErr((error: object) => ({
@@ -39,6 +50,11 @@ const formValidationHandler = ({
     if (Number(supply) < 0) {
         setErr((error: object) => ({
             ...error, supply: true
+        }))}
+
+    if (Number(twitterMembersCount) < 1) {
+        setErr((error: object) => ({
+            ...error, twitterMembersCount: true
         }))}
 
     if (description.length < 1 || description.length > 750) {

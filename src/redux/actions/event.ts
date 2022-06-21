@@ -48,7 +48,14 @@ export const getEvents = (): ThunkAction<void, any, null, Action<IEvent>> => {
             querySnapshot.forEach((doc) => {
                 const entity = doc.data()
                 if (entity) {
-                    let payload = {id: doc.id, name: entity.name.toString()}
+                    let payload = {id: doc.id,
+                        name: entity.name.toString(),
+                        image: entity.image.toString(),
+                        discord: entity.discord.toString(),
+                        discordMembers: entity.discordMembers.toString(),
+                        twitter: entity.twitter.toString(),
+                        twitterMembers: entity.twitterMembers.toString(),
+                    }
                     dispatch({type: ActionType.ADD, payload})
                 }
 

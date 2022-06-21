@@ -37,12 +37,15 @@ export const AddPage = () => {
     const imageField = useFormField("")
     const supplyField = useFormField("0")
     const priceField = useFormField("0")
+    const twitterCountField = useFormField("0")
     const twitterField = useFormField("")
     const discordField = useFormField("")
     const emailField = useFormField("")
     const websiteField = useFormField("")
     const descriptionField = useFormField("")
     const currencyField = useFormField("SOL")
+
+    const [discordMembers, setDiscordMembers] = useState(0)
 
     const paymentField = useFormField("SOL")
     const transactionField = useFormField("")
@@ -57,9 +60,11 @@ export const AddPage = () => {
         price: false,
         supply: false,
         twitter: false,
+        twitterMembersCount: false,
         discord: false,
         website: false,
-        description: false
+        description: false,
+        txSignature: false
     })
 
     const currencies = [
@@ -126,23 +131,31 @@ export const AddPage = () => {
             !error.price &&
             !error.supply &&
             !error.twitter &&
+            !error.twitterMembersCount &&
             !error.email &&
             !error.discord &&
+            !error.txSignature &&
             !error.website &&
             !error.description ) {
             let event: IEvent = {
                 id: '',
                 listed: false,
                 email: emailField.value,
+                image: imageField.value,
                 name: labelField.value,
                 twitter: twitterField.value,
                 discord: discordField.value,
                 website: websiteField.value,
                 supply: parseInt(supplyField.value),
                 price: parseFloat(priceField.value),
+                discordMembers: discordMembers,
+                twitterMembers: parseInt(twitterCountField.value),
                 description: descriptionField.value,
                 date: date,
-                currency: currencyField.value
+                currency: currencyField.value,
+                currencyPromo: paymentField.value,
+                promo: promo,
+                txPromo: transactionField.value,
             }
             setLoading(true)
             try {
@@ -155,13 +168,21 @@ export const AddPage = () => {
             }
         }
         else {
+            setLoading(false)
             alert('Not all the fields are correct!')
         }
 
     }
 
 
-    const onSubmitClick = () => {
+    const onSubmitClick = async () => {
+        if (discordField.value.length > 1) {
+            setLoading(true)
+            //@ts-ignore
+            await fetcher(discordField.value.split("/").pop())
+
+
+        }
         formValidationHandler(
             {
                 setErr: setError,
@@ -169,11 +190,14 @@ export const AddPage = () => {
                 image: imageField.value,
                 supply: supplyField.value,
                 price: priceField.value,
+                twitterMembersCount: twitterCountField.value,
                 twitter: twitterField.value,
                 discord: discordField.value,
                 email: emailField.value,
                 website: websiteField.value,
-                description: descriptionField.value
+                description: descriptionField.value,
+                txSignature: transactionField.value,
+                promo: promo
             }
         )
     }
@@ -191,6 +215,25 @@ export const AddPage = () => {
         }
         removeEvent(event)
     }
+
+
+    const fetcher = (url: string) => {
+        return fetch(`https://discord.com/api/v9/invites/${url}?with_counts=true&with_expiration=true`, { method: 'get'})
+            .then((response) => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    return "Something went wrong!";
+                }
+            })
+            .then((myJson) => {
+                setDiscordMembers(myJson.approximate_member_count)
+            })
+
+            .catch((err) => {
+                console.error(err);
+            });
+    };
 
 
     return (
@@ -342,7 +385,9 @@ export const AddPage = () => {
                             onChange={twitterField.onChange}
                         />
                     </Grid>
-                    <Grid item xs={12} sm={4} md={4} lg={4}>
+                    <Grid item xs={12} sm={4} md={4} lg={4} style={{
+                        textAlign: 'center'
+                    }}>
                         <TextField
                             style={{
                                 width: '100%'
@@ -368,8 +413,24 @@ export const AddPage = () => {
                             onChange={websiteField.onChange}
                         />
                     </Grid>
+                    <Grid item xs={12} sm={6} md={6} lg={6} style={{
+                        textAlign: 'center'
+                    }}>
+                        <TextField
+                            style={{
+                                width: 260
+                            }}
+                            id="outlined-name"
+                            label="Twitter followers"
+                            helperText="e.g. 1000"
+                            required
+                            onFocus={() => setError({...error, twitter: false})}
+                            error={error.twitter}
+                            onChange={twitterCountField.onChange}
+                        />
+                    </Grid>
 
-                    <Grid item xs={12} sm={12} md={12} lg={12} style={{
+                    <Grid item xs={12} sm={6} md={6} lg={6} style={{
                         textAlign: 'center'
                     }}>
                         <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -410,8 +471,11 @@ export const AddPage = () => {
                                         width: '100%'
                                     }}
                                     id="outlined-name"
+                                    required
                                     label="tx signature"
                                     helperText="your payment transaction signature"
+                                    onFocus={() => setError({...error, txSignature: false})}
+                                    error={error.txSignature}
                                     onChange={transactionField.onChange}
                                 />
                             </Grid>
@@ -451,7 +515,10 @@ export const AddPage = () => {
                     }}>
 
                     {
-                        loading ? <CircularProgress /> : <GoPlus style={{
+                        loading ? <CircularProgress size="2rem" style={{
+                            color: submitButtonHover ? '#c80e72' : '#fff',
+                            padding: 4
+                        }}/> : <GoPlus style={{
                             color: submitButtonHover ? '#c80e72' : '#fff',
                             fontSize: 25,
                             paddingLeft: 4
