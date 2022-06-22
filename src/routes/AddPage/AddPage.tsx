@@ -505,7 +505,8 @@ export const AddPage = () => {
                     onMouseOver={() => setSubmitButtonHover(true)}
                     onMouseOut={() => setSubmitButtonHover(false)}
                     style={{
-                        backgroundColor: submitButtonHover ? '#fff' : '#c80e72',
+                        backgroundColor: submitButtonHover ? 'transparent' : '#fbff2b',
+                        border: '1px solid #fbff2b',
                         display: 'flex',
                         flexDirection: 'row',
                         justifyContent: 'center',
@@ -516,10 +517,10 @@ export const AddPage = () => {
 
                     {
                         loading ? <CircularProgress size="2rem" style={{
-                            color: submitButtonHover ? '#c80e72' : '#fff',
+                            color: submitButtonHover ? '#fbff2b' : '#424242',
                             padding: 4
                         }}/> : <GoPlus style={{
-                            color: submitButtonHover ? '#c80e72' : '#fff',
+                            color: submitButtonHover ? '#fbff2b' : '#424242',
                             fontSize: 25,
                             paddingLeft: 4
                         }}/>
@@ -527,7 +528,7 @@ export const AddPage = () => {
 
 
                     <Typography variant="h5" style={{
-                        color: submitButtonHover ? '#c80e72' : '#fff',
+                        color: submitButtonHover ? '#fbff2b' : '#424242',
                         fontFamily: 'Pixels',
                         padding: 5,
                         paddingLeft: 0,

@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {Container, Paper, Typography} from "@mui/material";
 import {GoPlus} from "react-icons/go";
 import {FaTwitter} from "react-icons/fa";
-import firebase from "firebase/compat";
+import logo from "../../img/logo.png"
 
 
 interface Header {
@@ -25,15 +25,9 @@ export const Header = (props: Header) => {
                 justifyContent: 'space-between',
             }}>
 
-                <Typography variant="h5" style={{
-                    color:  '#fff',
-                    fontFamily: 'Pixels',
-                    padding: 5,
-                    textAlign: 'center',
-                    fontWeight: 'bold',
-                }}>
-                    NFT Calendar
-                </Typography>
+              <img src={logo} alt="logo" style={{
+                  height: 50,
+              }}/>
 
                 <div style={{
                     display: 'flex',
@@ -45,7 +39,8 @@ export const Header = (props: Header) => {
                         onMouseOver={() => setSubmitButtonHover(true)}
                         onMouseOut={() => setSubmitButtonHover(false)}
                         style={{
-                            backgroundColor: submitButtonHover ? '#fff' : '#c80e72',
+                            backgroundColor: submitButtonHover ? 'transparent' : '#fbff2b',
+                            border: '1px solid #fbff2b',
                             display: 'flex',
                             flexDirection: 'row',
                             justifyContent: 'center',
@@ -53,12 +48,12 @@ export const Header = (props: Header) => {
                             cursor: 'pointer'
                         }}>
                         <GoPlus style={{
-                            color: submitButtonHover ? '#c80e72' : '#fff',
+                            color: submitButtonHover ? '#fbff2b' : '#424242',
                             fontSize: 25,
                             paddingLeft: 4
                         }}/>
                         <Typography variant="h5" style={{
-                            color: submitButtonHover ? '#c80e72' : '#fff',
+                            color: submitButtonHover ? '#fbff2b' : '#424242',
                             fontFamily: 'Pixels',
                             padding: 5,
                             paddingLeft: 0,

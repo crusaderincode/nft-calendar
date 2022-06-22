@@ -21,10 +21,11 @@ interface IEvent {
 
 type EventsState = {
     events: IEvent[]
+    unlisted: IEvent[]
 }
 
 type SelectorState = {
-    event: { events: IEvent[] }
+    event: { events: IEvent[], unlisted: IEvent[] }
 }
 
 type EventsAction = {

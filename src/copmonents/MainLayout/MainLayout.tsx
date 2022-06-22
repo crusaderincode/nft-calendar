@@ -8,12 +8,12 @@ export const MainLayout = ({children}: Children) => {
     return (
         <div style={{
             display: 'flex',
-            justifyContent: 'flex-start',
-            alignItems: 'center',
-            backgroundImage: `linear-gradient(to bottom, #1e2634, #1e2634, #151b25, #0f131a, #050b14)`,
+            justifyContent: 'center',
+            alignItems: 'flex-start',
+            minHeight: '100vh',
+            backgroundImage: `linear-gradient(to bottom,  #262b36, #191d24)`
         }}>
             {children}
         </div>
     );
 };
-

@@ -66,7 +66,8 @@ export const SubmitModal = ({handleClose, state}: Modal) => {
                         onMouseOver={() => setSubmitButtonHover(true)}
                         onMouseOut={() => setSubmitButtonHover(false)}
                         style={{
-                            backgroundColor: submitButtonHover ? '#fff' : '#c80e72',
+                            backgroundColor: submitButtonHover ? 'transparent' : '#fbff2b',
+                            border: '1px solid #fbff2b',
                             display: 'flex',
                             flexDirection: 'row',
                             justifyContent: 'center',
@@ -76,7 +77,7 @@ export const SubmitModal = ({handleClose, state}: Modal) => {
                         }}>
 
                         <Typography variant="h5" style={{
-                            color: submitButtonHover ? '#c80e72' : '#fff',
+                            color: submitButtonHover ? '#fbff2b' : '#424242',
                             fontFamily: 'Pixels',
                             padding: 5,
                             paddingLeft: 7,

@@ -8,6 +8,7 @@ import { createTheme, ThemeProvider} from "@mui/material";
 import MainLayout from "./copmonents/MainLayout";
 import MainPage from "./routes/MainPage";
 import AddPage from "./routes/AddPage";
+import AdminPage from "./routes/AdminPage";
 
 import {store} from "./redux/store";
 import { Provider } from "react-redux";
@@ -39,6 +40,7 @@ const withLayout = (Component: any) => (props :any) => (
 
 const Main = withLayout(() => <MainPage />)
 const Add = withLayout(() => <AddPage />)
+const Admin = withLayout(() => <AdminPage />)
 
 
 
@@ -50,6 +52,7 @@ root.render(
               <Routes>
                   <Route path="/" element={<Main />}  />
                   <Route path="add" element={<Add />} />
+                  <Route path="admin" element={<Admin />} />
               </Routes>
           </BrowserRouter>
       </ThemeProvider>

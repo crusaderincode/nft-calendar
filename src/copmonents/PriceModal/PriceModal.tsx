@@ -39,7 +39,8 @@ export const PriceModal = ({handleClose, state}: Modal) => {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        flexDirection: 'column'
+        flexDirection: 'column',
+        backgroundColor: '#262b36'
     };
 
 
@@ -48,7 +49,7 @@ export const PriceModal = ({handleClose, state}: Modal) => {
             <Modal
                 open={state}
                 sx={{
-                    border: 'none'
+                    border: 'none',
                 }}
                 onClose={handleClose}
                 aria-labelledby="modal-modal-title"
@@ -59,7 +60,7 @@ export const PriceModal = ({handleClose, state}: Modal) => {
                         fontFamily: 'Pixels',
                         padding: 5,
                         margin: 0,
-                        color: '#c80e72',
+                        color: '#fff',
                         textAlign: 'center',
                         fontWeight: 'bold',
                     }}>
@@ -77,24 +78,33 @@ export const PriceModal = ({handleClose, state}: Modal) => {
                             width: '90%',
                             height: '100%',
                             borderRadius: 10,
+                            backgroundColor: '#2a303c',
                             minWidth: 260,
                             display: 'flex',
                             flexDirection: 'column',
                             justifyContent: 'space-between'
                         }}>
                             <div>
+                                <Paper elevation={5} style={{
+                                    borderRadius: 30,
+                                    marginTop: 10,
+                                    marginLeft: 10,
+                                    marginRight: 10,
+                                    marginBottom: 5,
+                                }}>
                             <Typography variant={bigScreenFlag ? 'h4' : 'h5'} style={{
                                 fontFamily: 'Pixels',
-                                padding: bigScreenFlag ? 5 : 3,
+                                padding: 3,
                                 color: '#366693',
                                 textAlign: 'center',
                                 fontWeight: 'bold',
                             }}>
                                 Standard
                             </Typography>
+                                </Paper>
                                 <Typography variant={bigScreenFlag ? 'h4' : 'h5'} style={{
                                     fontFamily: 'Pixels',
-                                    color: '#366693',
+                                    color: '#fff',
                                     textAlign: 'center',
                                     fontWeight: 'bold',
                                 }}>
@@ -104,7 +114,7 @@ export const PriceModal = ({handleClose, state}: Modal) => {
                             <Typography variant="h6" style={{
                                 fontFamily: 'Pixels',
                                 padding: bigScreenFlag ? 5 : 3,
-                                color: '#366693',
+                                color: '#fff',
                                 textAlign: 'left',
                                 fontWeight: 'bold',
                                 marginLeft: 10
@@ -115,7 +125,7 @@ export const PriceModal = ({handleClose, state}: Modal) => {
                             <Typography variant="h6" style={{
                                 fontFamily: 'Pixels',
                                 padding: bigScreenFlag ? 5 : 3,
-                                color: '#366693',
+                                color: '#fff',
                                 textAlign: 'left',
                                 fontWeight: 'bold',
                                 marginLeft: 10
@@ -126,7 +136,7 @@ export const PriceModal = ({handleClose, state}: Modal) => {
                             <Typography variant="h6" style={{
                                 fontFamily: 'Pixels',
                                 padding: bigScreenFlag ? 5 : 3,
-                                color: '#366693',
+                                color: '#fff',
                                 textAlign: 'left',
                                 fontWeight: 'bold',
                                 marginLeft: 10
@@ -177,25 +187,33 @@ export const PriceModal = ({handleClose, state}: Modal) => {
                                width: '90%',
                                height: '100%',
                                borderRadius: 10,
+                               backgroundColor: '#2a303c',
                                minWidth: 260,
                                display: 'flex',
                                flexDirection: 'column',
                                justifyContent: 'space-between'
                            }}>
                                <div>
+                                   <Paper elevation={5} style={{
+                                       borderRadius: 30,
+                                       marginTop: 10,
+                                       marginLeft: 10,
+                                       marginRight: 10,
+                                       marginBottom: 5,
+                                   }}>
                                <Typography variant={bigScreenFlag ? 'h4' : 'h5'} style={{
                                    fontFamily: 'Pixels',
-                                   padding: bigScreenFlag ? 5 : 3,
+                                   padding: 3,
                                    color: '#7965c1',
                                    textAlign: 'center',
                                    fontWeight: 'bold',
                                }}>
                                    Featured
                                </Typography>
-
+                                   </Paper>
                                    <Typography variant={bigScreenFlag ? 'h4' : 'h5'} style={{
                                        fontFamily: 'Pixels',
-                                       color: '#7965c1',
+                                       color: '#fff',
                                        textAlign: 'center',
                                        fontWeight: 'bold',
                                    }}>
@@ -205,7 +223,7 @@ export const PriceModal = ({handleClose, state}: Modal) => {
                                <Typography variant="h6" style={{
                                    fontFamily: 'Pixels',
                                    padding: bigScreenFlag ? 5 : 3,
-                                   color: '#7965c1',
+                                   color: '#fff',
                                    textAlign: 'left',
                                    fontWeight: 'bold',
                                    marginLeft: 10
@@ -216,7 +234,7 @@ export const PriceModal = ({handleClose, state}: Modal) => {
                                <Typography variant="h6" style={{
                                    fontFamily: 'Pixels',
                                    padding: bigScreenFlag ? 5 : 3,
-                                   color: '#7965c1',
+                                   color: '#fff',
                                    textAlign: 'left',
                                    fontWeight: 'bold',
                                    marginLeft: 10
@@ -227,7 +245,7 @@ export const PriceModal = ({handleClose, state}: Modal) => {
                                <Typography variant="h6" style={{
                                    fontFamily: 'Pixels',
                                    padding: bigScreenFlag ? 5 : 3,
-                                   color: '#7965c1',
+                                   color: '#fff',
                                    textAlign: 'left',
                                    fontWeight: 'bold',
                                    marginLeft: 10
@@ -238,7 +256,7 @@ export const PriceModal = ({handleClose, state}: Modal) => {
                                <Typography variant="h6" style={{
                                    fontFamily: 'Pixels',
                                    padding: bigScreenFlag ? 5 : 3,
-                                   color: '#7965c1',
+                                   color: '#fff',
                                    textAlign: 'left',
                                    fontWeight: 'bold',
                                    marginLeft: 10
@@ -249,7 +267,7 @@ export const PriceModal = ({handleClose, state}: Modal) => {
                                <Typography variant="h6" style={{
                                    fontFamily: 'Pixels',
                                    padding: bigScreenFlag ? 5 : 3,
-                                   color: '#7965c1',
+                                   color: '#fff',
                                    textAlign: 'left',
                                    fontWeight: 'bold',
                                    marginLeft: 10
@@ -300,25 +318,33 @@ export const PriceModal = ({handleClose, state}: Modal) => {
                                width: '90%',
                                height: '100%',
                                borderRadius: 10,
+                               backgroundColor: '#2a303c',
                                minWidth: 260,
                                display: 'flex',
                                flexDirection: 'column',
                                justifyContent: 'space-between'
                            }}>
                                <div>
+                                   <Paper elevation={5} style={{
+                                       borderRadius: 30,
+                                       marginTop: 10,
+                                       marginLeft: 10,
+                                       marginRight: 10,
+                                       marginBottom: 5,
+                                   }}>
                                <Typography variant={bigScreenFlag ? 'h4' : 'h5'} style={{
                                    fontFamily: 'Pixels',
-                                   padding: bigScreenFlag ? 5 : 3,
+                                   padding: 3,
                                    color: '#c80e72',
                                    textAlign: 'center',
                                    fontWeight: 'bold',
                                }}>
                                    Premium
                                </Typography>
-
+                                   </Paper>
                                    <Typography variant={bigScreenFlag ? 'h4' : 'h5'} style={{
                                        fontFamily: 'Pixels',
-                                       color: '#c80e72',
+                                       color: '#fff',
                                        textAlign: 'center',
                                        fontWeight: 'bold',
                                    }}>
@@ -328,7 +354,7 @@ export const PriceModal = ({handleClose, state}: Modal) => {
                                <Typography variant="h6" style={{
                                    fontFamily: 'Pixels',
                                    padding: bigScreenFlag ? 5 : 3,
-                                   color: '#c80e72',
+                                   color: '#fff',
                                    textAlign: 'left',
                                    fontWeight: 'bold',
                                    marginLeft: 10
@@ -339,7 +365,7 @@ export const PriceModal = ({handleClose, state}: Modal) => {
                                <Typography variant="h6" style={{
                                    fontFamily: 'Pixels',
                                    padding: bigScreenFlag ? 5 : 3,
-                                   color: '#c80e72',
+                                   color: '#fff',
                                    textAlign: 'left',
                                    fontWeight: 'bold',
                                    marginLeft: 10
@@ -350,7 +376,7 @@ export const PriceModal = ({handleClose, state}: Modal) => {
                                <Typography variant="h6" style={{
                                    fontFamily: 'Pixels',
                                    padding: bigScreenFlag ? 5 : 3,
-                                   color: '#c80e72',
+                                   color: '#fff',
                                    textAlign: 'left',
                                    fontWeight: 'bold',
                                    marginLeft: 10
@@ -361,7 +387,7 @@ export const PriceModal = ({handleClose, state}: Modal) => {
                                <Typography variant="h6" style={{
                                    fontFamily: 'Pixels',
                                    padding: bigScreenFlag ? 5 : 3,
-                                   color: '#c80e72',
+                                   color: '#fff',
                                    textAlign: 'left',
                                    fontWeight: 'bold',
                                    marginLeft: 10
@@ -372,7 +398,7 @@ export const PriceModal = ({handleClose, state}: Modal) => {
                                <Typography variant="h6" style={{
                                    fontFamily: 'Pixels',
                                    padding: bigScreenFlag ? 5 : 3,
-                                   color: '#c80e72',
+                                   color: '#fff',
                                    textAlign: 'left',
                                    fontWeight: 'bold',
                                    marginLeft: 10
@@ -383,7 +409,7 @@ export const PriceModal = ({handleClose, state}: Modal) => {
                                <Typography variant="h6" style={{
                                    fontFamily: 'Pixels',
                                    padding: bigScreenFlag ? 5 : 3,
-                                   color: '#c80e72',
+                                   color: '#fff',
                                    textAlign: 'left',
                                    fontWeight: 'bold',
                                    marginLeft: 10
@@ -394,7 +420,7 @@ export const PriceModal = ({handleClose, state}: Modal) => {
                                <Typography variant="h6" style={{
                                    fontFamily: 'Pixels',
                                    padding: bigScreenFlag ? 5 : 3,
-                                   color: '#c80e72',
+                                   color: '#fff',
                                    textAlign: 'left',
                                    fontWeight: 'bold',
                                    marginLeft: 10

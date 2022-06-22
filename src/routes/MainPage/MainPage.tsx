@@ -15,19 +15,37 @@ export const MainPage = () => {
         <div style={{
             display: 'flex',
             justifyContent: 'center',
-            alignItems: 'center',
-            minHeight: '100vh',
+            alignItems: 'flex-start',
             height: '100%',
             width: '100vw',
+            marginTop: '10rem'
         }}>
         <Header handleModalOpen={handleOpenModal}/>
-            <PriceModal handleClose={handleCloseModal} state={openModal} />
             <Container maxWidth="md" style={{
                 height: '100%',
-                width: '100%'
+                width: '100%',
+                display: 'flex',
+                justifyContent: 'flex-start',
+                flexDirection: 'column'
             }}>
+                <div>
+                <Typography variant="h3" display="inline" style={{
+                    color: '#fbff2b',
+                    fontWeight: 'bold'
+                }}>
+                    Upcoming
+                    <Typography variant="h3" display="inline" style={{
+                        color: '#fff',
+                        fontWeight: 'bold',
+                        marginLeft: 15
+                    }}>
+                        Drops
+                    </Typography>
+                </Typography>
+                </div>
             <UserEventsList />
             </Container>
+            <PriceModal handleClose={handleCloseModal} state={openModal} />
         </div>
     );
 };

@@ -25,11 +25,11 @@ export const UserEvent = ({event}: UserEvent) => {
         <Paper elevation={12} key={event.id} style={{
             marginTop: '1rem',
             marginBottom: '1rem',
-            backgroundColor: 'rgba(255,255,255,0.04)',
+            backgroundColor: 'rgba(255,255,255,0.05)',
             display: 'flex',
             flexDirection: 'column',
             padding: 10,
-            border: '1px solid #0f151d',
+            border: '1px solid #262b36',
             maxHeight: flag ? 300 : 80,
             overflow: 'hidden',
             transition: "all 0.5s ease-in-out",
@@ -83,7 +83,7 @@ export const UserEvent = ({event}: UserEvent) => {
                                 //@ts-ignore
                                 event.discordMembers && event.discordMembers < 1000 ? event.discordMembers : event.discordMembers < 10000 ? `${String(event.discordMembers / 1000).slice(0,3)}k` : event.discordMembers < 100000 ? `${String(event.discordMembers / 1000).slice(0,4)}k` : `${String(event.discordMembers / 1000).slice(0,3)}k`}
                         </Typography>
-                        <FaTwitter style={{fontSize: 25, color: '#fff'}}
+                        <FaTwitter style={{fontSize: 25, color: '#fff', cursor: 'pointer'}}
                                    onClick={()=> window.open(event.twitter, "_blank")}
                         />
                         <Typography variant="body1" style={{
