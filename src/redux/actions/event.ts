@@ -55,6 +55,12 @@ export const getEvents = (): ThunkAction<void, any, null, Action<IEvent>> => {
                         discordMembers: entity.discordMembers.toString(),
                         twitter: entity.twitter.toString(),
                         twitterMembers: entity.twitterMembers.toString(),
+                        website: entity.website.toString(),
+                        price: entity.price.toString(),
+                        supply: entity.supply.toString(),
+                        currency: entity.currency.toString(),
+                        date: entity.date.toString(),
+                        description: entity.description.toString(),
                     }
                     dispatch({type: ActionType.ADD, payload})
                 }
