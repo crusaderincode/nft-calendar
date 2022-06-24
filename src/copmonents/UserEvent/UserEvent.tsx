@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {Paper, Typography} from "@mui/material";
 import {FaDiscord, FaTwitter} from "react-icons/fa";
 import {MdPublic} from "react-icons/md";
+import {AiFillStar} from "react-icons/ai"
 
 interface UserEvent {
     event: IEvent
@@ -33,6 +34,7 @@ export const UserEvent = ({event}: UserEvent) => {
             maxHeight: flag ? 300 : 80,
             overflow: 'hidden',
             transition: "all 0.5s ease-in-out",
+            position: 'relative'
         }}>
             <div style={{
                 display: 'flex',
@@ -42,6 +44,18 @@ export const UserEvent = ({event}: UserEvent) => {
             <div style={{
                 display: 'flex'
             }}>
+
+                {
+                    //@ts-ignore
+                    event.promo > 0 && <AiFillStar style={{
+                    position: 'absolute',
+                        top: 10,
+                        right: 10,
+                        fontSize: 20,
+                        color: '#fbff2b'
+                    }}/>
+                }
+
                 <img src={event.image} alt="Wrong img url"
                      onClick={flagHandler}
                      style={{
@@ -60,7 +74,8 @@ export const UserEvent = ({event}: UserEvent) => {
                     <Typography variant="h5"
                                 onClick={flagHandler}
                                 style={{
-                        color: '#fff',
+                                    //@ts-ignore
+                        color: event.promo > 0 ? '#fbff2b' : '#fff',
                         fontWeight: 'bold',
                         cursor: 'pointer'
                     }}>

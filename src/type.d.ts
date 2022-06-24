@@ -22,10 +22,11 @@ interface IEvent {
 type EventsState = {
     events: IEvent[]
     unlisted: IEvent[]
+     past: IEvent[]
 }
 
 type SelectorState = {
-    event: { events: IEvent[], unlisted: IEvent[] }
+    event: { events: IEvent[], unlisted: IEvent[], past: IEvent[] }
 }
 
 type EventsAction = {

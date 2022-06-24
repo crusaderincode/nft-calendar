@@ -117,10 +117,6 @@ export const AddPage = () => {
         [dispatch]
     )
 
-    const removeEvent = useCallback(
-        (event: IEvent) => dispatch(deleteEvent(event)),
-        [dispatch]
-    )
 
     const submitHandler = async () => {
         setError((error) => ({
@@ -209,12 +205,7 @@ export const AddPage = () => {
     }, [error.checked])
 
 
-    const onRemoveClick = (id: string) => {
-        let event: IEvent = {
-            id: id,
-        }
-        removeEvent(event)
-    }
+
 
 
     const fetcher = (url: string) => {

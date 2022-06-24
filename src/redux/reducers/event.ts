@@ -2,7 +2,8 @@ import {ActionType} from "../types"
 
 const initialState : EventsState = {
     events: [],
-    unlisted: []
+    unlisted: [],
+    past: []
 };
 
 export const eventReducer = (state = initialState, action: EventsAction) => {
@@ -13,6 +14,11 @@ export const eventReducer = (state = initialState, action: EventsAction) => {
             return {
                 ...state,
                 events: [{...action.payload}, ...state.events]
+            }
+        case ActionType.ADD_PAST:
+            return {
+                ...state,
+                past: [{...action.payload}, ...state.past]
             }
         case ActionType.ADD_UNLISTED:
             return {

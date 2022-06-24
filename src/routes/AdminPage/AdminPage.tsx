@@ -1,10 +1,11 @@
 import React, {useCallback, useEffect} from 'react';
 import {Dispatch} from "@reduxjs/toolkit";
 import {shallowEqual, useDispatch, useSelector} from "react-redux";
-import {getUnslitedEvents} from "../../redux/actions/event";
+import {deleteEvent, getUnslitedEvents, listEvent} from "../../redux/actions/event";
 import UserEvent from "../../copmonents/UserEvent";
 import {Button, Container, Grid, Paper, Typography} from "@mui/material";
 import {Link} from "react-router-dom";
+
 
 export const AdminPage = () => {
     const dispatch: Dispatch<any> = useDispatch()
@@ -22,6 +23,31 @@ export const AdminPage = () => {
     useEffect(() => {
         fetchEvents()
     }, [])
+
+
+    const removeEvent = useCallback(
+        (event: IEvent) => dispatch(deleteEvent(event)),
+        [dispatch]
+    )
+
+    const applyEvent = useCallback(
+        (event: IEvent) => dispatch(listEvent(event)),
+        [dispatch]
+    )
+
+    const onRemoveClick = (id: string) => {
+        let event: IEvent = {
+            id: id,
+        }
+        removeEvent(event)
+    }
+
+    const onListClick = (id: string) => {
+        let event: IEvent = {
+            id: id,
+        }
+        applyEvent(event)
+    }
 
     return (
         <div>
@@ -52,20 +78,31 @@ export const AdminPage = () => {
                         border: '1px solid #fff'
                     }}>
                     <UserEvent event={event} />
+                        <Typography variant="body1" style={{
+                            color: '#fff',
+                            fontWeight: 'bold',
+                            paddingTop: 10,
+                            paddingLeft: 10,
+                            paddingBottom: 5
+                        }}>
+                            {`Email: ${event.email}`}
+                        </Typography>
                         {
                             Number(event.promo) > 0 && <div style={{
                                 display: 'flex',
                                 flexDirection: 'column',
-                                padding: 10
+                                paddingBottom: 10,
+                                paddingLeft: 10,
+                                paddingRight: 10
                             }}>
-                            <Typography variant="h6" style={{
+                            <Typography variant="body1" style={{
                                 color: '#fff',
                                 fontWeight: 'bold',
                             }}>
                                 {`Currency: ${event.currencyPromo}`}
                             </Typography>
 
-                                <Typography variant="h6" style={{
+                                <Typography variant="body1" style={{
                                     color: '#fff',
                                     fontWeight: 'bold',
                                 }}>
@@ -74,21 +111,21 @@ export const AdminPage = () => {
                                         event.promo > 1 ? "Promo type: 50$" : "Promo type: 10$"}
                                 </Typography>
 
-                                <Typography variant="h6" style={{
+                                <Typography variant="body1" style={{
                                     color: '#fff',
                                     fontWeight: 'bold',
                                 }}>
-                                    {`Tx: ${event.txPromo}`}
+                                   Tx:
+                                </Typography>
+                                <Typography variant="body2" style={{
+                                    color: '#fff',
+                                    fontWeight: 'bold',
+                                }}>
+                               {event.txPromo}
                                 </Typography>
                             </div>
                         }
-                        <Typography variant="h6" style={{
-                            color: '#fff',
-                            fontWeight: 'bold',
-                            padding: 10
-                        }}>
-                            {`Email: ${event.email}`}
-                        </Typography>
+
 
                         <Grid container spacing={3} style={{
                             paddingBottom: 15,
@@ -96,14 +133,14 @@ export const AdminPage = () => {
                             paddingRight: 5
                         }}>
                             <Grid item xs={12} sm={6} md={6} lg={6}>
-                              <Button color="success" variant="contained" style={{
+                              <Button color="success" variant="contained" onClick={() => onListClick(event.id)} style={{
                                   width: '100%'
                               }}>
                                   Submit
                               </Button>
                             </Grid>
                             <Grid item xs={12} sm={6} md={6} lg={6}>
-                                <Button color="error" variant="contained"  style={{
+                                <Button color="error" variant="contained" onClick={() => onRemoveClick(event.id)} style={{
                                     width: '100%'
                                 }}>
                                     Decline
