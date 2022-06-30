@@ -6,13 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="fbf523dc-3aed-4e2d-98dc-9c2c41800ac9" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/copmonents/MainLayout/MainLayout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/copmonents/MainLayout/MainLayout.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/copmonents/UserEvent/UserEvent.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/copmonents/UserEvent/UserEvent.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/copmonents/UserEventsList/UserEventsList.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/copmonents/UserEventsList/UserEventsList.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/redux/actions/event.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/actions/event.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/redux/reducers/event.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/reducers/event.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/copmonents/Header/Header.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/copmonents/Header/Header.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/store.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/store.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/redux/types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/types.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/AddPage/AddPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/AddPage/AddPage.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/routes/AdminPage/AdminPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/AdminPage/AdminPage.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/routes/MainPage/MainPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/MainPage/MainPage.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/type.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/type.d.ts" afterDir="false" />
@@ -104,7 +100,11 @@
       <workItem from="1655803240394" duration="14548000" />
       <workItem from="1655837310369" duration="7096000" />
       <workItem from="1655910182084" duration="11603000" />
-      <workItem from="1656062158121" duration="11325000" />
+      <workItem from="1656062158121" duration="12638000" />
+      <workItem from="1656231428793" duration="76000" />
+      <workItem from="1656265477956" duration="602000" />
+      <workItem from="1656267693771" duration="16000" />
+      <workItem from="1656580770825" duration="7337000" />
     </task>
     <servers />
   </component>

@@ -1,17 +1,31 @@
-import React, {useCallback, useEffect} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {Dispatch} from "@reduxjs/toolkit";
 import {shallowEqual, useDispatch, useSelector} from "react-redux";
 import {deleteEvent, getUnslitedEvents, listEvent} from "../../redux/actions/event";
 import UserEvent from "../../copmonents/UserEvent";
-import {Button, Container, Grid, Paper, Typography} from "@mui/material";
+import {Button, Container, Dialog, Grid, Paper, Typography, useTheme} from "@mui/material";
 import {Link} from "react-router-dom";
+import {MdEmail} from "react-icons/md"
+import {deleteTicket, getTickets} from "../../redux/actions/ticket";
 
 
 export const AdminPage = () => {
+    const theme = useTheme()
     const dispatch: Dispatch<any> = useDispatch()
+
+    const [ticketsOpen, setTicketsOpen] = useState(false)
+
+    const handleTicketsClose = () => {
+        setTicketsOpen(false)
+    }
 
     const events = useSelector(
         (state: SelectorState) => state.event.unlisted,
+        shallowEqual
+    )
+
+    const tickets = useSelector(
+        (state: SelectorTicketsState) => state.contact.tickets,
         shallowEqual
     )
 
@@ -20,13 +34,24 @@ export const AdminPage = () => {
         [dispatch]
     )
 
+    const fetchTickets = useCallback(
+        () => dispatch(getTickets()),
+        [dispatch]
+    )
+
     useEffect(() => {
         fetchEvents()
+        fetchTickets()
     }, [])
 
 
     const removeEvent = useCallback(
         (event: IEvent) => dispatch(deleteEvent(event)),
+        [dispatch]
+    )
+
+    const removeTicket = useCallback(
+        (ticket: ITicket) => dispatch(deleteTicket(ticket)),
         [dispatch]
     )
 
@@ -40,6 +65,13 @@ export const AdminPage = () => {
             id: id,
         }
         removeEvent(event)
+    }
+
+    const onRemoveTicketClick = (id: string) => {
+        let ticket: ITicket = {
+            id: id,
+        }
+        removeTicket(ticket)
     }
 
     const onListClick = (id: string) => {
@@ -64,6 +96,15 @@ export const AdminPage = () => {
                 Go Back
             </Button>
             </Link>
+
+            <MdEmail style={{fontSize: 30,
+                             cursor: 'pointer',
+                             color: tickets.length > 0 ? '#fbff2b' : '#fff',
+                             position: 'absolute',
+                             top: '0.6rem',
+                             left: '8rem',}}
+                     onClick={() => setTicketsOpen(true)}
+            />
 
             <Container maxWidth="md">
             {
@@ -151,6 +192,52 @@ export const AdminPage = () => {
 
                 ))
             }
+
+                <Dialog
+                    open={ticketsOpen && tickets.length > 0}
+                    maxWidth="md"
+                    sx={{
+                        backgroundColor: 'transparent',
+                    }}
+                    onClose={handleTicketsClose}
+                    scroll='body'
+                >
+                    {
+                        tickets.map((ticket: ITicket) => (
+                         <Paper key={ticket.id} style={{
+                             backgroundColor: '#161d30',
+                             padding: 10,
+                             display: 'flex',
+                             flexDirection: 'column',
+                             margin: 10
+                         }}>
+                             <Typography variant="body1" style={{
+                                 color: '#fff',
+                                 fontWeight: 'bold',
+                                 marginTop: '0.5rem'
+                             }}>
+                                 {`Email: ${ticket.email}`}
+                             </Typography>
+
+                             <Typography variant="body1" style={{
+                                 color: '#fff',
+                                 fontWeight: 'bold',
+                                 marginTop: '0.5rem'
+                             }}>
+                                 {`Issue: ${ticket.ticket}`}
+                             </Typography>
+
+                             <Button color="error" variant="contained" onClick={() => onRemoveTicketClick(ticket.id)} style={{
+                                 marginTop: '0.5rem',
+                                 marginBottom: '0.5rem'
+                             }}>
+                                 Delete
+                             </Button>
+                         </Paper>
+                        ))
+                    }
+                </Dialog>
+
             </Container>
         </div>
     );

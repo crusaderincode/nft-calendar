@@ -19,6 +19,21 @@ interface IEvent {
     currency?: string
 }
 
+interface ITicket {
+    id: string
+    email?: string
+    ticket?: string
+}
+
+type TicketState = {
+    tickets: ITicket[]
+}
+
+type TicketsAction = {
+    type: string
+    payload: ITicket
+}
+
 type EventsState = {
     events: IEvent[]
     unlisted: IEvent[]
@@ -27,6 +42,10 @@ type EventsState = {
 
 type SelectorState = {
     event: { events: IEvent[], unlisted: IEvent[], past: IEvent[] }
+}
+
+type SelectorTicketsState = {
+    contact: { tickets: ITicket[] }
 }
 
 type EventsAction = {

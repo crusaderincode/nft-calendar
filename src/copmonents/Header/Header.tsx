@@ -2,11 +2,13 @@ import React, {useState} from 'react';
 import {Container, Paper, Typography} from "@mui/material";
 import {GoPlus} from "react-icons/go";
 import {FaTwitter} from "react-icons/fa";
+import {MdEmail} from "react-icons/md"
 import logo from "../../img/logo.png"
 
 
 interface Header {
     handleModalOpen: () => void
+    handleContactOpen: () => void
 }
 
 export const Header = (props: Header) => {
@@ -67,6 +69,10 @@ export const Header = (props: Header) => {
 
                     <FaTwitter style={{fontSize: 30, cursor: 'pointer', color: '#fff', marginLeft: '2rem',}}
                                onClick={() => window.open("https://twitter.com/Hazed_Chameleon", "_blank")}
+                    />
+
+                    <MdEmail style={{fontSize: 30, cursor: 'pointer', color: '#fff', marginLeft: '1rem',}}
+                               onClick={props.handleContactOpen}
                     />
                 </div>
             </Container>

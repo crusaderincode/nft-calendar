@@ -7,13 +7,18 @@ import {Dispatch} from "@reduxjs/toolkit";
 import {shallowEqual, useDispatch, useSelector} from "react-redux";
 import {getEvents, getPastEvents} from "../../redux/actions/event";
 import {MdKeyboardArrowDown, MdKeyboardArrowUp} from "react-icons/md";
-import {Timestamp} from "firebase/firestore";
+import ContactModal from "../../copmonents/ContactModal";
+
 
 
 export const MainPage = () => {
     const [openModal, setOpenModal] = useState(false);
     const handleOpenModal = () => setOpenModal(true);
     const handleCloseModal = () => setOpenModal(false);
+
+    const [openContactModal, setOpenContactModal] = useState(false);
+    const handleOpenContactModal = () => setOpenContactModal(true);
+    const handleCloseContactModal = () => setOpenContactModal(false);
 
     const [isUpcomingOpen, setIsUpcomingOpen] = useState(true)
     const [isUpcoming, setIsUpcoming] = useState(true)
@@ -65,7 +70,7 @@ export const MainPage = () => {
             width: '100vw',
             marginTop: '8rem'
         }}>
-        <Header handleModalOpen={handleOpenModal}/>
+        <Header handleModalOpen={handleOpenModal} handleContactOpen={handleOpenContactModal}/>
             <Container maxWidth="md" style={{
                 height: '100%',
                 width: '100%',
@@ -146,6 +151,7 @@ export const MainPage = () => {
                 <UserEventsList eventsList={isUpcoming ? commonEvents : pastEvents}/>
             </Container>
             <PriceModal handleClose={handleCloseModal} state={openModal} />
+            <ContactModal handleClose={handleCloseContactModal} state={openContactModal} />
         </div>
     );
 };
