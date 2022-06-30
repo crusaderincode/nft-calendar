@@ -8,6 +8,7 @@ import {shallowEqual, useDispatch, useSelector} from "react-redux";
 import {getEvents, getPastEvents} from "../../redux/actions/event";
 import {MdKeyboardArrowDown, MdKeyboardArrowUp} from "react-icons/md";
 import ContactModal from "../../copmonents/ContactModal";
+import Footer from "../../copmonents/Footer";
 
 
 
@@ -66,9 +67,10 @@ export const MainPage = () => {
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'flex-start',
-            height: '100%',
+            flexDirection: 'column',
+            minHeight: '100vh',
             width: '100vw',
-            marginTop: '8rem'
+
         }}>
         <Header handleModalOpen={handleOpenModal} handleContactOpen={handleOpenContactModal}/>
             <Container maxWidth="md" style={{
@@ -76,15 +78,16 @@ export const MainPage = () => {
                 width: '100%',
                 display: 'flex',
                 justifyContent: 'flex-start',
-                flexDirection: 'column'
+                flexDirection: 'column',
+                marginTop: '8rem'
             }}>
                 <div>
-                    <Typography variant="h3" display="inline" style={{
+                    <Typography variant="h4" display="inline" style={{
                         color: '#fbff2b',
                         fontWeight: 'bold'
                     }}>
                         Featured
-                        <Typography variant="h3" display="inline" style={{
+                        <Typography variant="h4" display="inline" style={{
                             color: '#fff',
                             fontWeight: 'bold',
                             marginLeft: 15
@@ -100,7 +103,7 @@ export const MainPage = () => {
                     overflow: 'hidden',
                     transition: "all 0.3s ease-in-out",
                 }}>
-                <Typography variant="h3" display="inline" onClick={() => setIsUpcomingOpen(!isUpcomingOpen)} style={{
+                <Typography variant="h4" display="inline" onClick={() => setIsUpcomingOpen(!isUpcomingOpen)} style={{
                     color: '#fbff2b',
                     fontWeight: 'bold',
                     textDecoration: 'underline',
@@ -111,20 +114,20 @@ export const MainPage = () => {
                     {
                         isUpcomingOpen ? <MdKeyboardArrowDown onClick={() => setIsUpcomingOpen(!isUpcomingOpen)} style={{
                             color: '#fbff2b',
-                            fontSize: 50,
+                            fontSize: 40,
                             verticalAlign: 'bottom',
-                            marginLeft: -10,
+                            marginLeft: -8,
                             cursor: 'pointer'
                         }}/> : <MdKeyboardArrowUp onClick={() => setIsUpcomingOpen(!isUpcomingOpen)} style={{
                             color: '#fbff2b',
-                            fontSize: 50,
+                            fontSize: 40,
                             verticalAlign: 'bottom',
-                            marginLeft: -10,
+                            marginLeft: -8,
                             cursor: 'pointer'
                         }}/>
                     }
 
-                    <Typography variant="h3" display="inline" style={{
+                    <Typography variant="h4" display="inline" style={{
                         color: '#fff',
                         fontWeight: 'bold',
                         marginLeft: 2
@@ -139,7 +142,7 @@ export const MainPage = () => {
                         marginTop: 20,
                         cursor: 'pointer'
                     }}>
-                    <Typography variant="h3" style={{
+                    <Typography variant="h4" style={{
                         color: '#fbff2b',
                         fontWeight: 'bold',
                         textAlign: 'center'
@@ -152,6 +155,8 @@ export const MainPage = () => {
             </Container>
             <PriceModal handleClose={handleCloseModal} state={openModal} />
             <ContactModal handleClose={handleCloseContactModal} state={openContactModal} />
+
+            <Footer handleContactOpen={handleOpenContactModal}/>
         </div>
     );
 };
