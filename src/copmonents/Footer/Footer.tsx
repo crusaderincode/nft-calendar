@@ -51,7 +51,7 @@ export const Footer = ({handleContactOpen}: Footer) => {
                     />
 
                     <MdEmail style={{fontSize: 30, cursor: 'pointer', color: '#fff', marginLeft: '1rem',}}
-                             onClick={props.handleContactOpen}
+                             onClick={handleContactOpen}
                     />
                 </div>
             </div>

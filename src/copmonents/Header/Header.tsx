@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {Container, Paper, Typography} from "@mui/material";
+import React, {useCallback, useEffect, useState} from 'react';
+import {Container, MenuItem, Paper, SelectChangeEvent, Select, Typography, TextField} from "@mui/material";
 import {GoPlus} from "react-icons/go";
 import {FaTwitter} from "react-icons/fa";
 import {MdEmail} from "react-icons/md"
@@ -9,10 +9,46 @@ import logo from "../../img/logo.png"
 interface Header {
     handleModalOpen: () => void
     handleContactOpen: () => void
+    localAction: (type: string) => void
 }
 
 export const Header = (props: Header) => {
+    const useFormField = (initialValue: string) => {
+        const [value, setValue] = useState(initialValue);
+        const onChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => setValue(e.target.value), []);
+        return {value, onChange};
+    };
+
     const [submitButtonHover, setSubmitButtonHover] = useState(false)
+    const blockchainField = useFormField("ALL")
+
+    useEffect(() => {
+        props.localAction(blockchainField.value)
+    }, [blockchainField])
+
+
+    const currencies = [
+        {
+            value: 'ALL',
+            label: 'Upcomnig NFT',
+        },
+        {
+            value: 'SOL',
+            label: 'Solana NFT',
+        },
+        {
+            value: 'ETH',
+            label: 'Ethereum NFT',
+        },
+        {
+            value: 'MATIC',
+            label: 'Polygon NFT',
+        },
+        {
+            value: 'ADA',
+            label: 'Cardano NFT',
+        },
+    ];
 
     return (
         <div style={{
@@ -30,6 +66,46 @@ export const Header = (props: Header) => {
               <img src={logo} alt="logo" style={{
                   height: 50,
               }}/>
+                <div style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    width: '28%',
+                    justifyContent: 'space-between',
+                    alignItems: 'center'
+                }}>
+                    <TextField
+                        variant="standard"
+                        sx={{
+                            minWidth: 100,
+                            marginTop: 0.7
+                        }}
+                        InputProps={{
+                            disableUnderline: true,
+                        }}
+                        id="outlined-select-blockchain"
+                        select
+                        value={blockchainField.value}
+                        onChange={blockchainField.onChange}
+
+                    >
+                        {currencies.map((option) => (
+                            <MenuItem key={option.value} value={option.value}>
+                                {option.label}
+                            </MenuItem>
+                        ))}
+                    </TextField>
+
+                <Typography variant="h5" style={{
+                    color: '#fff',
+                    fontFamily: 'Pixels',
+                    padding: 5,
+                    paddingRight: 7,
+                    textAlign: 'center',
+                    fontWeight: 'bold',
+                }}>
+                   Alerts
+                </Typography>
+                </div>
 
                 <div style={{
                     display: 'flex',

@@ -34,6 +34,14 @@ code {
 
 .MuiInputBase-formControl {
   color: #c7c7c7 !important;
+
+}
+
+#outlined-select-blockchain {
+  font-weight: bold !important;
+  font-size: 1.5rem !important;
+  color: #fff !important;
+  padding: 10px 28px 0px 10px !important;
 }
 
 .MuiInputLabel-root {

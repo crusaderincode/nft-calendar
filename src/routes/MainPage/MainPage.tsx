@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState,} from 'react';
 import {Button, Container, Paper, Typography} from "@mui/material";
 import Header from "../../copmonents/Header";
 import UserEventsList from "../../copmonents/UserEventsList";
@@ -9,10 +9,29 @@ import {getEvents, getPastEvents} from "../../redux/actions/event";
 import {MdKeyboardArrowDown, MdKeyboardArrowUp} from "react-icons/md";
 import ContactModal from "../../copmonents/ContactModal";
 import Footer from "../../copmonents/Footer";
+import {json} from "stream/consumers";
+
 
 
 
 export const MainPage = () => {
+    const dispatch: Dispatch<any> = useDispatch()
+
+    const events = useSelector(
+        (state: SelectorState) => state.event.events,
+        shallowEqual
+    )
+
+
+    const pastEvents = useSelector(
+        (state: SelectorState) => state.event.past,
+        shallowEqual
+    )
+
+
+    const [blockchain, setBlockchain] = useState('ALL')
+    const [selectedEvents, setSelectedEvents] = useState(events)
+
     const [openModal, setOpenModal] = useState(false);
     const handleOpenModal = () => setOpenModal(true);
     const handleCloseModal = () => setOpenModal(false);
@@ -29,18 +48,6 @@ export const MainPage = () => {
         setIsUpcomingOpen(!isUpcomingOpen)
     }
 
-
-    const dispatch: Dispatch<any> = useDispatch()
-
-    const events = useSelector(
-        (state: SelectorState) => state.event.events,
-        shallowEqual
-    )
-
-    const pastEvents = useSelector(
-        (state: SelectorState) => state.event.past,
-        shallowEqual
-    )
 
     const fetchEvents = useCallback(
         () => dispatch(getEvents()),
@@ -61,6 +68,25 @@ export const MainPage = () => {
     const featuredEvents = events.filter((e) => Number(e.promo) > 0)
     const commonEvents = events.filter((e) => Number(e.promo) === 0)
 
+    const localAction = (selected: string) => {
+        setBlockchain(selected)
+    }
+
+    useEffect(() => {
+        switch (blockchain) {
+            case "SOL": setSelectedEvents(commonEvents.filter(e => e.currency === "SOL")); break;
+            case "ETH": setSelectedEvents(commonEvents.filter(e => e.currency === "ETH")); break;
+            case "MATIC": setSelectedEvents(commonEvents.filter(e => e.currency === "MATIC")); break;
+            case "ADA": setSelectedEvents(commonEvents.filter(e => e.currency === "ADA")); break;
+            default: setSelectedEvents(commonEvents); break;
+
+        }
+    }, [blockchain])
+
+    useEffect(() => {
+        setSelectedEvents(commonEvents)
+    }, [events])
+
 
     return (
         <div style={{
@@ -72,7 +98,7 @@ export const MainPage = () => {
             width: '100vw',
 
         }}>
-        <Header handleModalOpen={handleOpenModal} handleContactOpen={handleOpenContactModal}/>
+        <Header handleModalOpen={handleOpenModal} handleContactOpen={handleOpenContactModal} localAction={localAction}/>
             <Container maxWidth="md" style={{
                 height: '100%',
                 width: '100%',
@@ -151,7 +177,7 @@ export const MainPage = () => {
                     </Typography>
                     </Paper>
                 </div>
-                <UserEventsList eventsList={isUpcoming ? commonEvents : pastEvents}/>
+                <UserEventsList eventsList={isUpcoming ? selectedEvents : pastEvents}/>
             </Container>
             <PriceModal handleClose={handleCloseModal} state={openModal} />
             <ContactModal handleClose={handleCloseContactModal} state={openContactModal} />
