@@ -28,7 +28,8 @@ export const eventReducer = (state = initialState, action: EventsAction) => {
         case ActionType.DEL:
             return {
                 ...state,
-                events: state.events.filter(e => e.id !== action.payload.id)
+                events: state.events.filter(e => e.id !== action.payload.id),
+                past: state.past.filter(e => e.id !== action.payload.id)
             }
         case ActionType.DEL_UNLISTED:
             return {

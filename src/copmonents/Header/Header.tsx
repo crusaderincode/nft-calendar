@@ -1,8 +1,17 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {Container, MenuItem, Paper, SelectChangeEvent, Select, Typography, TextField} from "@mui/material";
+import {
+    Container,
+    MenuItem,
+    Paper,
+    SelectChangeEvent,
+    Select,
+    Typography,
+    TextField,
+    InputAdornment
+} from "@mui/material";
 import {GoPlus} from "react-icons/go";
 import {FaTwitter} from "react-icons/fa";
-import {MdEmail} from "react-icons/md"
+import {MdEmail, MdSearch} from "react-icons/md"
 import logo from "../../img/logo.png"
 
 
@@ -10,6 +19,11 @@ interface Header {
     handleModalOpen: () => void
     handleContactOpen: () => void
     localAction: (type: string) => void
+    curEvents: IEvent[] | []
+    pastEvents: IEvent[] | []
+    isUpcoming: boolean
+    setCurEvents: (events: IEvent[]) => void
+    setPastEvents: (events: IEvent[]) => void
 }
 
 export const Header = (props: Header) => {
@@ -21,11 +35,43 @@ export const Header = (props: Header) => {
 
     const [submitButtonHover, setSubmitButtonHover] = useState(false)
     const blockchainField = useFormField("ALL")
+    const searchField = useFormField("")
 
     useEffect(() => {
         props.localAction(blockchainField.value)
     }, [blockchainField])
 
+
+    useEffect(() => {
+
+        if (props.isUpcoming) {
+            let filtered = props.curEvents.filter(post => {
+                if (searchField.value === "") {
+                    //if query is empty
+                    return post;
+                    //@ts-ignore
+                } else if (post.name.toLowerCase().includes(searchField.value.toLowerCase())) {
+                    return post;
+                }
+            })
+            props.setCurEvents(filtered)
+        }
+        else {
+            let filtered = props.pastEvents.filter(post => {
+                if (searchField.value === "") {
+                    //if query is empty
+                    return post;
+                    //@ts-ignore
+                } else if (post.name.toLowerCase().includes(searchField.value.toLowerCase())) {
+                    return post;
+                }
+            })
+            props.setPastEvents(filtered)
+        }
+
+
+
+    }, [searchField.value])
 
     const currencies = [
         {
@@ -61,6 +107,7 @@ export const Header = (props: Header) => {
                 display: 'flex',
                 flexDirection: 'row',
                 justifyContent: 'space-between',
+                alignItems: 'center'
             }}>
 
               <img src={logo} alt="logo" style={{
@@ -112,6 +159,25 @@ export const Header = (props: Header) => {
                     flexDirection: 'row',
                     alignItems: 'center'
                 }}>
+                    <TextField
+                        style={{
+                            width: 170,
+                            marginRight: '2rem'
+                        }}
+                        id="outlined-search"
+                        onChange={searchField.onChange}
+                        InputProps={{
+                            startAdornment: (
+                                <InputAdornment position="start">
+                                    <MdSearch style={{
+                                        color: '#fff',
+                                        fontSize: 25
+                                    }}/>
+                                </InputAdornment>
+                            ),
+                        }}
+                    />
+
                     <Paper
                         onClick={props.handleModalOpen}
                         onMouseOver={() => setSubmitButtonHover(true)}

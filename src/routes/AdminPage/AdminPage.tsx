@@ -1,7 +1,14 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {Dispatch} from "@reduxjs/toolkit";
 import {shallowEqual, useDispatch, useSelector} from "react-redux";
-import {deleteEvent, getUnslitedEvents, listEvent} from "../../redux/actions/event";
+import {
+    deleteEvent,
+    deleteUnlistedEvent,
+    getEvents,
+    getPastEvents,
+    getUnslitedEvents,
+    listEvent
+} from "../../redux/actions/event";
 import UserEvent from "../../copmonents/UserEvent";
 import {Button, Container, Dialog, Grid, Paper, Typography, useTheme} from "@mui/material";
 import {Link} from "react-router-dom";
@@ -14,23 +21,51 @@ export const AdminPage = () => {
     const dispatch: Dispatch<any> = useDispatch()
 
     const [ticketsOpen, setTicketsOpen] = useState(false)
+    const [isUnlisted, setIsUnlisted] = useState(true)
+
+    const [curEvents, setCurEvents] = useState<IEvent[] | []>([])
 
     const handleTicketsClose = () => {
         setTicketsOpen(false)
     }
 
-    const events = useSelector(
+    const unlistedEvents = useSelector(
         (state: SelectorState) => state.event.unlisted,
         shallowEqual
     )
+
+    const listedEvents = useSelector(
+        (state: SelectorState) => state.event.events,
+        shallowEqual
+    )
+
+    const listedPastEvents = useSelector(
+        (state: SelectorState) => state.event.past,
+        shallowEqual
+    )
+
+    useEffect(() => {
+        setCurEvents(isUnlisted ? unlistedEvents : listedEvents.concat(listedPastEvents))
+    }, [unlistedEvents, isUnlisted, listedEvents, listedPastEvents])
+
 
     const tickets = useSelector(
         (state: SelectorTicketsState) => state.contact.tickets,
         shallowEqual
     )
 
-    const fetchEvents = useCallback(
+    const fetchUnlistedEvents = useCallback(
         () => dispatch(getUnslitedEvents()),
+        [dispatch]
+    )
+
+    const fetchListedEvents = useCallback(
+        () => dispatch(getEvents()),
+        [dispatch]
+    )
+
+    const fetchListedPastEvents = useCallback(
+        () => dispatch(getPastEvents()),
         [dispatch]
     )
 
@@ -40,13 +75,20 @@ export const AdminPage = () => {
     )
 
     useEffect(() => {
-        fetchEvents()
+        fetchUnlistedEvents()
+        fetchListedEvents()
+        fetchListedPastEvents()
         fetchTickets()
     }, [])
 
 
     const removeEvent = useCallback(
         (event: IEvent) => dispatch(deleteEvent(event)),
+        [dispatch]
+    )
+
+    const removeUnlistedEvent = useCallback(
+        (event: IEvent) => dispatch(deleteUnlistedEvent(event)),
         [dispatch]
     )
 
@@ -64,7 +106,8 @@ export const AdminPage = () => {
         let event: IEvent = {
             id: id,
         }
-        removeEvent(event)
+
+        isUnlisted ? removeUnlistedEvent(event) :  removeEvent(event)
     }
 
     const onRemoveTicketClick = (id: string) => {
@@ -106,9 +149,72 @@ export const AdminPage = () => {
                      onClick={() => setTicketsOpen(true)}
             />
 
-            <Container maxWidth="md">
+            <Container maxWidth="md" style={{
+                textAlign: 'center',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center'
+            }}>
+
+                <Grid container spacing={6} style={{
+                    marginTop: '3rem',
+                    width: '100%'
+                }}>
+                    <Grid item xs={6} sm={6} md={6} lg={6}>
+                        <Paper
+                            onClick={() => setIsUnlisted(true)}
+                            style={{
+                            width: '100%',
+                            padding: 5,
+                            textAlign: 'center',
+                            cursor: 'pointer',
+                            outline: isUnlisted ? 'none' : '2px solid #fbff2b',
+                            backgroundColor: isUnlisted ? '#fbff2b' : 'transparent'
+                        }}>
+                            <Typography variant="h5" style={{
+                                color: isUnlisted ? '#161d30' : '#fbff2b',
+                                fontWeight: 'bold',
+                                fontFamily: 'Pixels'
+                            }}>
+                                Unlisted
+                            </Typography>
+                        </Paper>
+                    </Grid>
+                    <Grid item xs={6} sm={6} md={12} lg={6}>
+                        <Paper
+                            onClick={() => setIsUnlisted(false)}
+                            style={{
+                            width: '100%',
+                            cursor: 'pointer',
+                            padding: 5,
+                            textAlign: 'center',
+                            outline: isUnlisted ? '2px solid #fbff2b' : 'none' ,
+                            backgroundColor: isUnlisted ? 'transparent' : '#fbff2b'
+                        }}>
+                            <Typography variant="h5" style={{
+                                color: isUnlisted ? '#fbff2b' : '#161d30',
+                                fontWeight: 'bold',
+                                fontFamily: 'Pixels'
+                            }}>
+                                Listed
+                            </Typography>
+                        </Paper>
+                    </Grid>
+                </Grid>
+
+                <Typography variant="h3" style={{
+                    color: '#fff',
+                    fontWeight: 'bold',
+                    fontFamily: 'Pixels',
+                    textAlign: 'center',
+                    marginTop: '3rem'
+                }}>
+                    {`${isUnlisted ? "Unlisted " : "Listed "} events`}
+                </Typography>
+
             {
-                events && events.map((event: IEvent) => (
+                curEvents && curEvents.map((event: IEvent) => (
                     <Paper key={event.id} style={{
                         backgroundColor: 'transparent',
                         paddingLeft: 15,
@@ -119,17 +225,21 @@ export const AdminPage = () => {
                         border: '1px solid #fff'
                     }}>
                     <UserEvent event={event} />
-                        <Typography variant="body1" style={{
-                            color: '#fff',
-                            fontWeight: 'bold',
-                            paddingTop: 10,
-                            paddingLeft: 10,
-                            paddingBottom: 5
-                        }}>
-                            {`Email: ${event.email}`}
-                        </Typography>
+
                         {
-                            Number(event.promo) > 0 && <div style={{
+                            isUnlisted && <Typography variant="body1" style={{
+                                color: '#fff',
+                                fontWeight: 'bold',
+                                paddingTop: 10,
+                                paddingLeft: 10,
+                                paddingBottom: 5
+                            }}>
+                                {`Email: ${event.email}`}
+                            </Typography>
+                        }
+
+                        {
+                            isUnlisted && Number(event.promo) > 0 && <div style={{
                                 display: 'flex',
                                 flexDirection: 'column',
                                 paddingBottom: 10,
@@ -174,17 +284,19 @@ export const AdminPage = () => {
                             paddingRight: 5
                         }}>
                             <Grid item xs={12} sm={6} md={6} lg={6}>
-                              <Button color="success" variant="contained" onClick={() => onListClick(event.id)} style={{
-                                  width: '100%'
-                              }}>
-                                  Submit
-                              </Button>
+                                {
+                                    isUnlisted &&  <Button color="success" variant="contained" onClick={() => onListClick(event.id)} style={{
+                                        width: '100%'
+                                    }}>
+                                        Submit
+                                    </Button>
+                                }
                             </Grid>
                             <Grid item xs={12} sm={6} md={6} lg={6}>
                                 <Button color="error" variant="contained" onClick={() => onRemoveClick(event.id)} style={{
                                     width: '100%'
                                 }}>
-                                    Decline
+                                    {isUnlisted ? "Decline" : "Delete"}
                                 </Button>
                             </Grid>
                         </Grid>

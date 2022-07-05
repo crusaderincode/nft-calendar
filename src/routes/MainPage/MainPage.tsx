@@ -9,7 +9,6 @@ import {getEvents, getPastEvents} from "../../redux/actions/event";
 import {MdKeyboardArrowDown, MdKeyboardArrowUp} from "react-icons/md";
 import ContactModal from "../../copmonents/ContactModal";
 import Footer from "../../copmonents/Footer";
-import {json} from "stream/consumers";
 
 
 
@@ -31,6 +30,10 @@ export const MainPage = () => {
 
     const [blockchain, setBlockchain] = useState('ALL')
     const [selectedEvents, setSelectedEvents] = useState(events)
+    const [filteredEvents, setFilteredEvents] = useState<IEvent[] | []>([])
+    const [mintedEvents, setMintedEvents] = useState<IEvent[] | []>(pastEvents)
+    const [mintedFilteredEvents, setMintedFilteredEvents] = useState<IEvent[] | []>([])
+
 
     const [openModal, setOpenModal] = useState(false);
     const handleOpenModal = () => setOpenModal(true);
@@ -60,8 +63,13 @@ export const MainPage = () => {
     )
 
     useEffect(() => {
-        fetchEvents()
-        fetchPastEvents()
+        if (
+            selectedEvents.length === 0
+        ) {
+            fetchEvents()
+            fetchPastEvents()
+        }
+
     }, [])
 
 
@@ -85,7 +93,17 @@ export const MainPage = () => {
 
     useEffect(() => {
         setSelectedEvents(commonEvents)
+        setFilteredEvents(commonEvents)
     }, [events])
+
+    useEffect(() => {
+        setMintedEvents(pastEvents)
+        setMintedFilteredEvents(pastEvents)
+    }, [pastEvents])
+
+    useEffect(() => {
+        setFilteredEvents(selectedEvents)
+    }, [selectedEvents])
 
 
     return (
@@ -98,7 +116,16 @@ export const MainPage = () => {
             width: '100vw',
 
         }}>
-        <Header handleModalOpen={handleOpenModal} handleContactOpen={handleOpenContactModal} localAction={localAction}/>
+        <Header
+            handleModalOpen={handleOpenModal}
+            handleContactOpen={handleOpenContactModal}
+            localAction={localAction}
+            curEvents={selectedEvents}
+            pastEvents={mintedEvents}
+            setPastEvents={setMintedFilteredEvents}
+            isUpcoming={isUpcoming}
+            setCurEvents={setFilteredEvents}
+        />
             <Container maxWidth="md" style={{
                 height: '100%',
                 width: '100%',
@@ -177,7 +204,7 @@ export const MainPage = () => {
                     </Typography>
                     </Paper>
                 </div>
-                <UserEventsList eventsList={isUpcoming ? selectedEvents : pastEvents}/>
+                <UserEventsList eventsList={isUpcoming ? filteredEvents : mintedFilteredEvents}/>
             </Container>
             <PriceModal handleClose={handleCloseModal} state={openModal} />
             <ContactModal handleClose={handleCloseContactModal} state={openContactModal} />

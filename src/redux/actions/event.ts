@@ -42,8 +42,21 @@ return async (dispatch: Dispatch) => {
     } catch (e) {
         console.error("Fatal error: ", e);
     }
-    dispatch({ type: ActionType.DEL_UNLISTED, payload })
+    dispatch({ type: ActionType.DEL, payload })
 }
+
+}
+
+export const deleteUnlistedEvent = (payload: IEvent): ThunkAction<void, any, null, Action<IEvent>> => {
+
+    return async (dispatch: Dispatch) => {
+        try {
+            await deleteDoc(doc(db, "events", payload.id));
+        } catch (e) {
+            console.error("Fatal error: ", e);
+        }
+        dispatch({ type: ActionType.DEL_UNLISTED, payload })
+    }
 
 }
 
