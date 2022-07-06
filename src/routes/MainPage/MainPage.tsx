@@ -9,6 +9,8 @@ import {getEvents, getPastEvents} from "../../redux/actions/event";
 import {MdKeyboardArrowDown, MdKeyboardArrowUp} from "react-icons/md";
 import ContactModal from "../../copmonents/ContactModal";
 import Footer from "../../copmonents/Footer";
+import {getPromos} from "../../redux/actions/promo";
+
 
 
 
@@ -21,9 +23,13 @@ export const MainPage = () => {
         shallowEqual
     )
 
-
     const pastEvents = useSelector(
         (state: SelectorState) => state.event.past,
+        shallowEqual
+    )
+
+    const promo = useSelector(
+        (state: SelectorPromoState) => state.promo.promos,
         shallowEqual
     )
 
@@ -57,6 +63,11 @@ export const MainPage = () => {
         [dispatch]
     )
 
+    const fetchPromo = useCallback(
+        () => dispatch(getPromos()),
+        [dispatch]
+    )
+
     const fetchPastEvents = useCallback(
         () => dispatch(getPastEvents()),
         [dispatch]
@@ -68,6 +79,7 @@ export const MainPage = () => {
         ) {
             fetchEvents()
             fetchPastEvents()
+            fetchPromo()
         }
 
     }, [])
@@ -134,7 +146,21 @@ export const MainPage = () => {
                 flexDirection: 'column',
                 marginTop: '8rem'
             }}>
-                <div>
+                {
+                   promo && promo.map((promo: IPromo) => (
+                      <img src={promo.image}
+                           onClick={() => window.open(promo.url, "_blank")}
+                           key={promo.id} style={{
+                          width: '100%',
+                          marginBottom: '0.5rem',
+                          cursor: 'pointer',
+                          borderRadius: 10
+                      }}/>
+                    ))
+                }
+                <div style={{
+                    marginTop: '2rem'
+                }}>
                     <Typography variant="h4" display="inline" style={{
                         color: '#fbff2b',
                         fontWeight: 'bold'

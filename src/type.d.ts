@@ -25,13 +25,28 @@ interface ITicket {
     ticket?: string
 }
 
+interface IPromo {
+    id: string
+    image?: string
+    url?: string
+}
+
 type TicketState = {
     tickets: ITicket[]
+}
+
+type PromoState = {
+    promos: IPromo[]
 }
 
 type TicketsAction = {
     type: string
     payload: ITicket
+}
+
+type PromosAction = {
+    type: string
+    payload: IPromo
 }
 
 type EventsState = {
@@ -46,6 +61,10 @@ type SelectorState = {
 
 type SelectorTicketsState = {
     contact: { tickets: ITicket[] }
+}
+
+type SelectorPromoState = {
+    promo: { promos: IPromo[]}
 }
 
 type EventsAction = {

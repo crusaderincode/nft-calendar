@@ -5,5 +5,7 @@ export enum ActionType {
     DEL_UNLISTED = 'DEL_UNLISTED',
     ADD_PAST = 'ADD_PAST',
     ADD_TICKET = 'ADD_TICKET',
-    DEL_TICKET = 'DEL_TICKET'
+    DEL_TICKET = 'DEL_TICKET',
+    ADD_PROMO = 'ADD_PROMO',
+    DEL_PROMO = 'DEL_PROMO'
 }

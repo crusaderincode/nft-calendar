@@ -142,13 +142,16 @@ export const Header = (props: Header) => {
                         ))}
                     </TextField>
 
-                <Typography variant="h5" style={{
+                <Typography variant="h5"
+                            onClick={() => alert('Coming soon...')}
+                            style={{
                     color: '#fff',
                     fontFamily: 'Pixels',
                     padding: 5,
                     paddingRight: 7,
                     textAlign: 'center',
                     fontWeight: 'bold',
+                    cursor: 'pointer'
                 }}>
                    Alerts
                 </Typography>
