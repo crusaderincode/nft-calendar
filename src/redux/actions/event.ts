@@ -84,6 +84,7 @@ export const getEvents = (): ThunkAction<void, any, null, Action<IEvent>> => {
                         date: entity.date.toString(),
                         description: entity.description.toString(),
                         promo: entity.promo.toString(),
+                        verified: entity.verified.toString(),
                     }
                     dispatch({type: ActionType.ADD, payload})
                 }
@@ -120,6 +121,7 @@ export const getPastEvents = (): ThunkAction<void, any, null, Action<IEvent>> =>
                         date: entity.date.toString(),
                         description: entity.description.toString(),
                         promo: entity.promo.toString(),
+                        verified: entity.verified.toString(),
                     }
                     dispatch({type: ActionType.ADD_PAST, payload})
                 }
@@ -159,6 +161,8 @@ export const getUnslitedEvents = (): ThunkAction<void, any, null, Action<IEvent>
                         currencyPromo: entity.currencyPromo.toString(),
                         promo: entity.promo.toString(),
                         txPromo: entity.txPromo.toString(),
+                        banner: entity.banner.toString(),
+                        verified: entity.verified.toString(),
                     }
                     dispatch({type: ActionType.ADD_UNLISTED, payload})
                 }
@@ -181,6 +185,20 @@ export const listEvent = (payload: IEvent): ThunkAction<void, any, null, Action<
             console.error("Fatal error: ", e);
         }
         dispatch({ type: ActionType.DEL_UNLISTED, payload })
+    }
+
+}
+
+export const verifyEvent = (payload: IEvent): ThunkAction<void, any, null, Action<IEvent>> => {
+
+    return async (dispatch: Dispatch) => {
+        const ref = doc(db, 'events', payload.id)
+        try {
+            await setDoc(ref, {verified: payload.verified}, { merge: true });
+        } catch (e) {
+            console.error("Fatal error: ", e);
+        }
+        dispatch({ type: ActionType.VER, payload })
     }
 
 }

@@ -17,6 +17,8 @@ interface IEvent {
     price?: number
     supply?: number
     currency?: string
+    banner?: string
+    verified?: number
 }
 
 interface ITicket {

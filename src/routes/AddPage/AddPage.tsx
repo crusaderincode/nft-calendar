@@ -44,6 +44,7 @@ export const AddPage = () => {
     const websiteField = useFormField("")
     const descriptionField = useFormField("")
     const currencyField = useFormField("SOL")
+    const bannerField = useFormField("")
 
     const [discordMembers, setDiscordMembers] = useState(0)
 
@@ -64,7 +65,7 @@ export const AddPage = () => {
         discord: false,
         website: false,
         description: false,
-        txSignature: false
+        txSignature: false,
     })
 
     const currencies = [
@@ -152,6 +153,8 @@ export const AddPage = () => {
                 currencyPromo: paymentField.value,
                 promo: promo,
                 txPromo: transactionField.value,
+                banner: bannerField.value,
+                verified: 0
             }
             setLoading(true)
             try {
@@ -435,7 +438,59 @@ export const AddPage = () => {
                     </Grid>
 
                     {
-                        promo && <>
+                        promo === 2 && <>
+                            <Grid item xs={12} sm={4} md={4} lg={4}>
+                                <TextField
+                                    style={{
+                                        width: '100%'
+                                    }}
+                                    id="outlined-select-currency"
+                                    select
+                                    label={promo > 1 ? "50$ payment chain" : "10$ payment chain"}
+                                    helperText="select the chain for promo payment"
+                                    value={paymentField.value}
+                                    required
+                                    onChange={paymentField.onChange}
+                                >
+                                    {payments.map((option) => (
+                                        <MenuItem key={option.value} value={option.value}>
+                                            {option.label}
+                                        </MenuItem>
+                                    ))}
+                                </TextField>
+                            </Grid>
+                            <Grid item xs={12} sm={4} md={4} lg={4}>
+                                <TextField
+                                    style={{
+                                        width: '100%'
+                                    }}
+                                    id="outlined-name"
+                                    required
+                                    label="tx signature"
+                                    helperText="your payment transaction signature"
+                                    onFocus={() => setError({...error, txSignature: false})}
+                                    error={error.txSignature}
+                                    onChange={transactionField.onChange}
+                                />
+                            </Grid>
+
+                            <Grid item xs={12} sm={4} md={4} lg={4}>
+                                <TextField
+                                    style={{
+                                        width: '100%'
+                                    }}
+                                    id="outlined-name"
+                                    required
+                                    label="banner image url"
+                                    helperText="7 to 1 promo banner"
+                                    onChange={bannerField.onChange}
+                                />
+                            </Grid>
+                        </>
+                    }
+
+                    {
+                        promo === 1 && <>
                             <Grid item xs={12} sm={6} md={6} lg={6}>
                                 <TextField
                                     style={{

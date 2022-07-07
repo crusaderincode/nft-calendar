@@ -36,6 +36,38 @@ export const eventReducer = (state = initialState, action: EventsAction) => {
                 ...state,
                 unlisted: state.unlisted.filter(e => e.id !== action.payload.id)
             }
+        case ActionType.VER:
+            return {
+                ...state,
+                events: state.events.map(e => {
+                    if(e.id == action.payload.id) {
+                        //@ts-ignore
+                        let ver = action.payload.verified.toString()
+                        return {
+                            ...e, verified: ver
+                        }}
+                    else return e
+                }),
+                past: state.past.map(e => {
+                    if(e.id == action.payload.id) {
+                        //@ts-ignore
+                        let ver = action.payload.verified.toString()
+                        return {
+                            ...e, verified: ver
+                        }}
+                    else return e
+                }),
+                unlisted: state.unlisted.map(e => {
+                    if(e.id == action.payload.id) {
+                        //@ts-ignore
+                        let ver = action.payload.verified.toString()
+                        return {
+                            ...e, verified: ver
+                        }}
+                    else return e
+                }),
+            }
+
 
         default: return state;
 

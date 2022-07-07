@@ -18,10 +18,14 @@ import {getPromos} from "../../redux/actions/promo";
 export const MainPage = () => {
     const dispatch: Dispatch<any> = useDispatch()
 
+    //Get from store
     const events = useSelector(
         (state: SelectorState) => state.event.events,
         shallowEqual
     )
+
+    const featuredEvents = events.filter((e) => Number(e.promo) > 0)
+    const commonEvents = events.filter((e) => Number(e.promo) === 0)
 
     const pastEvents = useSelector(
         (state: SelectorState) => state.event.past,
@@ -32,31 +36,6 @@ export const MainPage = () => {
         (state: SelectorPromoState) => state.promo.promos,
         shallowEqual
     )
-
-
-    const [blockchain, setBlockchain] = useState('ALL')
-    const [selectedEvents, setSelectedEvents] = useState(events)
-    const [filteredEvents, setFilteredEvents] = useState<IEvent[] | []>([])
-    const [mintedEvents, setMintedEvents] = useState<IEvent[] | []>(pastEvents)
-    const [mintedFilteredEvents, setMintedFilteredEvents] = useState<IEvent[] | []>([])
-
-
-    const [openModal, setOpenModal] = useState(false);
-    const handleOpenModal = () => setOpenModal(true);
-    const handleCloseModal = () => setOpenModal(false);
-
-    const [openContactModal, setOpenContactModal] = useState(false);
-    const handleOpenContactModal = () => setOpenContactModal(true);
-    const handleCloseContactModal = () => setOpenContactModal(false);
-
-    const [isUpcomingOpen, setIsUpcomingOpen] = useState(true)
-    const [isUpcoming, setIsUpcoming] = useState(true)
-
-    const handleUpcomingSwitch = () => {
-        setIsUpcoming(!isUpcoming)
-        setIsUpcomingOpen(!isUpcomingOpen)
-    }
-
 
     const fetchEvents = useCallback(
         () => dispatch(getEvents()),
@@ -73,20 +52,37 @@ export const MainPage = () => {
         [dispatch]
     )
 
+    //Main state
+    const [selectedEvents, setSelectedEvents] = useState(events)
+    const [filteredEvents, setFilteredEvents] = useState<IEvent[] | []>([])
+    const [mintedEvents, setMintedEvents] = useState<IEvent[] | []>(pastEvents)
+    const [mintedFilteredEvents, setMintedFilteredEvents] = useState<IEvent[] | []>([])
+
+        //UseEffect for setState after fetching
     useEffect(() => {
-        if (
-            selectedEvents.length === 0
-        ) {
-            fetchEvents()
-            fetchPastEvents()
-            fetchPromo()
-        }
+        setSelectedEvents(commonEvents)
+        setFilteredEvents(commonEvents)
+    }, [events])
 
-    }, [])
+    useEffect(() => {
+        setMintedEvents(pastEvents)
+        setMintedFilteredEvents(pastEvents)
+    }, [pastEvents])
+
+    useEffect(() => {
+        setFilteredEvents(selectedEvents)
+    }, [selectedEvents])
 
 
-    const featuredEvents = events.filter((e) => Number(e.promo) > 0)
-    const commonEvents = events.filter((e) => Number(e.promo) === 0)
+    //Filters
+    const [isUpcomingOpen, setIsUpcomingOpen] = useState(true)
+    const [isUpcoming, setIsUpcoming] = useState(true)
+    const [blockchain, setBlockchain] = useState('ALL')
+
+    const handleUpcomingSwitch = () => {
+        setIsUpcoming(!isUpcoming)
+        setIsUpcomingOpen(!isUpcomingOpen)
+    }
 
     const localAction = (selected: string) => {
         setBlockchain(selected)
@@ -103,20 +99,27 @@ export const MainPage = () => {
         }
     }, [blockchain])
 
-    useEffect(() => {
-        setSelectedEvents(commonEvents)
-        setFilteredEvents(commonEvents)
-    }, [events])
+    //Submit modal
+    const [openModal, setOpenModal] = useState(false);
+    const handleOpenModal = () => setOpenModal(true);
+    const handleCloseModal = () => setOpenModal(false);
 
-    useEffect(() => {
-        setMintedEvents(pastEvents)
-        setMintedFilteredEvents(pastEvents)
-    }, [pastEvents])
+    //Contact modal
+    const [openContactModal, setOpenContactModal] = useState(false);
+    const handleOpenContactModal = () => setOpenContactModal(true);
+    const handleCloseContactModal = () => setOpenContactModal(false);
 
+    //Main useEffect
     useEffect(() => {
-        setFilteredEvents(selectedEvents)
-    }, [selectedEvents])
+        if (
+            selectedEvents.length === 0
+        ) {
+            fetchEvents()
+            fetchPastEvents()
+            fetchPromo()
+        }
 
+    }, [])
 
     return (
         <div style={{
@@ -126,7 +129,6 @@ export const MainPage = () => {
             flexDirection: 'column',
             minHeight: '100vh',
             width: '100vw',
-
         }}>
         <Header
             handleModalOpen={handleOpenModal}

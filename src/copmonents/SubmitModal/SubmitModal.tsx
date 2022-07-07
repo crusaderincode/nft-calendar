@@ -2,9 +2,10 @@ import React, {useState} from 'react';
 import Typography from "@mui/material/Typography";
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
-import {Button, CircularProgress, Paper} from "@mui/material";
-import {GoPlus} from "react-icons/go";
+import {Paper} from "@mui/material";
 import {Link} from "react-router-dom";
+import logo from "../../img/logo.png"
+import {BsCheckCircleFill} from "react-icons/bs";
 
 interface Modal {
     handleClose: () => void,
@@ -20,13 +21,15 @@ export const SubmitModal = ({handleClose, state}: Modal) => {
         top: '50%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
-        width: 400,
-        height: 250,
-        backgroundImage: `linear-gradient(to bottom, #1e2634, #1e2634, #151b25)`,
+
+        backgroundColor: '#161d30',
         outline: 'none',
-        borderRadius: 5,
+        borderRadius: 3,
         boxShadow: 24,
-        padding: 0,
+        paddingTop: 1,
+        paddingLeft: 3,
+        paddingRight: 3,
+        paddingBottom: 2,
         margin: 0,
         display: 'flex',
         justifyContent: 'space-around',
@@ -53,12 +56,54 @@ export const SubmitModal = ({handleClose, state}: Modal) => {
                         fontFamily: 'Pixels',
                         padding: 0,
                         margin: 0,
-                        color: '#fff',
+                        color: '#fbff2b',
                         textAlign: 'center',
                         fontWeight: 'bold',
                     }}>
                         Your NFT drop submitted!
                     </Typography>
+
+                    <div style={{
+                        marginTop: '0.1rem',
+                        marginBottom: '0.5rem'
+                    }}>
+                    <Typography variant='h5' display="inline" style={{
+                        fontFamily: 'Pixels',
+                        padding: 0,
+                        margin: 0,
+                        color: '#fff',
+                        textAlign: 'center',
+                        fontWeight: 'bold',
+                        marginTop: '1rem'
+                    }}>
+                        Want to get a verified badge?
+                    </Typography>
+                        <BsCheckCircleFill style={{
+                            fontSize: 20,
+                            color: '#4bb543',
+                            marginLeft: 10,
+                            marginTop: 10
+                        }}/>
+                    </div>
+
+                    <Typography variant='body1' style={{
+                        fontFamily: 'Pixels',
+                        padding: 0,
+                        margin: 0,
+                        color: '#fff',
+                        textAlign: 'justify',
+                        fontWeight: 'bold',
+                    }}>
+                      Post our logo on your website with a link to Honey Drops
+                    </Typography>
+
+                    <img src={logo} style={{
+                        width: 200,
+                        textAlign: 'center',
+                        marginTop: '1rem',
+                        marginBottom: '0.5rem'
+                    }}/>
+
                     <Link to="/" style={{
                         textDecoration: 'none'
                     }}>

@@ -18,6 +18,7 @@ export const AdminLogin = ({setIsLoggedIn}: isLoggedIn) => {
     const [errorState, setErrorState] = useState(false)
     const [error, setError] = useState("")
 
+
     const handleTry = () => {
         setErrorState(false)
         setError("")

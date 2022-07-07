@@ -7,39 +7,119 @@ import {
     getEvents,
     getPastEvents,
     getUnslitedEvents,
-    listEvent
+    listEvent,
+    verifyEvent
 } from "../../redux/actions/event";
 import UserEvent from "../../copmonents/UserEvent";
-import {Button, Container, Dialog, Grid, Paper, Typography, useTheme} from "@mui/material";
+import {Button, CircularProgress, Container, Dialog, Grid, Paper, Typography, useTheme} from "@mui/material";
 import {Link} from "react-router-dom";
 import {MdEmail} from "react-icons/md"
+import {FaListAlt} from "react-icons/fa"
+import {TiDelete} from "react-icons/ti"
 import {BsFillPlusSquareFill} from "react-icons/bs"
 import {deleteTicket, getTickets} from "../../redux/actions/ticket";
 import { getAuth, signOut } from "firebase/auth";
 import AdminLogin from "../../copmonents/AdminLogin";
 import { useNavigate } from 'react-router-dom';
 import PromoModal from "../../copmonents/PromoModal";
+import {deletePromo, getPromos} from "../../redux/actions/promo";
 
 
 export const AdminPage = () => {
     const theme = useTheme()
     const dispatch: Dispatch<any> = useDispatch()
 
-    const [ticketsOpen, setTicketsOpen] = useState(false)
-    const [ticketsListOpen, setTicketsListOpen] = useState(false)
-    const [promoOpen, setPromoOpen] = useState(false)
-    const [isUnlisted, setIsUnlisted] = useState(true)
+    //Authentication
     const [isLoggedIn, setIsLoggedIn] = useState(false)
+    const [loading, setLoading] = useState(true)
 
-    const [curEvents, setCurEvents] = useState<IEvent[] | []>([])
+    const auth = getAuth()
+    const user = auth.currentUser;
+
+    const navigate = useNavigate();
+
+    const logOutHandler = () => {
+        const auth = getAuth();
+        signOut(auth).then(() => {
+            navigate('/');
+        }).catch((error) => {
+            alert(error)
+        });
+    }
+
+    useEffect(() => {
+        if (user) {
+            setIsLoggedIn(true)
+        }
+        setLoading(false)
+    }, [user])
+
+    //Tickets
+    const [ticketsOpen, setTicketsOpen] = useState(false)
 
     const handleTicketsClose = () => {
         setTicketsOpen(false)
     }
 
+    const tickets = useSelector(
+        (state: SelectorTicketsState) => state.contact.tickets,
+        shallowEqual
+    )
+
+    const fetchTickets = useCallback(
+        () => dispatch(getTickets()),
+        [dispatch]
+    )
+
+    const removeTicket = useCallback(
+        (ticket: ITicket) => dispatch(deleteTicket(ticket)),
+        [dispatch]
+    )
+
+    const onRemoveTicketClick = (id: string) => {
+        let ticket: ITicket = {
+            id: id,
+        }
+        removeTicket(ticket)
+    }
+
+
+    //Promo
+        //Add
+    const [promoOpen, setPromoOpen] = useState(false)
+
     const handlePromoClose = () => {
         setPromoOpen(false)
     }
+
+        //Get
+    const [promoListOpen, setPromoListOpen] = useState(false)
+
+    const promo = useSelector(
+        (state: SelectorPromoState) => state.promo.promos,
+        shallowEqual
+    )
+
+    const fetchPromo = useCallback(
+        () => dispatch(getPromos()),
+        [dispatch]
+    )
+
+    const removePromo = useCallback(
+        (promo: IPromo) => dispatch(deletePromo(promo)),
+        [dispatch]
+    )
+
+    const onRemovePromoClick = (id: string) => {
+        let promo: IPromo = {
+            id: id,
+        }
+        removePromo(promo)
+    }
+
+    //Events
+    const [isUnlisted, setIsUnlisted] = useState(true)
+    const [curEvents, setCurEvents] = useState<IEvent[] | []>([])
 
     const unlistedEvents = useSelector(
         (state: SelectorState) => state.event.unlisted,
@@ -53,21 +133,6 @@ export const AdminPage = () => {
 
     const listedPastEvents = useSelector(
         (state: SelectorState) => state.event.past,
-        shallowEqual
-    )
-
-    const promo = useSelector(
-        (state: SelectorPromoState) => state.promo.promos,
-        shallowEqual
-    )
-
-    useEffect(() => {
-        setCurEvents(isUnlisted ? unlistedEvents : listedEvents.concat(listedPastEvents))
-    }, [unlistedEvents, isUnlisted, listedEvents, listedPastEvents])
-
-
-    const tickets = useSelector(
-        (state: SelectorTicketsState) => state.contact.tickets,
         shallowEqual
     )
 
@@ -86,19 +151,6 @@ export const AdminPage = () => {
         [dispatch]
     )
 
-    const fetchTickets = useCallback(
-        () => dispatch(getTickets()),
-        [dispatch]
-    )
-
-    useEffect(() => {
-        fetchUnlistedEvents()
-        fetchListedEvents()
-        fetchListedPastEvents()
-        fetchTickets()
-    }, [])
-
-
     const removeEvent = useCallback(
         (event: IEvent) => dispatch(deleteEvent(event)),
         [dispatch]
@@ -109,13 +161,13 @@ export const AdminPage = () => {
         [dispatch]
     )
 
-    const removeTicket = useCallback(
-        (ticket: ITicket) => dispatch(deleteTicket(ticket)),
+    const applyEvent = useCallback(
+        (event: IEvent) => dispatch(listEvent(event)),
         [dispatch]
     )
 
-    const applyEvent = useCallback(
-        (event: IEvent) => dispatch(listEvent(event)),
+    const approveEvent = useCallback(
+        (event: IEvent) => dispatch(verifyEvent(event)),
         [dispatch]
     )
 
@@ -127,13 +179,6 @@ export const AdminPage = () => {
         isUnlisted ? removeUnlistedEvent(event) :  removeEvent(event)
     }
 
-    const onRemoveTicketClick = (id: string) => {
-        let ticket: ITicket = {
-            id: id,
-        }
-        removeTicket(ticket)
-    }
-
     const onListClick = (id: string) => {
         let event: IEvent = {
             id: id,
@@ -141,25 +186,43 @@ export const AdminPage = () => {
         applyEvent(event)
     }
 
-    const auth = getAuth();
-    const user = auth.currentUser;
-
-    const navigate = useNavigate();
-
-    const logOutHandler = () => {
-        const auth = getAuth();
-        signOut(auth).then(() => {
-            navigate('/');
-        }).catch((error) => {
-            alert(error)
-        });
+    const onVerifyClick = (id: string, verified: number) => {
+        let opposite = verified > 0 ? 0 : 1
+        let event: IEvent = {
+            id: id,
+            verified: opposite
+        }
+        approveEvent(event)
     }
 
+    //UseEffect for setState after fetching
     useEffect(() => {
-        if (user) {
-            setIsLoggedIn(true)
-        }
-    }, [user])
+        setCurEvents(isUnlisted ? unlistedEvents : listedEvents.concat(listedPastEvents))
+    }, [unlistedEvents, isUnlisted, listedEvents, listedPastEvents])
+
+    useEffect(() => {
+        fetchUnlistedEvents()
+        fetchListedEvents()
+        fetchListedPastEvents()
+        fetchTickets()
+        fetchPromo()
+    }, [])
+
+    if (loading) {
+        return (
+            <div style={{
+                display: 'flex',
+                height: '100vh',
+                justifyContent: 'center',
+                alignItems: 'center'
+            }}>
+                <CircularProgress size="5rem" style={{
+                    color: '#fff',
+                }}/>
+            </div>
+
+        )
+    }
 
     if (isLoggedIn) {
         return (
@@ -194,6 +257,15 @@ export const AdminPage = () => {
                     top: '0.8rem',
                     left: '11rem',}}
                          onClick={() => setPromoOpen(true)}
+                />
+
+                <FaListAlt style={{fontSize: 25,
+                    cursor: 'pointer',
+                    color: '#fff',
+                    position: 'absolute',
+                    top: '0.8rem',
+                    left: '14rem',}}
+                           onClick={() => setPromoListOpen(true)}
                 />
 
                 <Button variant="contained" onClick={() => logOutHandler()} style={{
@@ -289,7 +361,8 @@ export const AdminPage = () => {
                                         fontWeight: 'bold',
                                         paddingTop: 10,
                                         paddingLeft: 10,
-                                        paddingBottom: 5
+                                        paddingBottom: 5,
+                                        textAlign: 'left'
                                     }}>
                                         {`Email: ${event.email}`}
                                     </Typography>
@@ -306,6 +379,7 @@ export const AdminPage = () => {
                                         <Typography variant="body1" style={{
                                             color: '#fff',
                                             fontWeight: 'bold',
+                                            textAlign: 'left'
                                         }}>
                                             {`Currency: ${event.currencyPromo}`}
                                         </Typography>
@@ -313,6 +387,7 @@ export const AdminPage = () => {
                                         <Typography variant="body1" style={{
                                             color: '#fff',
                                             fontWeight: 'bold',
+                                            textAlign: 'left'
                                         }}>
                                             {
                                                 //@ts-ignore
@@ -322,15 +397,28 @@ export const AdminPage = () => {
                                         <Typography variant="body1" style={{
                                             color: '#fff',
                                             fontWeight: 'bold',
+                                            textAlign: 'left'
                                         }}>
                                             Tx:
                                         </Typography>
                                         <Typography variant="body2" style={{
                                             color: '#fff',
                                             fontWeight: 'bold',
+                                            textAlign: 'left'
                                         }}>
                                             {event.txPromo}
                                         </Typography>
+
+                                        {
+                                            Number(event.promo) > 1 && <Typography variant="body2" style={{
+                                                color: '#fff',
+                                                fontWeight: 'bold',
+                                                textAlign: 'left'
+                                            }}>
+                                                {event.banner}
+                                            </Typography>
+                                        }
+
                                     </div>
                                 }
 
@@ -340,7 +428,7 @@ export const AdminPage = () => {
                                     paddingLeft: 5,
                                     paddingRight: 5
                                 }}>
-                                    <Grid item xs={12} sm={6} md={6} lg={6}>
+                                    <Grid item xs={12} sm={4} md={4} lg={4}>
                                         {
                                             isUnlisted &&  <Button color="success" variant="contained" onClick={() => onListClick(event.id)} style={{
                                                 width: '100%'
@@ -349,7 +437,20 @@ export const AdminPage = () => {
                                             </Button>
                                         }
                                     </Grid>
-                                    <Grid item xs={12} sm={6} md={6} lg={6}>
+                                    <Grid item xs={12} sm={4} md={4} lg={4}>
+                                        {
+                                            <Button  variant="contained" onClick={() => onVerifyClick(event.id,
+                                                //@ts-ignore
+                                                event.verified)} style={{
+                                                width: '100%',
+                                                backgroundColor: '#0063cc',
+                                            }}>
+                                                { //@ts-ignore
+                                                    event.verified > 0 ? "Unverify" : "Verify"}
+                                            </Button>
+                                        }
+                                    </Grid>
+                                    <Grid item xs={12} sm={4} md={4} lg={4}>
                                         <Button color="error" variant="contained" onClick={() => onRemoveClick(event.id)} style={{
                                             width: '100%'
                                         }}>
@@ -410,25 +511,38 @@ export const AdminPage = () => {
                     </Dialog>
 
                     <Dialog
-                        open={promoOpen && promo.length > 0}
+                        open={promoListOpen && promo.length > 0}
                         maxWidth="md"
                         sx={{
                             backgroundColor: 'transparent',
                         }}
-                        onClose={() => setPromoOpen(false)}
+                        onClose={() => setPromoListOpen(false)}
                         scroll='body'
                     >
                         {
                             promo.map((item: IPromo) => (
                                 <Paper key={item.id} style={{
                                     backgroundColor: '#161d30',
-                                    padding: 10,
+                                    padding: 0,
                                     display: 'flex',
+                                    position: 'relative',
                                     flexDirection: 'column',
-                                    margin: 10
+                                    margin: 10,
+                                    borderRadius: 20
                                 }}>
                                     <img src={item.image} style={{
-                                        width: '100%'
+                                        width: '100%',
+                                        borderRadius: 10
+                                    }}/>
+                                    <TiDelete
+                                        onClick={() => onRemovePromoClick(item.id)}
+                                        style={{
+                                        position: 'absolute',
+                                        top: '0.2rem',
+                                        right: '0.2rem',
+                                        fontSize: 35,
+                                        cursor: 'pointer',
+                                        color: '#F32013'
                                     }}/>
                                 </Paper>
                             ))

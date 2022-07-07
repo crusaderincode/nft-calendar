@@ -3,6 +3,7 @@ import {Paper, Typography} from "@mui/material";
 import {FaDiscord, FaTwitter} from "react-icons/fa";
 import {MdPublic} from "react-icons/md";
 import {AiFillStar} from "react-icons/ai"
+import {BsCheckCircleFill} from "react-icons/bs"
 
 interface UserEvent {
     event: IEvent
@@ -55,6 +56,17 @@ export const UserEvent = ({event}: UserEvent) => {
                         right: 10,
                         fontSize: 20,
                         color: '#fbff2b'
+                    }}/>
+                }
+
+                {
+                    //@ts-ignore
+                    (event.promo < 1 && event.verified > 0) && <BsCheckCircleFill style={{
+                        position: 'absolute',
+                        top: 10,
+                        right: 10,
+                        fontSize: 20,
+                        color: '#4bb543'
                     }}/>
                 }
 

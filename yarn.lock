@@ -5500,6 +5500,11 @@
     "loader-utils" "^2.0.0"
     "schema-utils" "^3.0.0"
 
+"file-saver@^2.0.5":
+  "integrity" "sha512-P9bmyZ3h/PRG+Nzga+rbdI4OEpNDzAVyy74uVO9ATgzLK6VtAsYybF/+TOCvrc0MO793d6+42lLyZTw7/ArVzA=="
+  "resolved" "https://registry.npmjs.org/file-saver/-/file-saver-2.0.5.tgz"
+  "version" "2.0.5"
+
 "filelist@^1.0.1":
   "integrity" "sha512-LwjCsruLWQULGYKy7TX0OPtrL9kLpojOFKc5VCTxdFTV7w5zbsgqVKfnkKG7Qgjtq50gKfO56hJv88OfcGb70Q=="
   "resolved" "https://registry.npmjs.org/filelist/-/filelist-1.0.3.tgz"
@@ -6319,15 +6324,6 @@
   "resolved" "https://registry.npmjs.org/ignore/-/ignore-5.2.0.tgz"
   "version" "5.2.0"
 
-"image-url-validator@^1.0.4":
-  "integrity" "sha512-RfOeAyuviWfOcdQK33nlglC+RvTlHILOJWJEbYBGeVsk3FlDDkdYkKKtirgxPQRDslFhw15T5s2l4iagzjCVaw=="
-  "resolved" "https://registry.npmjs.org/image-url-validator/-/image-url-validator-1.0.4.tgz"
-  "version" "1.0.4"
-  dependencies:
-    "is-url" "1.2.4"
-    "request" "2.88.2"
-    "request-promise-native" "1.0.9"
-
 "immediate@~3.0.5":
   "integrity" "sha512-XXOFtyqDjNDAQxVfYxuF7g9Il/IbWmmlQg2MYKOH8ExIT1qg6xc4zyS3HaEEATgs1btfzxq15ciUiY7gjSXRGQ=="
   "resolved" "https://registry.npmjs.org/immediate/-/immediate-3.0.6.tgz"
@@ -6618,11 +6614,6 @@
   "integrity" "sha1-5HnICFjfDBsR3dppQPlgEfzaSpo="
   "resolved" "https://registry.npmjs.org/is-typedarray/-/is-typedarray-1.0.0.tgz"
   "version" "1.0.0"
-
-"is-url@1.2.4":
-  "integrity" "sha512-ITvGim8FhRiYe4IQ5uHSkj7pVaPDrCTkNd3yq3cV7iZAcJdHTUMPMEHcqSOy9xZ9qFenQCvi+2wjH9a1nXqHww=="
-  "resolved" "https://registry.npmjs.org/is-url/-/is-url-1.2.4.tgz"
-  "version" "1.2.4"
 
 "is-weakref@^1.0.2":
   "integrity" "sha512-qctsuLZmIQ0+vSSMfoVvyFe2+GSEvnmZ2ezTup1SBse9+twCCeial6EEi3Nc2KFcf6+qz2FBPnjXsk8xhKSaPQ=="
@@ -7479,7 +7470,7 @@
   "resolved" "https://registry.npmjs.org/lodash.uniq/-/lodash.uniq-4.5.0.tgz"
   "version" "4.5.0"
 
-"lodash@^4.17.11", "lodash@^4.17.15", "lodash@^4.17.19", "lodash@^4.17.20", "lodash@^4.17.21", "lodash@^4.7.0", "lodash@~4.17.10":
+"lodash@^4.17.11", "lodash@^4.17.15", "lodash@^4.17.20", "lodash@^4.17.21", "lodash@^4.7.0", "lodash@~4.17.10":
   "integrity" "sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg=="
   "resolved" "https://registry.npmjs.org/lodash/-/lodash-4.17.21.tgz"
   "version" "4.17.21"
@@ -9516,23 +9507,7 @@
     "lodash" "^4.17.21"
     "strip-ansi" "^6.0.1"
 
-"request-promise-core@1.1.4":
-  "integrity" "sha512-TTbAfBBRdWD7aNNOoVOBH4pN/KigV6LyapYNNlAPA8JwbovRti1E88m3sYAwsLi5ryhPKsE9APwnjFTgdUjTpw=="
-  "resolved" "https://registry.npmjs.org/request-promise-core/-/request-promise-core-1.1.4.tgz"
-  "version" "1.1.4"
-  dependencies:
-    "lodash" "^4.17.19"
-
-"request-promise-native@1.0.9":
-  "integrity" "sha512-wcW+sIUiWnKgNY0dqCpOZkUbF/I+YPi+f09JZIDa39Ec+q82CpSYniDp+ISgTTbKmnpJWASeJBPZmoxH84wt3g=="
-  "resolved" "https://registry.npmjs.org/request-promise-native/-/request-promise-native-1.0.9.tgz"
-  "version" "1.0.9"
-  dependencies:
-    "request-promise-core" "1.1.4"
-    "stealthy-require" "^1.1.1"
-    "tough-cookie" "^2.3.3"
-
-"request@^2.34", "request@^2.88.0", "request@2.88.2":
+"request@^2.88.0":
   "integrity" "sha512-MsvtOrfG9ZcrOwAW+Qi+F6HbD0CWXEh9ou77uOb7FM2WPhwT7smM833PzanhJLsgXjN89Ir6V2PczXNnMpwKhw=="
   "resolved" "https://registry.npmjs.org/request/-/request-2.88.2.tgz"
   "version" "2.88.2"
@@ -10217,11 +10192,6 @@
   dependencies:
     "readable-stream" "^2.0.1"
 
-"stealthy-require@^1.1.1":
-  "integrity" "sha512-ZnWpYnYugiOVEY5GkcuJK1io5V8QmNYChG62gSit9pQVGErXtrKuPC55ITaVSukmMta5qpMU7vqLt2Lnni4f/g=="
-  "resolved" "https://registry.npmjs.org/stealthy-require/-/stealthy-require-1.1.1.tgz"
-  "version" "1.1.1"
-
 "stream-browserify@^3.0.0":
   "integrity" "sha512-H73RAHsVBapbim0tU2JwwOiXUj+fikfiaoYAKHF3VJfA0pe2BCzkhAHBlLG6REzE+2WNZcxOXjK7lkso+9euLA=="
   "resolved" "https://registry.npmjs.org/stream-browserify/-/stream-browserify-3.0.0.tgz"
@@ -10617,14 +10587,6 @@
   "integrity" "sha512-o5sSPKEkg/DIQNmH43V0/uerLrpzVedkUh8tGNvaeXpfpuwjKenlSox/2O/BTlZUtEe+JG7s5YhEz608PlAHRA=="
   "resolved" "https://registry.npmjs.org/toidentifier/-/toidentifier-1.0.1.tgz"
   "version" "1.0.1"
-
-"tough-cookie@^2.3.3":
-  "integrity" "sha512-nlLsUzgm1kfLXSXfRZMc1KLAugd4hqJHDTvc2hDIwS3mZAfMEuMbc03SujMF+GEcpaX/qboeycw6iO8JwVv2+g=="
-  "resolved" "https://registry.npmjs.org/tough-cookie/-/tough-cookie-2.5.0.tgz"
-  "version" "2.5.0"
-  dependencies:
-    "psl" "^1.1.28"
-    "punycode" "^2.1.1"
 
 "tough-cookie@^4.0.0":
   "integrity" "sha512-tHdtEpQCMrc1YLrMaqXXcj6AxhYi/xgit6mZu1+EDWUn+qhUf8wMQoFIy9NXuq23zAwtcB0t/MjACGR18pcRbg=="
