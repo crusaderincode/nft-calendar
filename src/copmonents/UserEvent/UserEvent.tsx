@@ -4,12 +4,15 @@ import {FaDiscord, FaTwitter} from "react-icons/fa";
 import {MdPublic} from "react-icons/md";
 import {AiFillStar} from "react-icons/ai"
 import {BsCheckCircleFill} from "react-icons/bs"
+import isMobile from "../isMobile";
 
 interface UserEvent {
     event: IEvent
 }
 
 export const UserEvent = ({event}: UserEvent) => {
+    const mobile = isMobile()
+
     const [flag, setFlag] = useState(false)
 
     const flagHandler = () => setFlag(!flag)
@@ -32,7 +35,7 @@ export const UserEvent = ({event}: UserEvent) => {
             flexDirection: 'column',
             padding: 10,
             border: '1px solid #262b36',
-            maxHeight: flag ? 300 : 80,
+            maxHeight: mobile ? flag ? 500 : 110 : flag ? 300 : 80,
             overflow: 'hidden',
             transition: "all 0.5s ease-in-out",
             position: 'relative'
@@ -41,9 +44,10 @@ export const UserEvent = ({event}: UserEvent) => {
                    transition: "transform 0.25s ease-in-out",}}>
             <div style={{
                 display: 'flex',
-                justifyContent: 'space-between',
-                flexDirection: 'row',
+                justifyContent: mobile ? 'flex-start' : 'space-between',
+                flexDirection: mobile ? 'column' : 'row',
             }}>
+
             <div style={{
                 display: 'flex'
             }}>
@@ -73,8 +77,8 @@ export const UserEvent = ({event}: UserEvent) => {
                 <img src={event.image} alt="Wrong img url"
                      onClick={flagHandler}
                      style={{
-                         height: 80,
-                         width: 80,
+                         height: mobile ? 60 : 80,
+                         width: mobile ? 60 : 80,
                          textAlign: 'center',
                          borderRadius: 10,
                          cursor: 'pointer'
@@ -83,9 +87,9 @@ export const UserEvent = ({event}: UserEvent) => {
                     marginLeft: 15,
                     display: 'flex',
                     flexDirection: 'column',
-                    justifyContent: 'space-between'
+                    justifyContent: mobile ? 'flex-start' : 'space-between'
                 }}>
-                    <Typography variant="h5"
+                    <Typography variant={mobile ? 'h6' : 'h5'}
                                 onClick={flagHandler}
                                 style={{
                                     //@ts-ignore
@@ -98,12 +102,13 @@ export const UserEvent = ({event}: UserEvent) => {
 
                     <div style={{
                         display: 'flex',
-                        flexDirection: 'row'
+                        flexDirection: 'row',
+                        marginTop: mobile ? 5 : 0
                     }}>
-                        <FaDiscord style={{fontSize: 25, color: '#fff', cursor: 'pointer', marginRight: 8
+                        <FaDiscord style={{fontSize: mobile ? 22 : 25, color: '#fff', cursor: 'pointer', marginRight: 8
                         }}
                                    onClick={()=> window.open(event.discord, "_blank")} />
-                        <Typography variant="body1" style={{
+                        <Typography variant={mobile ? 'body2' : 'body1'} style={{
                             color: '#fff',
                             marginRight: 15,
                             fontWeight: 'bold'
@@ -112,10 +117,10 @@ export const UserEvent = ({event}: UserEvent) => {
                                 //@ts-ignore
                                 event.discordMembers && event.discordMembers < 1000 ? event.discordMembers : event.discordMembers < 10000 ? `${String(event.discordMembers / 1000).slice(0,3)}k` : event.discordMembers < 100000 ? `${String(event.discordMembers / 1000).slice(0,4)}k` : `${String(event.discordMembers / 1000).slice(0,3)}k`}
                         </Typography>
-                        <FaTwitter style={{fontSize: 25, color: '#fff', cursor: 'pointer'}}
+                        <FaTwitter style={{fontSize: mobile ? 22 : 25, color: '#fff', cursor: 'pointer'}}
                                    onClick={()=> window.open(event.twitter, "_blank")}
                         />
-                        <Typography variant="body1" style={{
+                        <Typography variant={mobile ? 'body2' : 'body1'} style={{
                             color: '#fff',
                             marginLeft: 5,
                             fontWeight: 'bold'
@@ -127,7 +132,7 @@ export const UserEvent = ({event}: UserEvent) => {
 
                         {
                             //@ts-ignore
-                          event.website.length > 0 && <MdPublic style={{fontSize: 25, color: '#fff', cursor: 'pointer', marginLeft: 8
+                          event.website.length > 0 && <MdPublic style={{fontSize: mobile ? 22 : 25, color: '#fff', cursor: 'pointer', marginLeft: 8
                           }}
                                                                    onClick={()=> window.open(event.website, "_blank")} />
                         }
@@ -136,80 +141,152 @@ export const UserEvent = ({event}: UserEvent) => {
                     </div>
                 </div>
             </div>
-            <div style={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'space-between'
-            }}>
-                <Typography variant="h6" style={{
-                    color: 'gray',
-                    marginLeft: 5,
+                {mobile ? <div style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    marginTop: 5
+                }}> <div style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        justifyContent: 'space-between'
+                    }}>
+                        <Typography variant="body1" style={{
+                            color: 'gray',
+                            marginLeft: 5,
+                        }}>
+                            Price
+                        </Typography>
+
+                    <Typography variant="body1" style={{
+                            color: '#fff',
+                            marginLeft: 5,
+                            fontWeight: 'bold'
+                        }}>
+                            {Number(event.price) > 0 ? `${event.price} ${event.currency}` : `TBA ${event.currency}`}
+                        </Typography>
+
+                    </div>
+
+                    <div style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        justifyContent: 'space-between'
+                    }}>
+                        <Typography variant="body1" style={{
+                            color: 'gray',
+                            marginLeft: 5,
+                        }}>
+                            Supply
+                        </Typography>
+
+                        <Typography variant="body1" style={{
+                            color: '#fff',
+                            marginLeft: 5,
+                            fontWeight: 'bold'
+                        }}>
+                            {Number(event.supply) > 0 ? event.supply : 'TBA'}
+                        </Typography>
+
+                    </div>
+
+                    <div style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    marginRight: '1rem'
                 }}>
-                    Price
-                </Typography>
-
-                <Typography variant="h6" style={{
-                    color: '#fff',
-                    marginLeft: 5,
-                    fontWeight: 'bold'
-                }}>
-                    {Number(event.price) > 0 ? `${event.price} ${event.currency}` : `TBA ${event.currency}`}
-                </Typography>
-
-            </div>
-
-            <div style={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'space-between'
-            }}>
-                <Typography variant="h6" style={{
-                    color: 'gray',
-                    marginLeft: 5,
-                }}>
-                    Supply
-                </Typography>
-
-                <Typography variant="h6" style={{
-                    color: '#fff',
-                    marginLeft: 5,
-                    fontWeight: 'bold'
-                }}>
-                    {Number(event.supply) > 0 ? event.supply : 'TBA'}
-                </Typography>
-
-            </div>
-
-            <div style={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                marginRight: '1rem'
-            }}>
-                <Typography variant="h6" style={{
+                        <Typography variant="body1" style={{
                     color: 'gray',
                     marginLeft: 5,
                 }}>
                     Date
-                </Typography>
+                    </Typography>
 
-                <Typography variant="h6" style={{
+                        <Typography variant="body1" style={{
                     color: '#fff',
                     marginLeft: 5,
                     fontWeight: 'bold'
                 }}>
-                    {formattedDate}
-                </Typography>
+                {formattedDate}
+                    </Typography>
 
-            </div>
+                    </div> </div> : <><div style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'space-between'
+                }}>
+                    <Typography variant="h6" style={{
+                        color: 'gray',
+                        marginLeft: 5,
+                    }}>
+                        Price
+                    </Typography>
+
+                    <Typography variant="h6" style={{
+                        color: '#fff',
+                        marginLeft: 5,
+                        fontWeight: 'bold'
+                    }}>
+                        {Number(event.price) > 0 ? `${event.price} ${event.currency}` : `TBA ${event.currency}`}
+                    </Typography>
+
+                </div>
+
+                    <div style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'space-between'
+                }}>
+                    <Typography variant="h6" style={{
+                    color: 'gray',
+                    marginLeft: 5,
+                }}>
+                    Supply
+                    </Typography>
+
+                    <Typography variant="h6" style={{
+                    color: '#fff',
+                    marginLeft: 5,
+                    fontWeight: 'bold'
+                }}>
+                {Number(event.supply) > 0 ? event.supply : 'TBA'}
+                    </Typography>
+
+                    </div>
+
+                    <div style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    marginRight: '1rem'
+                }}>
+                    <Typography variant="h6" style={{
+                    color: 'gray',
+                    marginLeft: 5,
+                }}>
+                    Date
+                    </Typography>
+
+                    <Typography variant="h6" style={{
+                    color: '#fff',
+                    marginLeft: 5,
+                    fontWeight: 'bold'
+                }}>
+                {formattedDate}
+                    </Typography>
+
+                    </div> </>}
             </div>
 
             <div>
 
-                <Typography variant="h5"
+                <Typography variant={mobile ? 'h6' : 'h5'}
                             style={{
                                 color: '#fff',
                                 fontWeight: 'bold',
@@ -218,7 +295,7 @@ export const UserEvent = ({event}: UserEvent) => {
                             }}>
                   Description
                 </Typography>
-                <Typography variant="h6" style={{
+                <Typography variant={mobile ? 'body1' : 'h6'} style={{
                     color: '#fff',
                     marginLeft: 5,
                 }}>

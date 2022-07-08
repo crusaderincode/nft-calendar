@@ -10,6 +10,8 @@ import {MdKeyboardArrowDown, MdKeyboardArrowUp} from "react-icons/md";
 import ContactModal from "../../copmonents/ContactModal";
 import Footer from "../../copmonents/Footer";
 import {getPromos} from "../../redux/actions/promo";
+import HeaderMobile from "../../copmonents/HeaderMobile";
+import isMobile from "../../copmonents/isMobile"
 
 
 
@@ -17,6 +19,7 @@ import {getPromos} from "../../redux/actions/promo";
 
 export const MainPage = () => {
     const dispatch: Dispatch<any> = useDispatch()
+    const mobile: boolean = isMobile()
 
     //Get from store
     const events = useSelector(
@@ -130,23 +133,14 @@ export const MainPage = () => {
             minHeight: '100vh',
             width: '100vw',
         }}>
-        <Header
-            handleModalOpen={handleOpenModal}
-            handleContactOpen={handleOpenContactModal}
-            localAction={localAction}
-            curEvents={selectedEvents}
-            pastEvents={mintedEvents}
-            setPastEvents={setMintedFilteredEvents}
-            isUpcoming={isUpcoming}
-            setCurEvents={setFilteredEvents}
-        />
+      <HeaderMobile />
             <Container maxWidth="md" style={{
                 height: '100%',
                 width: '100%',
                 display: 'flex',
                 justifyContent: 'flex-start',
                 flexDirection: 'column',
-                marginTop: '8rem'
+                marginTop: mobile ? '5rem' : '8rem'
             }}>
                 {
                    promo && promo.map((promo: IPromo) => (
@@ -161,14 +155,14 @@ export const MainPage = () => {
                     ))
                 }
                 <div style={{
-                    marginTop: '2rem'
+                    marginTop: mobile ? '1rem' : '2rem'
                 }}>
-                    <Typography variant="h4" display="inline" style={{
+                    <Typography variant={mobile ? "h5" : "h4"} display="inline" style={{
                         color: '#fbff2b',
                         fontWeight: 'bold'
                     }}>
                         Featured
-                        <Typography variant="h4" display="inline" style={{
+                        <Typography variant={mobile ? "h5" : "h4"} display="inline" style={{
                             color: '#fff',
                             fontWeight: 'bold',
                             marginLeft: 15
@@ -179,12 +173,12 @@ export const MainPage = () => {
                 </div>
                 <UserEventsList eventsList={featuredEvents}/>
                 <div style={{
-                    marginTop: '2rem',
-                    height: isUpcomingOpen ? 60 : 140,
+                    marginTop: mobile ? '1rem' : '2rem',
+                    height: mobile ? isUpcomingOpen ? 40 : 80 : isUpcomingOpen ? 60 : 140,
                     overflow: 'hidden',
                     transition: "all 0.3s ease-in-out",
                 }}>
-                <Typography variant="h4" display="inline" onClick={() => setIsUpcomingOpen(!isUpcomingOpen)} style={{
+                    <Typography variant={mobile ? "h5" : "h4"} display="inline" onClick={() => setIsUpcomingOpen(!isUpcomingOpen)} style={{
                     color: '#fbff2b',
                     fontWeight: 'bold',
                     textDecoration: 'underline',
@@ -195,20 +189,20 @@ export const MainPage = () => {
                     {
                         isUpcomingOpen ? <MdKeyboardArrowDown onClick={() => setIsUpcomingOpen(!isUpcomingOpen)} style={{
                             color: '#fbff2b',
-                            fontSize: 40,
+                            fontSize: mobile ? 30 : 40,
                             verticalAlign: 'bottom',
                             marginLeft: -8,
                             cursor: 'pointer'
                         }}/> : <MdKeyboardArrowUp onClick={() => setIsUpcomingOpen(!isUpcomingOpen)} style={{
                             color: '#fbff2b',
-                            fontSize: 40,
+                            fontSize: mobile ? 30 : 40,
                             verticalAlign: 'bottom',
                             marginLeft: -8,
                             cursor: 'pointer'
                         }}/>
                     }
 
-                    <Typography variant="h4" display="inline" style={{
+                    <Typography variant={mobile ? "h5" : "h4"} display="inline" style={{
                         color: '#fff',
                         fontWeight: 'bold',
                         marginLeft: 2
@@ -219,11 +213,11 @@ export const MainPage = () => {
                     <Paper onClick={handleUpcomingSwitch} style={{
                         backgroundColor: 'rgba(255,255,255,0.05)',
                         borderRadius: 15,
-                        width: isUpcoming ? 200 : 250,
-                        marginTop: 20,
+                        width: isUpcoming ? 150 : 200,
+                        marginTop: mobile ? 10 : 20,
                         cursor: 'pointer'
                     }}>
-                    <Typography variant="h4" style={{
+                        <Typography variant={mobile ? "h5" : "h4"} style={{
                         color: '#fbff2b',
                         fontWeight: 'bold',
                         textAlign: 'center'
