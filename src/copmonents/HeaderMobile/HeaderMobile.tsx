@@ -1,8 +1,115 @@
-import React from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import logo from "../../img/logo.png";
-import {FaBars} from "react-icons/fa"
+import {FaBars, FaTwitter} from "react-icons/fa"
+import {Box, InputAdornment, MenuItem, Modal, Paper, TextField, Typography} from "@mui/material";
+import {MdEmail, MdSearch} from "react-icons/md";
+import {GoPlus} from "react-icons/go";
 
-export const HeaderMobile = () => {
+interface Header {
+    handleModalOpen: () => void
+    handleContactOpen: () => void
+    localAction: (type: string) => void
+    curEvents: IEvent[] | []
+    pastEvents: IEvent[] | []
+    isUpcoming: boolean
+    setCurEvents: (events: IEvent[]) => void
+    setPastEvents: (events: IEvent[]) => void
+}
+
+export const HeaderMobile = (props: Header) => {
+    const [modalOpen, setModalOpen] = useState(true)
+
+    const handleClose = () => {
+        setModalOpen(false)
+    }
+
+    const style = {
+        position: 'absolute' as 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: '100%',
+        bgcolor: 'background.paper',
+        outline: 'none',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        boxShadow: 24,
+        backgroundColor: '#22293b',
+        borderRadius: 1,
+        px: 4,
+    };
+
+    const useFormField = (initialValue: string) => {
+        const [value, setValue] = useState(initialValue);
+        const onChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => setValue(e.target.value), []);
+        return {value, onChange};
+    };
+
+    const [submitButtonHover, setSubmitButtonHover] = useState(false)
+    const blockchainField = useFormField("ALL")
+    const searchField = useFormField("")
+
+    useEffect(() => {
+        props.localAction(blockchainField.value)
+    }, [blockchainField])
+
+
+    useEffect(() => {
+
+        if (props.isUpcoming) {
+            let filtered = props.curEvents.filter(post => {
+                if (searchField.value === "") {
+                    //if query is empty
+                    return post;
+                    //@ts-ignore
+                } else if (post.name.toLowerCase().includes(searchField.value.toLowerCase())) {
+                    return post;
+                }
+            })
+            props.setCurEvents(filtered)
+        }
+        else {
+            let filtered = props.pastEvents.filter(post => {
+                if (searchField.value === "") {
+                    //if query is empty
+                    return post;
+                    //@ts-ignore
+                } else if (post.name.toLowerCase().includes(searchField.value.toLowerCase())) {
+                    return post;
+                }
+            })
+            props.setPastEvents(filtered)
+        }
+
+
+
+    }, [searchField.value])
+
+    const currencies = [
+        {
+            value: 'ALL',
+            label: 'Upcomnig NFT',
+        },
+        {
+            value: 'SOL',
+            label: 'Solana NFT',
+        },
+        {
+            value: 'ETH',
+            label: 'Ethereum NFT',
+        },
+        {
+            value: 'MATIC',
+            label: 'Polygon NFT',
+        },
+        {
+            value: 'ADA',
+            label: 'Cardano NFT',
+        },
+    ];
+
+
     return (
         <div style={{
             width: '100%',
@@ -24,15 +131,130 @@ export const HeaderMobile = () => {
                 padding: 10
             }}/>
 
+<div>
 
-            <FaBars style={{
-                fontSize: 28,
-                padding: 10,
-                color: '#fff'
-            }}/>
+    <FaTwitter style={{fontSize: 25, cursor: 'pointer', color: '#fff',   padding: 10,}}
+               onClick={() => window.open("https://twitter.com/Hazed_Chameleon", "_blank")}
+    />
+
+    <MdEmail style={{fontSize: 25, cursor: 'pointer', color: '#fff',   padding: 10,}}
+             onClick={props.handleContactOpen}
+    />
+
+    <FaBars
+        onClick={() => setModalOpen(true)}
+        style={{
+            fontSize: 25,
+            padding: 10,
+            color: '#fff'
+        }}/>
+</div>
             </div>
 
+            <Modal
+                open={modalOpen}
+                onClose={handleClose}
+                aria-labelledby="parent-modal-title"
+                aria-describedby="parent-modal-description"
+                style={{
+                    width: '70%',
+                    marginLeft: '15%',
+                    outline: 'none'
+                }}
+            >
+                <Box sx={{ ...style }}>
+                    <TextField
+                        variant="standard"
+                        sx={{
+                            minWidth: 100,
+                            marginTop: 0.7,
+                            textAlign: 'center'
+                        }}
+                        InputProps={{
+                            disableUnderline: true,
+                        }}
+                        id="outlined-select-blockchain"
+                        select
+                        value={blockchainField.value}
+                        onChange={blockchainField.onChange}
 
+                    >
+                        {currencies.map((option) => (
+                            <MenuItem key={option.value} value={option.value}>
+                                {option.label}
+                            </MenuItem>
+                        ))}
+                    </TextField>
+
+                    <Typography variant="h5"
+                                onClick={() => alert('Coming soon...')}
+                                style={{
+                                    color: '#fff',
+                                    fontFamily: 'Pixels',
+                                    padding: 5,
+                                    paddingRight: 7,
+                                    textAlign: 'center',
+                                    fontWeight: 'bold',
+                                    cursor: 'pointer'
+                                }}>
+                        Alerts
+                    </Typography>
+
+                    <TextField
+                        style={{
+                            width: '100%',
+                            marginBottom: '1.5rem',
+                            marginTop: '0.5rem'
+                        }}
+                        id="outlined-search"
+                        onChange={searchField.onChange}
+                        InputProps={{
+                            startAdornment: (
+                                <InputAdornment position="start">
+                                    <MdSearch style={{
+                                        color: '#fff',
+                                        fontSize: 25
+                                    }}/>
+                                </InputAdornment>
+                            ),
+                        }}
+                    />
+
+                    <Paper
+                        onClick={props.handleModalOpen}
+                        onMouseOver={() => setSubmitButtonHover(true)}
+                        onMouseOut={() => setSubmitButtonHover(false)}
+                        style={{
+                            backgroundColor: submitButtonHover ? 'transparent' : '#fbff2b',
+                            border: '1px solid #fbff2b',
+                            display: 'flex',
+                            flexDirection: 'row',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            cursor: 'pointer',
+                            marginBottom: '1rem',
+                            width: '100%'
+                        }}>
+                        <GoPlus style={{
+                            color: submitButtonHover ? '#fbff2b' : '#424242',
+                            fontSize: 25,
+                            paddingLeft: 4
+                        }}/>
+                        <Typography variant="h5" style={{
+                            color: submitButtonHover ? '#fbff2b' : '#424242',
+                            fontFamily: 'Pixels',
+                            padding: 5,
+                            paddingLeft: 0,
+                            paddingRight: 7,
+                            textAlign: 'center',
+                            fontWeight: 'bold',
+                        }}>
+                            Submit NFT
+                        </Typography>
+                    </Paper>
+
+                </Box>
+            </Modal>
         </div>
     );
 };

@@ -8,6 +8,7 @@ import {Dispatch} from "@reduxjs/toolkit";
 import {useDispatch} from "react-redux";
 import {addTicket} from "../../redux/actions/ticket";
 import {addPromo} from "../../redux/actions/promo";
+import isMobile from "../isMobile";
 
 
 
@@ -23,6 +24,7 @@ export const PromoModal = ({handleClose, state}: Modal) => {
         return {value, onChange};
     };
 
+    const mobile = isMobile()
     const imageField = useFormField("")
     const urlField = useFormField("")
     const dispatch: Dispatch<any> = useDispatch()
@@ -72,10 +74,10 @@ export const PromoModal = ({handleClose, state}: Modal) => {
         transform: 'translate(-50%, -50%)',
         width: 'auto',
         height: 'auto',
-        minWidth: 800,
+        minWidth: mobile ? '80%' : 800,
         bgcolor: 'background.paper',
         outline: 'none',
-        borderRadius: 5,
+        borderRadius:  mobile ? 2 : 5,
         boxShadow: 24,
         p: 3,
         display: 'flex',

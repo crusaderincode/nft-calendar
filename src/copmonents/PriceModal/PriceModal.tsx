@@ -5,6 +5,7 @@ import Modal from '@mui/material/Modal';
 import {Grid, Paper} from "@mui/material";
 import {GoPlus} from "react-icons/go";
 import {Link} from "react-router-dom";
+import isMobile from "../isMobile";
 
 
 interface Modal {
@@ -13,6 +14,7 @@ interface Modal {
 }
 
 export const PriceModal = ({handleClose, state}: Modal) => {
+    const mobile = isMobile()
     const bigScreenFlag = window.innerWidth > 1600
 
     const [standardButton, setStandardButton] = useState(false)
@@ -25,12 +27,15 @@ export const PriceModal = ({handleClose, state}: Modal) => {
 
     const style = {
         position: 'absolute' as 'absolute',
-        top: '50%',
+        top:  '50%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
         width: 'auto',
         height: 'auto',
-        minWidth: 800,
+        minWidth: mobile ? "90%" : 800,
+        marginLeft: mobile ? '5%' : 'auto',
+        minHeight: mobile ? 1500 : 'auto',
+        marginTop: mobile ? '10rem' : 'auto',
         bgcolor: 'background.paper',
         outline: 'none',
         borderRadius: 5,
@@ -40,7 +45,7 @@ export const PriceModal = ({handleClose, state}: Modal) => {
         justifyContent: 'center',
         alignItems: 'center',
         flexDirection: 'column',
-        backgroundColor: '#262b36'
+        backgroundColor: mobile ? 'transparent' : '#262b36'
     };
 
 
@@ -50,6 +55,8 @@ export const PriceModal = ({handleClose, state}: Modal) => {
                 open={state}
                 sx={{
                     border: 'none',
+                    overflow:'scroll',
+                    width: '90%'
                 }}
                 onClose={handleClose}
                 aria-labelledby="modal-modal-title"

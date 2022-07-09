@@ -133,7 +133,29 @@ export const MainPage = () => {
             minHeight: '100vh',
             width: '100vw',
         }}>
-      <HeaderMobile />
+
+            {
+                mobile ? <HeaderMobile
+                    handleModalOpen={handleOpenModal}
+                    handleContactOpen={handleOpenContactModal}
+                    localAction={localAction}
+                    curEvents={selectedEvents}
+                    pastEvents={mintedEvents}
+                    setPastEvents={setMintedFilteredEvents}
+                    isUpcoming={isUpcoming}
+                    setCurEvents={setFilteredEvents}
+                /> : <Header
+                    handleModalOpen={handleOpenModal}
+                    handleContactOpen={handleOpenContactModal}
+                    localAction={localAction}
+                    curEvents={selectedEvents}
+                    pastEvents={mintedEvents}
+                    setPastEvents={setMintedFilteredEvents}
+                    isUpcoming={isUpcoming}
+                    setCurEvents={setFilteredEvents}
+                />
+            }
+
             <Container maxWidth="md" style={{
                 height: '100%',
                 width: '100%',

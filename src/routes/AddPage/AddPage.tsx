@@ -10,10 +10,14 @@ import formValidationHandler from "../../formValidationHandler";
 import {GoPlus} from "react-icons/go";
 import { useLocation } from 'react-router-dom'
 import SubmitModal from "../../copmonents/SubmitModal";
+import isMobile from "../../copmonents/isMobile";
 
 
 export const AddPage = () => {
     const dispatch: Dispatch<any> = useDispatch()
+
+    const mobile = isMobile()
+
     const location = useLocation()
     //@ts-ignore
     const { promo } = location.state
@@ -412,7 +416,7 @@ export const AddPage = () => {
                     }}>
                         <TextField
                             style={{
-                                width: 260
+                                width: mobile ? '100%' : 260
                             }}
                             id="outlined-name"
                             label="Twitter followers"
@@ -558,7 +562,8 @@ export const AddPage = () => {
                         justifyContent: 'center',
                         alignItems: 'center',
                         cursor: 'pointer',
-                        marginTop: '0.7rem'
+                        marginTop: '0.7rem',
+                        marginBottom: mobile ? '1rem' : 'auto'
                     }}>
 
                     {

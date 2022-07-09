@@ -7,6 +7,7 @@ import {GoPlus} from "react-icons/go";
 import {Dispatch} from "@reduxjs/toolkit";
 import {useDispatch} from "react-redux";
 import {addTicket} from "../../redux/actions/ticket";
+import isMobile from "../isMobile";
 
 
 
@@ -21,6 +22,8 @@ export const ContactModal = ({handleClose, state}: Modal) => {
         const onChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => setValue(e.target.value), []);
         return {value, onChange};
     };
+
+    const mobile = isMobile()
 
     const descriptionField = useFormField("")
     const emailField = useFormField("")
@@ -71,10 +74,10 @@ export const ContactModal = ({handleClose, state}: Modal) => {
         transform: 'translate(-50%, -50%)',
         width: 'auto',
         height: 'auto',
-        minWidth: 800,
+        minWidth: mobile ? '80%' : 800,
         bgcolor: 'background.paper',
         outline: 'none',
-        borderRadius: 5,
+        borderRadius: mobile ? 2 : 5,
         boxShadow: 24,
         p: 3,
         display: 'flex',
