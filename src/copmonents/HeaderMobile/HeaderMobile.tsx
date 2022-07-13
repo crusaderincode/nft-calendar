@@ -17,7 +17,7 @@ interface Header {
 }
 
 export const HeaderMobile = (props: Header) => {
-    const [modalOpen, setModalOpen] = useState(true)
+    const [modalOpen, setModalOpen] = useState(false)
 
     const handleClose = () => {
         setModalOpen(false)

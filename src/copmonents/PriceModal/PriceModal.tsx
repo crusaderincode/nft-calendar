@@ -55,8 +55,8 @@ export const PriceModal = ({handleClose, state}: Modal) => {
                 open={state}
                 sx={{
                     border: 'none',
-                    overflow:'scroll',
-                    width: '90%'
+                    overflow: mobile ? 'scroll' : 'hidden',
+                    width: mobile ? '90%' : '100%'
                 }}
                 onClose={handleClose}
                 aria-labelledby="modal-modal-title"
