@@ -67,7 +67,7 @@ const formValidationHandler = ({
             ...error, website: true
         }))}
 
-    if (!/(https?:\/\/)?(www\.)?(discord\.(gg|io|me|li)|discordapp\.com\/invite)\/.+[a-z]/gi.test(discord) && discord.length > 0) {
+    if (!/(https?:\/\/)?(www\.)?(discord\.(gg|io|me|li|com)|discordapp\.com\/invite)\/.+[a-z]/gi.test(discord) && discord.length > 0) {
         setErr((error: object) => ({
             ...error, discord: true
         }))}

@@ -105,8 +105,8 @@ export const AddPage = () => {
             label: 'MATIC',
         },
         {
-            value: 'ADA',
-            label: 'ADA',
+            value: 'BSC',
+            label: 'BSC',
         },
     ];
 
@@ -422,8 +422,8 @@ export const AddPage = () => {
                             label="Twitter followers"
                             helperText="e.g. 1000"
                             required
-                            onFocus={() => setError({...error, twitter: false})}
-                            error={error.twitter}
+                            onFocus={() => setError({...error, twitterMembersCount: false})}
+                            error={error.twitterMembersCount}
                             onChange={twitterCountField.onChange}
                         />
                     </Grid>
@@ -451,7 +451,7 @@ export const AddPage = () => {
                                     id="outlined-select-currency"
                                     select
                                     label={promo > 1 ? "50$ payment chain" : "10$ payment chain"}
-                                    helperText="select the chain for promo payment"
+                                    helperText={paymentField.value === "SOL" ? "2pMhaJMoyZnw2NabS284hs9Zgn48Ntc5jFSDjT3oYKfv" : "0x9b38A07D100F59C45fC6CC808DdD136d1c46f41c"}
                                     value={paymentField.value}
                                     required
                                     onChange={paymentField.onChange}
@@ -503,7 +503,7 @@ export const AddPage = () => {
                                     id="outlined-select-currency"
                                     select
                                     label={promo > 1 ? "50$ payment chain" : "10$ payment chain"}
-                                    helperText="select the chain for promo payment"
+                                    helperText={paymentField.value === "SOL" ? "2pMhaJMoyZnw2NabS284hs9Zgn48Ntc5jFSDjT3oYKfv" : "0x9b38A07D100F59C45fC6CC808DdD136d1c46f41c"}
                                     value={paymentField.value}
                                     required
                                     onChange={paymentField.onChange}

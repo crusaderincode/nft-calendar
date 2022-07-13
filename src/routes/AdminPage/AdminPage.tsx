@@ -18,7 +18,7 @@ import {FaListAlt} from "react-icons/fa"
 import {TiDelete} from "react-icons/ti"
 import {BsFillPlusSquareFill} from "react-icons/bs"
 import {deleteTicket, getTickets} from "../../redux/actions/ticket";
-import { getAuth, signOut } from "firebase/auth";
+import {getAuth, onAuthStateChanged, signOut} from "firebase/auth";
 import AdminLogin from "../../copmonents/AdminLogin";
 import { useNavigate } from 'react-router-dom';
 import PromoModal from "../../copmonents/PromoModal";
@@ -32,9 +32,16 @@ export const AdminPage = () => {
     //Authentication
     const [isLoggedIn, setIsLoggedIn] = useState(false)
     const [loading, setLoading] = useState(true)
+    const [admin, setAdmin] = useState("")
 
     const auth = getAuth()
-    const user = auth.currentUser;
+
+    onAuthStateChanged(auth, (user: any) => {
+        setLoading(false)
+        user && setAdmin(user.uid)
+    })
+
+    console.log(JSON.stringify(auth))
 
     const navigate = useNavigate();
 
@@ -46,13 +53,6 @@ export const AdminPage = () => {
             alert(error)
         });
     }
-
-    useEffect(() => {
-        if (user) {
-            setIsLoggedIn(true)
-        }
-        setLoading(false)
-    }, [user])
 
     //Tickets
     const [ticketsOpen, setTicketsOpen] = useState(false)
@@ -224,7 +224,7 @@ export const AdminPage = () => {
         )
     }
 
-    if (isLoggedIn) {
+    if (admin) {
         return (
             <div>
                 <Link to="/" style={{
