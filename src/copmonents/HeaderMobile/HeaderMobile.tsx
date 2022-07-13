@@ -134,7 +134,7 @@ export const HeaderMobile = (props: Header) => {
 <div>
 
     <FaTwitter style={{fontSize: 25, cursor: 'pointer', color: '#fff',   padding: 10,}}
-               onClick={() => window.open("https://twitter.com/Hazed_Chameleon", "_blank")}
+               onClick={() => window.open("https://twitter.com/HoneyDropsNFT", "_blank")}
     />
 
     <MdEmail style={{fontSize: 25, cursor: 'pointer', color: '#fff',   padding: 10,}}

@@ -213,7 +213,7 @@ export const Header = (props: Header) => {
                     </Paper>
 
                     <FaTwitter style={{fontSize: 30, cursor: 'pointer', color: '#fff', marginLeft: '2rem',}}
-                               onClick={() => window.open("https://twitter.com/Hazed_Chameleon", "_blank")}
+                               onClick={() => window.open("https://twitter.com/HoneyDropsNFT", "_blank")}
                     />
 
                     <MdEmail style={{fontSize: 30, cursor: 'pointer', color: '#fff', marginLeft: '1rem',}}
