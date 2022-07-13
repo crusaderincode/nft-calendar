@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fbf523dc-3aed-4e2d-98dc-9c2c41800ac9" name="Changes" comment="" />
+    <list default="true" id="fbf523dc-3aed-4e2d-98dc-9c2c41800ac9" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/src/copmonents/AdminLogin/AdminLogin.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/copmonents/AdminLogin/AdminLogin.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/AdminPage/AdminPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/AdminPage/AdminPage.tsx" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -106,7 +109,7 @@
       <workItem from="1657392704678" duration="957000" />
       <workItem from="1657531627985" duration="391000" />
       <workItem from="1657556005020" duration="3158000" />
-      <workItem from="1657707563060" duration="4569000" />
+      <workItem from="1657707563060" duration="4913000" />
     </task>
     <servers />
   </component>

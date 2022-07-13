@@ -4,7 +4,7 @@ import {Button, TextField, Typography} from "@mui/material";
 
 
 interface isLoggedIn {
-    setIsLoggedIn: (login: boolean) => void
+    setIsLoggedIn: (login: any) => void
 }
 
 export const AdminLogin = ({setIsLoggedIn}: isLoggedIn) => {
@@ -31,7 +31,7 @@ export const AdminLogin = ({setIsLoggedIn}: isLoggedIn) => {
             // Signed in
             const user = userCredential.user;
                 if (user) {
-                    setIsLoggedIn(true)
+                    setIsLoggedIn(user.uid)
                 }
         })
         .catch((error) => {

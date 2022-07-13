@@ -30,16 +30,18 @@ export const AdminPage = () => {
     const dispatch: Dispatch<any> = useDispatch()
 
     //Authentication
-    const [isLoggedIn, setIsLoggedIn] = useState(false)
     const [loading, setLoading] = useState(true)
     const [admin, setAdmin] = useState("")
 
     const auth = getAuth()
 
-    onAuthStateChanged(auth, (user: any) => {
-        setLoading(false)
-        user && setAdmin(user.uid)
-    })
+    useEffect(() => {
+        onAuthStateChanged(auth, (user: any) => {
+            setLoading(false)
+            user && setAdmin(user.uid)
+        })
+    }, [])
+
 
     console.log(JSON.stringify(auth))
 
@@ -346,6 +348,7 @@ export const AdminPage = () => {
                         curEvents && curEvents.map((event: IEvent) => (
                             <Paper key={event.id} style={{
                                 backgroundColor: 'transparent',
+                                width: '100%',
                                 paddingLeft: 15,
                                 paddingRight: 15,
                                 margin: 20,
@@ -554,7 +557,7 @@ export const AdminPage = () => {
         );
     }
     else {
-     return <AdminLogin setIsLoggedIn={setIsLoggedIn}/>
+     return <AdminLogin setIsLoggedIn={setAdmin}/>
     }
 };
 
