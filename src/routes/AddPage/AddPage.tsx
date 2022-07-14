@@ -1,5 +1,15 @@
 import React, {useState, useCallback, useEffect} from 'react';
-import {Button, Container, Grid, MenuItem, Paper, TextField, Typography, CircularProgress} from "@mui/material";
+import {
+    Button,
+    Container,
+    Grid,
+    MenuItem,
+    Paper,
+    TextField,
+    Typography,
+    CircularProgress,
+    FormControlLabel, Checkbox
+} from "@mui/material";
 import { useSelector, shallowEqual, useDispatch } from "react-redux"
 import {Dispatch} from "@reduxjs/toolkit";
 import {addEvent, deleteEvent, getEvents} from "../../redux/actions/event";
@@ -55,7 +65,10 @@ export const AddPage = () => {
     const paymentField = useFormField("SOL")
     const transactionField = useFormField("")
 
-    const [date, setDate] = useState<Date>(new Date("01 Jun 2022 9:00:00 GMT"));
+    const now = new Date();
+
+    const [date, setDate] = useState<Date>(new Date(now.getFullYear(), now.getMonth(), 1));
+    const [dateTBA, setDateTBA] = useState(false)
 
     const [error, setError] = useState({
         checked: false,
@@ -152,7 +165,7 @@ export const AddPage = () => {
                 discordMembers: discordMembers,
                 twitterMembers: parseInt(twitterCountField.value),
                 description: descriptionField.value,
-                date: date,
+                date: dateTBA ? new Date("01 Jan 2025 17:00:00 GMT") : date,
                 currency: currencyField.value,
                 currencyPromo: paymentField.value,
                 promo: promo,
@@ -439,6 +452,13 @@ export const AddPage = () => {
                                 renderInput={(params) => <TextField {...params} />}
                             />
                         </LocalizationProvider>
+                        <FormControlLabel control={<Checkbox  checked={dateTBA}
+                                                              onChange={() => setDateTBA(!dateTBA)}
+                                                              inputProps={{ 'aria-label': 'controlled' }} />} label="TBA" style={{
+                            color: '#c7c7c7',
+                            marginLeft: 10,
+                            marginTop: 5
+                        }} />
                     </Grid>
 
                     {

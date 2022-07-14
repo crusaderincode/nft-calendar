@@ -22,8 +22,10 @@ export const UserEvent = ({event}: UserEvent) => {
     const strCutStamp = strStamp.substr(18,10)
     const timeStamp = Number(strCutStamp)
     const date = new Date(Number(timeStamp * 1000))
+    const tba = new Date("01 Jan 2025 17:00:00 GMT")
+
     const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
-    const formattedDate = months[date.getMonth()] + ' ' + date.getDate() + ' ' + date.getFullYear()
+    const formattedDate = date.getTime() === tba.getTime() ? "TBA" : months[date.getMonth()] + ' ' + date.getDate() + ' ' + date.getFullYear()
 
 
     return (
@@ -49,7 +51,8 @@ export const UserEvent = ({event}: UserEvent) => {
             }}>
 
             <div style={{
-                display: 'flex'
+                display: 'flex',
+                width: mobile ? '100%' : '45%'
             }}>
 
                 {
