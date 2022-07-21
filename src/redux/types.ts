@@ -8,5 +8,6 @@ export enum ActionType {
     DEL_TICKET = 'DEL_TICKET',
     ADD_PROMO = 'ADD_PROMO',
     DEL_PROMO = 'DEL_PROMO',
-    VER = 'VER'
+    VER = 'VER',
+    SET_IMG = 'SET_IMG'
 }

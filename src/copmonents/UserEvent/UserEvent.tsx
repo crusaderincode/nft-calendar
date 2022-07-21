@@ -82,6 +82,7 @@ export const UserEvent = ({event}: UserEvent) => {
                      style={{
                          height: mobile ? 60 : 80,
                          width: mobile ? 60 : 80,
+                         objectFit: 'cover',
                          textAlign: 'center',
                          borderRadius: 10,
                          cursor: 'pointer'

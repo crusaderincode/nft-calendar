@@ -61,6 +61,7 @@ export const AddPage = () => {
     const bannerField = useFormField("")
 
     const [discordMembers, setDiscordMembers] = useState(0)
+    const [imageLoaded, setImageLoaded] = useState(false)
 
     const paymentField = useFormField("SOL")
     const transactionField = useFormField("")
@@ -129,6 +130,7 @@ export const AddPage = () => {
         }
     };
 
+    console.log(imageLoaded)
 
     const submitEvent = useCallback(
         (event: IEvent) => dispatch(addEvent(event)),
@@ -150,7 +152,8 @@ export const AddPage = () => {
             !error.discord &&
             !error.txSignature &&
             !error.website &&
-            !error.description ) {
+            !error.description &&
+            imageLoaded) {
             let event: IEvent = {
                 id: '',
                 listed: false,
@@ -247,6 +250,7 @@ export const AddPage = () => {
     };
 
 
+
     return (
         <div style={{
             display: 'flex',
@@ -273,6 +277,8 @@ export const AddPage = () => {
                     {
 
                         imageField.value.length > 0 ? <img src={imageField.value} alt="Wrong img url"
+                                                           onLoad={() => setImageLoaded(true)}
+                                                           onError={() => setImageLoaded(false)}
                                                            style={{
                                                                height: '100%',
                                                                width: '100%',
@@ -313,7 +319,7 @@ export const AddPage = () => {
                             }}
                             id="outlined-name"
                             label="Image url"
-                            helperText="e.g. https://imgur.com/gallery/myimage"
+                            helperText="e.g. https://imgur.com/XXXXXXX.png"
                             required
                             onFocus={() => setError({...error, image: false})}
                             error={error.image}

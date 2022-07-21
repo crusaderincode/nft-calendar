@@ -143,7 +143,7 @@ export const Header = (props: Header) => {
                     </TextField>
 
                 <Typography variant="h5"
-                            onClick={() => alert('Coming soon...')}
+                            onClick={() => window.open("https://medium.com/@honeyblog", "_blank")}
                             style={{
                     color: '#fff',
                     fontFamily: 'Pixels',
@@ -153,7 +153,7 @@ export const Header = (props: Header) => {
                     fontWeight: 'bold',
                     cursor: 'pointer'
                 }}>
-                   Alerts
+                   Blog
                 </Typography>
                 </div>
 

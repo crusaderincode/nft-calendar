@@ -170,7 +170,7 @@ export const MainPage = () => {
                            onClick={() => window.open(promo.url, "_blank")}
                            key={promo.id} style={{
                           width: '100%',
-                          marginBottom: '0.5rem',
+                          marginBottom: '1rem',
                           cursor: 'pointer',
                           borderRadius: 10
                       }}/>

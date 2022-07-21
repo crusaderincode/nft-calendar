@@ -68,6 +68,38 @@ export const eventReducer = (state = initialState, action: EventsAction) => {
                 }),
             }
 
+        case ActionType.SET_IMG:
+            return {
+                ...state,
+                events: state.events.map(e => {
+                    if(e.id == action.payload.id) {
+                        //@ts-ignore
+                        let img = action.payload.image.toString()
+                        return {
+                            ...e, image: img
+                        }}
+                    else return e
+                }),
+                past: state.past.map(e => {
+                    if(e.id == action.payload.id) {
+                        //@ts-ignore
+                        let img = action.payload.image.toString()
+                        return {
+                            ...e, image: img
+                        }}
+                    else return e
+                }),
+                unlisted: state.unlisted.map(e => {
+                    if(e.id == action.payload.id) {
+                        //@ts-ignore
+                        let img = action.payload.image.toString()
+                        return {
+                            ...e, image: img
+                        }}
+                    else return e
+                }),
+            }
+
 
         default: return state;
 

@@ -202,3 +202,17 @@ export const verifyEvent = (payload: IEvent): ThunkAction<void, any, null, Actio
     }
 
 }
+
+export const changeEventImage = (payload: IEvent): ThunkAction<void, any, null, Action<IEvent>> => {
+
+    return async (dispatch: Dispatch) => {
+        const ref = doc(db, 'events', payload.id)
+        try {
+            await setDoc(ref, {image: payload.image}, { merge: true });
+        } catch (e) {
+            console.error("Fatal error: ", e);
+        }
+        dispatch({ type: ActionType.SET_IMG, payload })
+    }
+
+}
