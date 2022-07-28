@@ -130,7 +130,6 @@ export const AddPage = () => {
         }
     };
 
-    console.log(imageLoaded)
 
     const submitEvent = useCallback(
         (event: IEvent) => dispatch(addEvent(event)),

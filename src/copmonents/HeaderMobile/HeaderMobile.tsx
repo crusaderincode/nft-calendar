@@ -208,10 +208,18 @@ export const HeaderMobile = (props: Header) => {
                         }}
                         id="outlined-search"
                         onChange={searchField.onChange}
+                        onKeyDown={(e) => {
+                            if (e.key === 'Enter') {
+                                handleClose()
+                            }
+                        }}
+                        onSubmit={handleClose}
                         InputProps={{
                             startAdornment: (
                                 <InputAdornment position="start">
-                                    <MdSearch style={{
+                                    <MdSearch
+                                        onClick={handleClose}
+                                        style={{
                                         color: '#fff',
                                         fontSize: 25
                                     }}/>
