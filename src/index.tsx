@@ -9,9 +9,11 @@ import MainLayout from "./copmonents/MainLayout";
 import MainPage from "./routes/MainPage";
 import AddPage from "./routes/AddPage";
 import AdminPage from "./routes/AdminPage";
+import NewsPage from "./routes/NewsPage";
 
 import {store} from "./redux/store";
 import { Provider } from "react-redux";
+
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -22,7 +24,8 @@ const theme = createTheme({
         primary: {
             light: '#2e176a',
             main: '#1c0d49',
-            dark: '#0e062d'
+            dark: '#0e062d',
+            contrastText: '#fbff2b'
         },
         secondary: {
             light: '#fff',
@@ -41,6 +44,7 @@ const withLayout = (Component: any) => (props :any) => (
 const Main = withLayout(() => <MainPage />)
 const Add = withLayout(() => <AddPage />)
 const Admin = withLayout(() => <AdminPage />)
+const News = withLayout(() => <NewsPage />)
 
 
 
@@ -53,6 +57,7 @@ root.render(
                   <Route path="/" element={<Main />}  />
                   <Route path="add" element={<Add />} />
                   <Route path="admin" element={<Admin />} />
+                  <Route path="news" element={<News />} />
               </Routes>
           </BrowserRouter>
       </ThemeProvider>

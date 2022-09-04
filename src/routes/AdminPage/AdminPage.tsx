@@ -23,6 +23,8 @@ import AdminLogin from "../../copmonents/AdminLogin";
 import { useNavigate } from 'react-router-dom';
 import PromoModal from "../../copmonents/PromoModal";
 import {deletePromo, getPromos} from "../../redux/actions/promo";
+import {deleteNews, getNews} from "../../redux/actions/news";
+import NewsModal from '../../copmonents/NewsModal';
 
 
 export const AdminPage = () => {
@@ -119,6 +121,39 @@ export const AdminPage = () => {
         removePromo(promo)
     }
 
+    //News
+     //Add
+     const [newsOpen, setNewsOpen] = useState(false)
+
+     const handleNewsClose = () => {
+         setNewsOpen(false)
+     }
+ 
+         //Get
+     const [newsListOpen, setNewsListOpen] = useState(false)
+ 
+     const news = useSelector(
+         (state: SelectorNewsState) => state.new.news,
+         shallowEqual
+     )
+ 
+     const fetchNews = useCallback(
+         () => dispatch(getNews()),
+         [dispatch]
+     )
+ 
+     const removeNews = useCallback(
+         (news: INews) => dispatch(deleteNews(news)),
+         [dispatch]
+     )
+ 
+     const onRemoveNewsClick = (id: string) => {
+         let news: INews = {
+             id: id,
+         }
+         removeNews(news)
+     }
+
     //Events
     const [isUnlisted, setIsUnlisted] = useState(true)
     const [curEvents, setCurEvents] = useState<IEvent[] | []>([])
@@ -208,6 +243,7 @@ export const AdminPage = () => {
         fetchListedPastEvents()
         fetchTickets()
         fetchPromo()
+        fetchNews()
     }, [])
 
     if (loading) {
@@ -236,7 +272,7 @@ export const AdminPage = () => {
                         position: 'absolute',
                         top: '0.5rem',
                         left: '0.5rem',
-                        backgroundColor: '#fbff2b',
+                        backgroundColor: theme.palette.primary.contrastText,
                         color: '#262b36'
                     }}>
                         Go Back
@@ -245,36 +281,90 @@ export const AdminPage = () => {
 
                 <MdEmail style={{fontSize: 30,
                     cursor: 'pointer',
-                    color: tickets.length > 0 ? '#fbff2b' : '#fff',
+                    color: tickets.length > 0 ? theme.palette.primary.contrastText : '#fff',
                     position: 'absolute',
                     top: '0.6rem',
                     left: '8rem',}}
                          onClick={() => setTicketsOpen(true)}
                 />
 
+                    <div style={{
+                        display: 'flex',
+                        position: 'absolute',
+                        top: '0.5rem',
+                        left: '11rem',
+                        borderRadius: 5,
+                        border: '1px solid #fff',
+                        padding: 5
+                    }}>
+             <Typography variant="body1" style={{
+                                    color: "#fff",
+                                    fontWeight: 'bold',
+                                    fontFamily: 'Pixels',
+                                    margin: 0,
+                                    padding: 0,
+                                    marginRight: '0.5rem'
+                                }}>
+                                    Promo: 
+                                </Typography>
+
                 <BsFillPlusSquareFill style={{fontSize: 25,
                     cursor: 'pointer',
-                    color: '#fff',
-                    position: 'absolute',
-                    top: '0.8rem',
-                    left: '11rem',}}
+                    color: '#fff',}}
                          onClick={() => setPromoOpen(true)}
                 />
 
                 <FaListAlt style={{fontSize: 25,
                     cursor: 'pointer',
                     color: '#fff',
-                    position: 'absolute',
-                    top: '0.8rem',
-                    left: '14rem',}}
+                    marginLeft: '1rem'
+                  }}
                            onClick={() => setPromoListOpen(true)}
                 />
+                    </div>
+
+                    <div style={{
+                        display: 'flex',
+                        position: 'absolute',
+                        top: '0.5rem',
+                        left: '21rem',
+                        borderRadius: 5,
+                        border: '1px solid #fff',
+                        padding: 5
+                    }}>
+             <Typography variant="body1" style={{
+                                    color: "#fff",
+                                    fontWeight: 'bold',
+                                    fontFamily: 'Pixels',
+                                    margin: 0,
+                                    padding: 0,
+                                    marginRight: '0.5rem'
+                                }}>
+                                    News: 
+                                </Typography>
+
+                <BsFillPlusSquareFill style={{fontSize: 25,
+                    cursor: 'pointer',
+                    color: '#fff',}}
+                         onClick={() => setNewsOpen(true)}
+                />
+
+                <FaListAlt style={{fontSize: 25,
+                    cursor: 'pointer',
+                    color: '#fff',
+                    marginLeft: '1rem'
+                  }}
+                           onClick={() => setNewsListOpen(true)}
+                />
+                    </div>
+
+                
 
                 <Button variant="contained" onClick={() => logOutHandler()} style={{
                     position: 'absolute',
                     top: '0.5rem',
                     right: '0.5rem',
-                    backgroundColor: '#fbff2b',
+                    backgroundColor: theme.palette.primary.contrastText,
                     color: '#262b36'
                 }}>
                    Log out
@@ -300,11 +390,11 @@ export const AdminPage = () => {
                                     padding: 5,
                                     textAlign: 'center',
                                     cursor: 'pointer',
-                                    outline: isUnlisted ? 'none' : '2px solid #fbff2b',
-                                    backgroundColor: isUnlisted ? '#fbff2b' : 'transparent'
+                                    outline: isUnlisted ? 'none' : `2px solid ${theme.palette.primary.contrastText}`,
+                                    backgroundColor: isUnlisted ? theme.palette.primary.contrastText : 'transparent'
                                 }}>
                                 <Typography variant="h5" style={{
-                                    color: isUnlisted ? '#161d30' : '#fbff2b',
+                                    color: isUnlisted ? '#161d30' : theme.palette.primary.contrastText,
                                     fontWeight: 'bold',
                                     fontFamily: 'Pixels'
                                 }}>
@@ -320,11 +410,11 @@ export const AdminPage = () => {
                                     cursor: 'pointer',
                                     padding: 5,
                                     textAlign: 'center',
-                                    outline: isUnlisted ? '2px solid #fbff2b' : 'none' ,
-                                    backgroundColor: isUnlisted ? 'transparent' : '#fbff2b'
+                                    outline: isUnlisted ? `2px solid ${theme.palette.primary.contrastText}` : 'none' ,
+                                    backgroundColor: isUnlisted ? 'transparent' : theme.palette.primary.contrastText
                                 }}>
                                 <Typography variant="h5" style={{
-                                    color: isUnlisted ? '#fbff2b' : '#161d30',
+                                    color: isUnlisted ? theme.palette.primary.contrastText : '#161d30',
                                     fontWeight: 'bold',
                                     fontFamily: 'Pixels'
                                 }}>
@@ -467,6 +557,7 @@ export const AdminPage = () => {
                     }
 
                     <PromoModal handleClose={handlePromoClose} state={promoOpen} />
+                    <NewsModal handleClose={handleNewsClose} state={newsOpen}/>
 
                     <Dialog
                         open={ticketsOpen && tickets.length > 0}
@@ -539,6 +630,57 @@ export const AdminPage = () => {
                                     }}/>
                                     <TiDelete
                                         onClick={() => onRemovePromoClick(item.id)}
+                                        style={{
+                                        position: 'absolute',
+                                        top: '0.2rem',
+                                        right: '0.2rem',
+                                        fontSize: 35,
+                                        cursor: 'pointer',
+                                        color: '#F32013'
+                                    }}/>
+                                </Paper>
+                            ))
+                        }
+                    </Dialog>
+
+                    <Dialog
+                        open={newsListOpen && news.length > 0}
+                        maxWidth="md"
+                        sx={{
+                            backgroundColor: 'transparent',
+                        }}
+                        onClose={() => setNewsListOpen(false)}
+                        scroll='body'
+                    >
+                        {
+                            news.map((item: INews) => (
+                                <Paper key={item.id} style={{
+                                    backgroundColor: '#161d30',
+                                    padding: 0,
+                                    display: 'flex',
+                                    position: 'relative',
+                                    flexDirection: 'column',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    margin: 10,
+                                    borderRadius: 10
+                                }}>
+                                    <img src={item.image} alt="img" style={{
+                                        width: 250,
+                                        borderRadius: 10
+                                    }}/>
+
+                            <Typography variant="body1" style={{
+                                        color: theme.palette.primary.contrastText,
+                                        fontWeight: 'bold',
+                                        marginTop: '0.5rem',
+                                        marginBottom: '0.5rem'
+                                    }}>
+                                    {item.header}
+                                    </Typography>
+
+                                    <TiDelete
+                                        onClick={() => onRemoveNewsClick(item.id)}
                                         style={{
                                         position: 'absolute',
                                         top: '0.2rem',

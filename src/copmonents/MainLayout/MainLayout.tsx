@@ -17,7 +17,3 @@ export const MainLayout = ({children}: Children) => {
         </div>
     );
 };
-
-
-//Синеватый `linear-gradient(to bottom,  #1f2937, #181f26)`
-//Синий `linear-gradient(to bottom,  #161d30, #161d30)`

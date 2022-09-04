@@ -8,7 +8,7 @@ import {
     TextField,
     Typography,
     CircularProgress,
-    FormControlLabel, Checkbox
+    FormControlLabel, Checkbox, useTheme
 } from "@mui/material";
 import { useSelector, shallowEqual, useDispatch } from "react-redux"
 import {Dispatch} from "@reduxjs/toolkit";
@@ -27,6 +27,7 @@ export const AddPage = () => {
     const dispatch: Dispatch<any> = useDispatch()
 
     const mobile = isMobile()
+    const theme = useTheme()
 
     const location = useLocation()
     //@ts-ignore
@@ -580,8 +581,8 @@ export const AddPage = () => {
                     onMouseOver={() => setSubmitButtonHover(true)}
                     onMouseOut={() => setSubmitButtonHover(false)}
                     style={{
-                        backgroundColor: submitButtonHover ? 'transparent' : '#fbff2b',
-                        border: '1px solid #fbff2b',
+                        backgroundColor: submitButtonHover ? 'transparent' : theme.palette.primary.contrastText,
+                        border: `1px solid ${theme.palette.primary.contrastText}`,
                         display: 'flex',
                         flexDirection: 'row',
                         justifyContent: 'center',
@@ -593,10 +594,10 @@ export const AddPage = () => {
 
                     {
                         loading ? <CircularProgress size="2rem" style={{
-                            color: submitButtonHover ? '#fbff2b' : '#424242',
+                            color: submitButtonHover ?theme.palette.primary.contrastText : '#424242',
                             padding: 4
                         }}/> : <GoPlus style={{
-                            color: submitButtonHover ? '#fbff2b' : '#424242',
+                            color: submitButtonHover ? theme.palette.primary.contrastText : '#424242',
                             fontSize: 25,
                             paddingLeft: 4
                         }}/>
@@ -604,7 +605,7 @@ export const AddPage = () => {
 
 
                     <Typography variant="h5" style={{
-                        color: submitButtonHover ? '#fbff2b' : '#424242',
+                        color: submitButtonHover ? theme.palette.primary.contrastText : '#424242',
                         fontFamily: 'Pixels',
                         padding: 5,
                         paddingLeft: 0,

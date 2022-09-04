@@ -33,12 +33,25 @@ interface IPromo {
     url?: string
 }
 
+interface INews {
+    id: string
+    image?: string
+    url?: string
+    header?: string
+    text?: string
+    date?: Date | string
+}
+
 type TicketState = {
     tickets: ITicket[]
 }
 
 type PromoState = {
     promos: IPromo[]
+}
+
+type NewsState = {
+    news: INews[]
 }
 
 type TicketsAction = {
@@ -49,6 +62,11 @@ type TicketsAction = {
 type PromosAction = {
     type: string
     payload: IPromo
+}
+
+type NewsAction = {
+    type: string
+    payload: INews
 }
 
 type EventsState = {
@@ -67,6 +85,10 @@ type SelectorTicketsState = {
 
 type SelectorPromoState = {
     promo: { promos: IPromo[]}
+}
+
+type SelectorNewsState = {
+    new: { news: IPromo[]}
 }
 
 type EventsAction = {

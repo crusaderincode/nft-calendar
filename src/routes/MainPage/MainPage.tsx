@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useState,} from 'react';
-import {Button, Container, Paper, Typography} from "@mui/material";
+import {Button, Container, Paper, Typography, useTheme} from "@mui/material";
 import Header from "../../copmonents/Header";
 import UserEventsList from "../../copmonents/UserEventsList";
 import PriceModal from "../../copmonents/PriceModal";
@@ -20,6 +20,7 @@ import isMobile from "../../copmonents/isMobile"
 export const MainPage = () => {
     const dispatch: Dispatch<any> = useDispatch()
     const mobile: boolean = isMobile()
+    const theme = useTheme()
 
     //Get from store
     const events = useSelector(
@@ -102,15 +103,7 @@ export const MainPage = () => {
         }
     }, [blockchain])
 
-    //Submit modal
-    const [openModal, setOpenModal] = useState(false);
-    const handleOpenModal = () => setOpenModal(true);
-    const handleCloseModal = () => setOpenModal(false);
 
-    //Contact modal
-    const [openContactModal, setOpenContactModal] = useState(false);
-    const handleOpenContactModal = () => setOpenContactModal(true);
-    const handleCloseContactModal = () => setOpenContactModal(false);
 
     //Main useEffect
     useEffect(() => {
@@ -136,8 +129,6 @@ export const MainPage = () => {
 
             {
                 mobile ? <HeaderMobile
-                    handleModalOpen={handleOpenModal}
-                    handleContactOpen={handleOpenContactModal}
                     localAction={localAction}
                     curEvents={selectedEvents}
                     pastEvents={mintedEvents}
@@ -145,8 +136,6 @@ export const MainPage = () => {
                     isUpcoming={isUpcoming}
                     setCurEvents={setFilteredEvents}
                 /> : <Header
-                    handleModalOpen={handleOpenModal}
-                    handleContactOpen={handleOpenContactModal}
                     localAction={localAction}
                     curEvents={selectedEvents}
                     pastEvents={mintedEvents}
@@ -166,7 +155,7 @@ export const MainPage = () => {
             }}>
                 {
                    promo && promo.map((promo: IPromo) => (
-                      <img src={promo.image}
+                      <img alt="img" src={promo.image}
                            onClick={() => window.open(promo.url, "_blank")}
                            key={promo.id} style={{
                           width: '100%',
@@ -176,11 +165,14 @@ export const MainPage = () => {
                       }}/>
                     ))
                 }
-                <div style={{
+
+{
+    featuredEvents.length > 0 && <>
+     <div style={{
                     marginTop: mobile ? '1rem' : '2rem'
                 }}>
                     <Typography variant={mobile ? "h5" : "h4"} display="inline" style={{
-                        color: '#fbff2b',
+                        color: theme.palette.primary.contrastText,
                         fontWeight: 'bold'
                     }}>
                         Featured
@@ -194,6 +186,10 @@ export const MainPage = () => {
                     </Typography>
                 </div>
                 <UserEventsList eventsList={featuredEvents}/>
+    </>
+}
+
+               
                 <div style={{
                     marginTop: mobile ? '1rem' : '2rem',
                     height: mobile ? isUpcomingOpen ? 40 : 80 : isUpcomingOpen ? 60 : 140,
@@ -201,7 +197,7 @@ export const MainPage = () => {
                     transition: "all 0.3s ease-in-out",
                 }}>
                     <Typography variant={mobile ? "h5" : "h4"} display="inline" onClick={() => setIsUpcomingOpen(!isUpcomingOpen)} style={{
-                    color: '#fbff2b',
+                    color: theme.palette.primary.contrastText,
                     fontWeight: 'bold',
                     textDecoration: 'underline',
                     cursor: 'pointer'
@@ -210,13 +206,13 @@ export const MainPage = () => {
                 </Typography>
                     {
                         isUpcomingOpen ? <MdKeyboardArrowDown onClick={() => setIsUpcomingOpen(!isUpcomingOpen)} style={{
-                            color: '#fbff2b',
+                            color: theme.palette.primary.contrastText,
                             fontSize: mobile ? 30 : 40,
                             verticalAlign: 'bottom',
                             marginLeft: -8,
                             cursor: 'pointer'
                         }}/> : <MdKeyboardArrowUp onClick={() => setIsUpcomingOpen(!isUpcomingOpen)} style={{
-                            color: '#fbff2b',
+                            color: theme.palette.primary.contrastText,
                             fontSize: mobile ? 30 : 40,
                             verticalAlign: 'bottom',
                             marginLeft: -8,
@@ -240,7 +236,7 @@ export const MainPage = () => {
                         cursor: 'pointer'
                     }}>
                         <Typography variant={mobile ? "h5" : "h4"} style={{
-                        color: '#fbff2b',
+                        color: theme.palette.primary.contrastText,
                         fontWeight: 'bold',
                         textAlign: 'center'
                     }}>
@@ -250,10 +246,9 @@ export const MainPage = () => {
                 </div>
                 <UserEventsList eventsList={isUpcoming ? filteredEvents : mintedFilteredEvents}/>
             </Container>
-            <PriceModal handleClose={handleCloseModal} state={openModal} />
-            <ContactModal handleClose={handleCloseContactModal} state={openContactModal} />
 
-            <Footer handleContactOpen={handleOpenContactModal}/>
+
+            <Footer/>
         </div>
     );
 };

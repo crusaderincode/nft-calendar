@@ -1,16 +1,19 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Container, Typography} from "@mui/material";
 import logo from "../../img/logo.png"
 import {FaTwitter} from "react-icons/fa";
 import {MdEmail} from "react-icons/md";
 import isMobile from "../isMobile";
+import ContactModal from "../ContactModal";
 
-interface Footer {
-    handleContactOpen: () => void
-}
 
-export const Footer = ({handleContactOpen}: Footer) => {
+export const Footer = () => {
     const mobile = isMobile()
+
+    //Contact modal
+    const [openContactModal, setOpenContactModal] = useState(false);
+    const handleOpenContactModal = () => setOpenContactModal(true);
+    const handleCloseContactModal = () => setOpenContactModal(false);
 
     return (
         <div style={{
@@ -58,7 +61,7 @@ export const Footer = ({handleContactOpen}: Footer) => {
                     />
 
                     <MdEmail style={{fontSize:  mobile ? 25 : 30, cursor: 'pointer', color: '#fff', marginLeft: '1rem',}}
-                             onClick={handleContactOpen}
+                             onClick={handleOpenContactModal}
                     />
                 </div>
             </div>
@@ -72,6 +75,7 @@ export const Footer = ({handleContactOpen}: Footer) => {
                     © Honey Drops 2022
                 </Typography>
             }
+            <ContactModal handleClose={handleCloseContactModal} state={openContactModal} />
         </div>
     );
 };

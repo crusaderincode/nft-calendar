@@ -6,8 +6,7 @@ import {CircularProgress, Grid, Paper, TextField, useTheme} from "@mui/material"
 import {GoPlus} from "react-icons/go";
 import {Dispatch} from "@reduxjs/toolkit";
 import {useDispatch} from "react-redux";
-import {addTicket} from "../../redux/actions/ticket";
-import {addPromo} from "../../redux/actions/promo";
+import {addNews} from "../../redux/actions/news";
 import isMobile from "../isMobile";
 
 
@@ -17,7 +16,7 @@ interface Modal {
     state: boolean
 }
 
-export const PromoModal = ({handleClose, state}: Modal) => {
+export const NewsModal = ({handleClose, state}: Modal) => {
     const useFormField = (initialValue: string) => {
         const [value, setValue] = useState(initialValue);
         const onChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => setValue(e.target.value), []);
@@ -28,6 +27,9 @@ export const PromoModal = ({handleClose, state}: Modal) => {
     const theme = useTheme()
     const imageField = useFormField("")
     const urlField = useFormField("")
+    const titleField = useFormField("")
+    const textField = useFormField("")
+
     const dispatch: Dispatch<any> = useDispatch()
 
     const [submitButtonHover, setSubmitButtonHover] = useState(false)
@@ -40,10 +42,13 @@ export const PromoModal = ({handleClose, state}: Modal) => {
     const handleClick = async () => {
 
         if (imageField.value.length > 0 && urlField.value.length > 0) {
-            let promo: IPromo = {
+            let promo: INews = {
                 id: '',
                 image: imageField.value,
-                url: urlField.value
+                url: urlField.value,
+                header: titleField.value,
+                text: textField.value,
+                date: new Date()
             }
             setLoading(true)
             try {
@@ -64,7 +69,7 @@ export const PromoModal = ({handleClose, state}: Modal) => {
 
 
     const submitTicket = useCallback(
-        (promo: IPromo) => dispatch(addPromo(promo)),
+        (promo: IPromo) => dispatch(addNews(promo)),
         [dispatch]
     )
 
@@ -110,10 +115,23 @@ export const PromoModal = ({handleClose, state}: Modal) => {
             fontWeight: 'bold',
             marginBottom: '1rem'
     }}>
-    Add promo
+    Add news
     </Typography>
 
-        <Grid container spacing={3}>
+        <Grid container spacing={2}>
+        <Grid item xs={12} sm={12} md={12} lg={12}>
+                <TextField
+                    style={{
+                        width: '100%',
+                        marginBottom: '0.5rem',
+                    }}
+                    id="outlined-name"
+                    label="Title"
+                    required
+                    onChange={titleField.onChange}
+                />
+            </Grid>
+
             <Grid item xs={12} sm={6} md={6} lg={6}>
                 <TextField
                     style={{
@@ -138,13 +156,28 @@ export const PromoModal = ({handleClose, state}: Modal) => {
                     onChange={urlField.onChange}
                 />
             </Grid>
+
+            <Grid item xs={12} sm={12} md={12} lg={12}>
+                <TextField
+                    style={{
+                        width: '100%',
+                        marginBottom: '0.5rem',
+                    }}
+                    id="outlined-name"
+                    label="Text"
+                    required
+                    multiline
+                    rows={3}
+                    onChange={textField.onChange}
+                />
+            </Grid>
         </Grid>
 
         {
 
             imageField.value.length > 0 ? <img src={imageField.value} alt="Wrong img url"
                                                style={{
-                                                   width: '100%',
+                                                   height: 120,
                                                    textAlign: 'center',
                                                    borderRadius: 10,
                                                    marginTop: '0.5rem',
@@ -156,7 +189,7 @@ export const PromoModal = ({handleClose, state}: Modal) => {
                     color: '#fff',
                     marginTop: '1rem'
                 }}>
-                    Collection Image example*
+                    Post Image example*
                 </Typography>
         }
 

@@ -27,7 +27,17 @@ code {
 }
 
 
-
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background-color: #22293b;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #fff;
+  border-radius: 10px;
+}
 
 
 

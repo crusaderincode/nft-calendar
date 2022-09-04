@@ -23,6 +23,12 @@ export const AdminLogin = ({setIsLoggedIn}: isLoggedIn) => {
         setErrorState(false)
         setError("")
     }
+    
+    const handleEnterPress = (event: React.KeyboardEvent<HTMLImageElement>) => {
+        if (event.key === 'Enter') {
+          handleLogIn()
+        }
+      }
 
 
     const auth = getAuth();
@@ -66,7 +72,7 @@ export const AdminLogin = ({setIsLoggedIn}: isLoggedIn) => {
                 color="secondary"
                 id="outlined-name"
                 label="Password"
-                sx={{}}
+                onKeyDown={handleEnterPress}
                 onChange={passwordField.onChange}
                 onFocus={() => handleTry()}
                 error={errorState}

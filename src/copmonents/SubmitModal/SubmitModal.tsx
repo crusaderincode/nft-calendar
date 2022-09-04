@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import Typography from "@mui/material/Typography";
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
-import {Paper} from "@mui/material";
+import {Paper, useTheme} from "@mui/material";
 import {Link} from "react-router-dom";
 import logo from "../../img/logo.png"
 import {BsCheckCircleFill} from "react-icons/bs";
@@ -14,6 +14,7 @@ interface Modal {
 
 export const SubmitModal = ({handleClose, state}: Modal) => {
     const [submitButtonHover, setSubmitButtonHover] = useState(false)
+    const theme = useTheme()
 
 
     const style = {
@@ -56,7 +57,7 @@ export const SubmitModal = ({handleClose, state}: Modal) => {
                         fontFamily: 'Pixels',
                         padding: 0,
                         margin: 0,
-                        color: '#fbff2b',
+                        color: theme.palette.primary.contrastText,
                         textAlign: 'center',
                         fontWeight: 'bold',
                     }}>
@@ -111,8 +112,8 @@ export const SubmitModal = ({handleClose, state}: Modal) => {
                         onMouseOver={() => setSubmitButtonHover(true)}
                         onMouseOut={() => setSubmitButtonHover(false)}
                         style={{
-                            backgroundColor: submitButtonHover ? 'transparent' : '#fbff2b',
-                            border: '1px solid #fbff2b',
+                            backgroundColor: submitButtonHover ? 'transparent' : theme.palette.primary.contrastText,
+                            border: `1px solid ${theme.palette.primary.contrastText}`,
                             display: 'flex',
                             flexDirection: 'row',
                             justifyContent: 'center',
@@ -122,7 +123,7 @@ export const SubmitModal = ({handleClose, state}: Modal) => {
                         }}>
 
                         <Typography variant="h5" style={{
-                            color: submitButtonHover ? '#fbff2b' : '#424242',
+                            color: submitButtonHover ? theme.palette.primary.contrastText : '#424242',
                             fontFamily: 'Pixels',
                             padding: 5,
                             paddingLeft: 7,

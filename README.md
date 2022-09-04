@@ -1,6 +1,6 @@
 # Honey Drops
 
-![Picture is lost somewhere](https://github.com/GottliebGlob/nft-calendar/blob/main/promo.png?raw=true "Текст заголовка логотипа 1")
+![Picture is lost somewhere](https://github.com/GottliebGlob/nft-calendar/blob/main/promo.png?raw=true "Promote")
 
 ## About
 

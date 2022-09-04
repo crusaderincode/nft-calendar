@@ -9,5 +9,7 @@ export enum ActionType {
     ADD_PROMO = 'ADD_PROMO',
     DEL_PROMO = 'DEL_PROMO',
     VER = 'VER',
-    SET_IMG = 'SET_IMG'
+    SET_IMG = 'SET_IMG',
+    ADD_NEWS = 'ADD_NEWS',
+    DEL_NEWS = 'DEL_NEWS'
 }

@@ -2,7 +2,7 @@ import React, {useCallback, useState} from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import {CircularProgress, Paper, TextField} from "@mui/material";
+import {CircularProgress, Paper, TextField, useTheme} from "@mui/material";
 import {GoPlus} from "react-icons/go";
 import {Dispatch} from "@reduxjs/toolkit";
 import {useDispatch} from "react-redux";
@@ -24,6 +24,7 @@ export const ContactModal = ({handleClose, state}: Modal) => {
     };
 
     const mobile = isMobile()
+    const theme = useTheme()
 
     const descriptionField = useFormField("")
     const emailField = useFormField("")
@@ -142,8 +143,8 @@ export const ContactModal = ({handleClose, state}: Modal) => {
                         onMouseOver={() => setSubmitButtonHover(true)}
                         onMouseOut={() => setSubmitButtonHover(false)}
                         style={{
-                            backgroundColor: submitButtonHover ? 'transparent' : '#fbff2b',
-                            border: '1px solid #fbff2b',
+                            backgroundColor: submitButtonHover ? 'transparent' : theme.palette.primary.contrastText,
+                            border: `1px solid ${theme.palette.primary.contrastText}`,
                             display: 'flex',
                             flexDirection: 'row',
                             justifyContent: 'center',
@@ -155,10 +156,10 @@ export const ContactModal = ({handleClose, state}: Modal) => {
 
                         {
                             loading ? <CircularProgress size="2rem" style={{
-                                color: submitButtonHover ? '#fbff2b' : '#424242',
+                                color: submitButtonHover ? theme.palette.primary.contrastText : '#424242',
                                 padding: 4
                             }}/> : <GoPlus style={{
-                                color: submitButtonHover ? '#fbff2b' : '#424242',
+                                color: submitButtonHover ? theme.palette.primary.contrastText : '#424242',
                                 fontSize: 25,
                                 paddingLeft: 4
                             }}/>
@@ -166,7 +167,7 @@ export const ContactModal = ({handleClose, state}: Modal) => {
 
 
                         <Typography variant="h5" style={{
-                            color: submitButtonHover ? '#fbff2b' : '#424242',
+                            color: submitButtonHover ? theme.palette.primary.contrastText : '#424242',
                             fontFamily: 'Pixels',
                             padding: 5,
                             paddingLeft: 0,

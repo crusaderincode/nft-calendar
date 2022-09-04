@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Paper, Typography} from "@mui/material";
+import {Paper, Typography, useTheme} from "@mui/material";
 import {FaDiscord, FaTwitter} from "react-icons/fa";
 import {MdPublic} from "react-icons/md";
 import {AiFillStar} from "react-icons/ai"
@@ -12,6 +12,7 @@ interface UserEvent {
 
 export const UserEvent = ({event}: UserEvent) => {
     const mobile = isMobile()
+    const theme = useTheme()
 
     const [flag, setFlag] = useState(false)
 
@@ -62,7 +63,7 @@ export const UserEvent = ({event}: UserEvent) => {
                         top: 10,
                         right: 10,
                         fontSize: 20,
-                        color: '#fbff2b'
+                        color: theme.palette.primary.contrastText
                     }}/>
                 }
 
@@ -97,7 +98,7 @@ export const UserEvent = ({event}: UserEvent) => {
                                 onClick={flagHandler}
                                 style={{
                                     //@ts-ignore
-                        color: event.promo > 0 ? '#fbff2b' : '#fff',
+                        color: event.promo > 0 ? theme.palette.primary.contrastText : '#fff',
                         fontWeight: 'bold',
                         cursor: 'pointer'
                     }}>
