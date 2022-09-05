@@ -40,8 +40,10 @@ export const NewsItem = ({item}: NewsItem) => {
             maxHeight: mobile ? flag ? 800 : 450 : flag ? 500 : 245,
             overflow: 'hidden',
             transition: "all 0.5s ease-in-out",
-            position: 'relative'
+            position: 'relative',
+            cursor: 'pointer'
         }}
+        onClick={flagHandler}
                sx={{ "&:hover": { transform: "scale3d(1.02, 1.02, 1.02)" },
                    transition: "transform 0.25s ease-in-out",}}>
 
@@ -61,7 +63,6 @@ export const NewsItem = ({item}: NewsItem) => {
         </Typography>
     }
                     <img src={item.image} alt="Wrong img url"
-                         onClick={flagHandler}
                          style={{
                              height: mobile ? '80%' : 240,
                              width: mobile ? '80%' : 240,

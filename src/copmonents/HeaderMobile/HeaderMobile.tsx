@@ -38,7 +38,7 @@ export const HeaderMobile = (props: Header) => {
         flexDirection: 'column',
         alignItems: 'center',
         boxShadow: 24,
-        backgroundColor: theme.palette.primary.contrastText,
+        backgroundColor: '#22293b',
         borderRadius: 1,
         px: 4,
     };
