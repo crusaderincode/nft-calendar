@@ -4,4 +4,4 @@
 
 ## About
 
-Multi-chain NFT calendar. List your NFT drops on Ethereum, Solana, Polygon, Near, BSC. Totally free! Never miss upcoming NFT event, drop or giveaway with **[Honey Drops](https://www.honeydrops.xyz/)**.
+Multi-chain NFT calendar. List your NFT drops on Ethereum, Solana, Polygon, Aptos, BSC. Totally free! Never miss upcoming NFT event, drop or giveaway with **[Honey Drops](https://www.honeydrops.xyz/)**.
