@@ -112,8 +112,8 @@ export const Header = (props: Header) => {
             label: 'Polygon NFT',
         },
         {
-            value: 'ADA',
-            label: 'Cardano NFT',
+            value: 'APT',
+            label: 'Aptos NFT',
         },
     ];
 
@@ -272,7 +272,7 @@ export const Header = (props: Header) => {
                     </Paper>
 
                     <FaTwitter style={{fontSize: 30, cursor: 'pointer', color: '#fff', marginLeft: '2rem',}}
-                               onClick={() => window.open("https://twitter.com/HoneyDropsNFT", "_blank")}
+                               onClick={() => window.open("https://twitter.com/HoneyDrops_NFT", "_blank")}
                     />
 
                     <MdEmail style={{fontSize: 30, cursor: 'pointer', color: '#fff', marginLeft: '1rem',}}

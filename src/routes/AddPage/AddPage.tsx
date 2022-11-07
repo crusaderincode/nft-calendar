@@ -101,8 +101,8 @@ export const AddPage = () => {
             label: 'MATIC',
         },
         {
-            value: 'ADA',
-            label: 'ADA',
+            value: 'APT',
+            label: 'APT',
         },
     ];
 
@@ -122,6 +122,10 @@ export const AddPage = () => {
         {
             value: 'BSC',
             label: 'BSC',
+        },
+        {
+            value: 'APT',
+            label: 'APT',
         },
     ];
 
@@ -477,7 +481,7 @@ export const AddPage = () => {
                                     id="outlined-select-currency"
                                     select
                                     label={promo > 1 ? "50$ payment chain" : "10$ payment chain"}
-                                    helperText={paymentField.value === "SOL" ? "2pMhaJMoyZnw2NabS284hs9Zgn48Ntc5jFSDjT3oYKfv" : "0x9b38A07D100F59C45fC6CC808DdD136d1c46f41c"}
+                                    helperText={paymentField.value === "SOL" ? "2pMhaJMoyZnw2NabS284hs9Zgn48Ntc5jFSDjT3oYKfv" : "APT" ? "0x5a1bf7885f91c66e8f297a5a68c97abaf34a931847256d3bcd78436bf006e35c" : "0x9b38A07D100F59C45fC6CC808DdD136d1c46f41c"}
                                     value={paymentField.value}
                                     required
                                     onChange={paymentField.onChange}
@@ -529,7 +533,7 @@ export const AddPage = () => {
                                     id="outlined-select-currency"
                                     select
                                     label={promo > 1 ? "50$ payment chain" : "10$ payment chain"}
-                                    helperText={paymentField.value === "SOL" ? "2pMhaJMoyZnw2NabS284hs9Zgn48Ntc5jFSDjT3oYKfv" : "0x9b38A07D100F59C45fC6CC808DdD136d1c46f41c"}
+                                    helperText={paymentField.value === "SOL" ? "2pMhaJMoyZnw2NabS284hs9Zgn48Ntc5jFSDjT3oYKfv" : "APT" ? "0x5a1bf7885f91c66e8f297a5a68c97abaf34a931847256d3bcd78436bf006e35c" : "0x9b38A07D100F59C45fC6CC808DdD136d1c46f41c"}
                                     value={paymentField.value}
                                     required
                                     onChange={paymentField.onChange}
